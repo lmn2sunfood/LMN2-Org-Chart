@@ -396,7 +396,7 @@ const DEFAULT_DATA = [
    2) ตั้ง PIN ให้ตรงกับใน Code.gs (ตัวแปร EDIT_PIN)
    ถ้า API_URL ยังว่าง ระบบจะทำงานแบบออฟไลน์ (เก็บในเครื่อง) อัตโนมัติ
    ============================================================ */
-const API_URL = "https://script.google.com/macros/s/AKfycbwPwbMStMJzDcPfVNyZd_Nv-bi-OP5FIEUWiyw6cSTHCt-_IbEMbRwP3p_dAAvmzfJ7/exec";          // << URL ของ Web App
+const API_URL = "https://script.google.com/macros/s/AKfycbxD2LHjl_QEajbb9hgYZh38rXz-1ZD2m1YbJCCy5FcSVxYfpNs0jUDgopE13BBRu34l/exec";          // << URL ของ Web App
 const LOCAL_STORE = "lmn2_orgchart_v3";
 const LOCAL_KPI   = "lmn2_kpi_v1";
 
@@ -584,14 +584,12 @@ async function saveAll(){
 async function pushOnline(){
   const payload = JSON.stringify({ data: data, kpi: kpiStore, profile: profileStore });
   setSync('กำลังบันทึก...');
-  // ส่งแบบ no-cors: เขียนลงชีตได้ข้ามโดเมน แต่จะอ่าน response ไม่ได้ จึงถือว่าสำเร็จ
+  // ส่งเป็น FormData (form-encoded) ทำงานกับ no-cors ได้แน่นอน
+  // Apps Script อ่านได้จาก e.parameter.payload
   try{
-    await fetch(API_URL,{
-      method:'POST',
-      mode:'no-cors',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body:payload
-    });
+    const fd = new FormData();
+    fd.append('payload', payload);
+    await fetch(API_URL,{ method:'POST', mode:'no-cors', body:fd });
     setSync('บันทึกแล้ว ✓ ' + new Date().toLocaleTimeString('th-TH'));
     flash();
   }catch(e){
