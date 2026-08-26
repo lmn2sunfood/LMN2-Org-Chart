@@ -12,18 +12,33 @@
     --ink:#0f2a3f; --steel:#1f5f7a; --teal:#2a9d8f; --teal-soft:#e3f3f0;
     --amber:#e9a23b; --amber-soft:#fbf0db; --line:#cdd9df; --paper:#f6f8f9;
     --white:#fff; --muted:#5d7480; --shadow:0 8px 28px -12px rgba(15,42,63,.28);
-    --red:#c0584e; --nav-w:248px;
+    --red:#c0584e; --nav-w:248px; --nav-2:#123449;
+    --bg-1:#eef6f4; --bg-2:#f4ede0;
+  }
+  /* ===== ธีมสาย Sunfeed : โทนส้มทองอบอุ่น ===== */
+  body.org-sunfeed{
+    --ink:#432a17; --steel:#a15c28; --teal:#c2600c; --teal-soft:#fbeadb;
+    --amber:#d9a02b; --amber-soft:#fcf3dd; --line:#e0d3c6; --paper:#faf7f3;
+    --muted:#7d6653; --shadow:0 8px 28px -12px rgba(67,42,23,.28);
+    --red:#b4453a; --nav-2:#5e3a1c;
+    --bg-1:#fdeee0; --bg-2:#f6e7cf;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
     font-family:'IBM Plex Sans Thai',sans-serif;color:var(--ink);
-    background:var(--paper);min-height:100vh;-webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(900px 500px at 88% -5%, var(--bg-1) 0%, transparent 60%),
+      radial-gradient(700px 500px at 5% 100%, var(--bg-2) 0%, transparent 55%),
+      var(--paper);
+    background-attachment:fixed;
+    min-height:100vh;-webkit-font-smoothing:antialiased;
+    transition:background .3s ease;
   }
 
   /* ===== Layout ===== */
   .app{display:flex;min-height:100vh;}
   .nav{
-    width:var(--nav-w);flex-shrink:0;background:linear-gradient(180deg,var(--ink),#123449);
+    width:var(--nav-w);flex-shrink:0;background:linear-gradient(180deg,var(--ink),var(--nav-2));
     color:#cfe0e8;position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;
     padding:26px 18px;z-index:30;
   }
@@ -31,6 +46,12 @@
   .nav-brand .eyebrow{font-family:'Sora';font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--teal);}
   .nav-brand h1{font-family:'Sora',sans-serif;font-weight:800;font-size:26px;color:#fff;line-height:1;margin-top:6px;}
   .nav-brand .sub{font-size:12px;color:#8fadbb;margin-top:8px;line-height:1.4;}
+  .org-switch{display:flex;gap:6px;background:rgba(255,255,255,.07);padding:5px;border-radius:11px;margin-bottom:18px;}
+  .org-btn{flex:1;background:none;border:none;color:#a9c4d1;font-family:'Sora',sans-serif;font-weight:700;font-size:12.5px;padding:8px 6px;border-radius:8px;cursor:pointer;letter-spacing:.04em;transition:background .15s ease,color .15s ease;}
+  .org-btn:hover{color:#fff;}
+  .org-btn.active{background:var(--teal);color:#fff;box-shadow:0 4px 12px -6px rgba(42,157,143,.9);}
+  .org-btn[data-org="sunfeed"].active{background:#d97706;box-shadow:0 4px 12px -6px rgba(217,119,6,.9);}
+  .org-btn[data-org="lmn2"].active{background:#2a9d8f;box-shadow:0 4px 12px -6px rgba(42,157,143,.9);}
 
   .nav-item{
     display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:11px;
@@ -214,9 +235,13 @@
   <!-- ===== Left Nav ===== -->
   <nav class="nav" id="nav">
     <div class="nav-brand">
-      <div class="eyebrow">Clean Zone Unit</div>
-      <h1>LMN2</h1>
-      <div class="sub">ระบบแผนผัง · KPI · เป้าหมาย<br>หน่วยซ่อมบำรุงเครื่องจักร</div>
+      <div class="eyebrow" id="brandEyebrow">Clean Zone Unit</div>
+      <h1 id="brandTitle">LMN2</h1>
+      <div class="sub" id="brandSub">ระบบแผนผัง · KPI · เป้าหมาย<br>หน่วยซ่อมบำรุงเครื่องจักร</div>
+    </div>
+    <div class="org-switch">
+      <button class="org-btn active" data-org="lmn2">LMN2</button>
+      <button class="org-btn" data-org="sunfeed">Sunfeed</button>
     </div>
     <div class="nav-item active" data-page="overview"><span class="ic">🗂️</span> หน้ารวมทั้งหมด</div>
     <div class="nav-item" data-page="profile"><span class="ic">👤</span> ข้อมูลรายบุคคล</div>
@@ -609,25 +634,68 @@ const LEVEL_NAMES = {
   40:{th:"ระดับ 40", sub:"เจ้าหน้าที่"}
 };
 
+/* ===== สายองค์กร (org) ===== */
+let currentOrg = 'lmn2';
+const ORG_INFO = {
+  lmn2:    {eyebrow:'Clean Zone Unit', title:'LMN2',    sub:'ระบบแผนผัง · KPI · เป้าหมาย<br>หน่วยซ่อมบำรุงเครื่องจักร'},
+  sunfeed: {eyebrow:'Organization',    title:'Sunfeed', sub:'ระบบแผนผัง · KPI · เป้าหมาย<br>สายงาน Sunfeed'}
+};
+const ORG_LEVEL_NAMES = {
+  75:{th:"ระดับ 75", sub:"ผู้จัดการฝ่าย"},
+  65:{th:"ระดับ 65", sub:"ผู้จัดการส่วน / ผู้เชี่ยวชาญ"},
+  55:{th:"ระดับ 55", sub:"ผู้จัดการแผนก"},
+  40:{th:"ระดับ 40", sub:"เจ้าหน้าที่"}
+};
+
+// บุคลากรสาย Sunfeed (ค่าเริ่มต้น)
+const SUNFEED_PEOPLE = [
+  {id:"s_phum",  org:"sunfeed", rank:75, role:"ผู้จัดการฝ่าย", name:"นายพิทยุตม์ ทรัพย์สมบูรณ์", nickname:"ภูมิ", machines:[], goals:[]},
+  {id:"s_nat",   org:"sunfeed", rank:75, role:"ผู้จัดการฝ่าย", name:"นายณัฏฐวัสส์ ไตรยงค์",      nickname:"",    machines:[], goals:[]},
+  {id:"s_sippo", org:"sunfeed", rank:40, role:"เจ้าหน้าที่",   name:"นายกฤตยชญ์ จันทร์เดช",      nickname:"สิปโป", note:"รหัส 690511", machines:[], goals:[]},
+  {id:"s_phet",  org:"sunfeed", rank:40, role:"เจ้าหน้าที่",   name:"นายอภิสิทธิ์ เรืองชัยวัฒนกุล", nickname:"เพชร",  note:"รหัส 690631", machines:[], goals:[]},
+  {id:"s_happy", org:"sunfeed", rank:40, role:"เจ้าหน้าที่",   name:"นายวรภพ ก้อนศิลา",          nickname:"แฮปปี้", note:"รหัส 690519", machines:[], goals:[]},
+  {id:"s_pik",   org:"sunfeed", rank:40, role:"เจ้าหน้าที่",   name:"นายยุทธนากร สีหาชาติ",       nickname:"ปิ๊ก",   note:"รหัส 690383", machines:[], goals:[]}
+];
+
+// เติม org ให้คนเก่า (ถือเป็น LMN2) และเติมทีม Sunfeed ถ้ายังไม่มี
+function ensureOrgs(){
+  let changed=false;
+  data.forEach(p=>{ if(!p.org){ p.org='lmn2'; changed=true; } });
+  if(!data.some(p=>p.org==='sunfeed')){
+    data=data.concat(JSON.parse(JSON.stringify(SUNFEED_PEOPLE)));
+    changed=true;
+  }
+  return changed;
+}
+
 let flashT;
 function flash(){ const f=document.getElementById('flash'); f.classList.add('show'); clearTimeout(flashT); flashT=setTimeout(()=>f.classList.remove('show'),1300); }
 function esc(s){return (s||"").replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function lvClass(r){ if(r>=75)return'lv75'; if(r>=65)return'lv65'; if(r>=55)return'lv55'; return'lv40'; }
 function pcClass(r){ if(r>=75)return'pc75'; if(r>=65)return'pc65'; if(r>=55)return'pc55'; return'pc40'; }
-function headColor(r){ if(r>=75)return'linear-gradient(135deg,#0f2a3f,#1f5f7a)'; if(r>=65)return'linear-gradient(135deg,#1f5f7a,#2a9d8f)'; if(r>=55)return'linear-gradient(135deg,#2a9d8f,#1f8e80)'; return'linear-gradient(135deg,#e9a23b,#c97f1c)'; }
-function sortedPeople(){ return [...data].sort((a,b)=>b.rank-a.rank); }
+function headColor(r){
+  if(r>=75) return 'linear-gradient(135deg,var(--ink),var(--steel))';
+  if(r>=65) return 'linear-gradient(135deg,var(--steel),var(--teal))';
+  if(r>=55) return 'linear-gradient(135deg,var(--teal),var(--steel))';
+  return 'linear-gradient(135deg,var(--amber),var(--steel))';
+}
+// คนเฉพาะสายที่เลือกอยู่
+function orgData(){ return data.filter(p=>(p.org||'lmn2')===currentOrg); }
+function sortedPeople(){ return orgData().sort((a,b)=>b.rank-a.rank); }
 
 /* ===== Overview page ===== */
 function renderOverview(){
   const host=document.getElementById('levels'); host.innerHTML='';
-  const c=data.length;
+  const list=orgData();
+  const c=list.length;
   document.getElementById('headcount').textContent=c;
   document.getElementById('headcount2').textContent=c;
-  const ranks=[...new Set(data.map(p=>p.rank))].sort((a,b)=>b-a);
+  const names = currentOrg==='sunfeed' ? ORG_LEVEL_NAMES : LEVEL_NAMES;
+  const ranks=[...new Set(list.map(p=>p.rank))].sort((a,b)=>b-a);
   ranks.forEach(rank=>{
-    const people=data.filter(p=>p.rank===rank);
+    const people=list.filter(p=>p.rank===rank);
     const band=document.createElement('div'); band.className='level '+lvClass(rank);
-    const info=LEVEL_NAMES[rank]||{th:'ระดับ '+rank,sub:''};
+    const info=names[rank]||{th:'ระดับ '+rank,sub:''};
     band.innerHTML=`<div class="level-head"><span class="level-rank">${rank}</span><span class="level-name">${esc(info.th)}<small>${esc(info.sub)}</small></span></div><div class="level-cards"></div>`;
     const cards=band.querySelector('.level-cards');
     people.forEach(p=>cards.appendChild(orgCard(p)));
@@ -833,21 +901,46 @@ document.getElementById('navScrim').addEventListener('click',closeNav);
 
 /* ===== toolbar (ทุกคนแก้ได้) ===== */
 document.getElementById('addPerson').addEventListener('click',()=>{
-  const id='p_'+Date.now();
-  data.push({id,rank:40,role:'เจ้าหน้าที่',name:'ชื่อใหม่',nickname:'',machines:[],goals:[]});
+  const id=(currentOrg==='sunfeed'?'s_':'p_')+Date.now();
+  data.push({id,org:currentOrg,rank:40,role:'เจ้าหน้าที่',name:'ชื่อใหม่',nickname:'',machines:[],goals:[]});
   persist(); refreshAll(); openModal(id);
 });
 document.getElementById('resetData').addEventListener('click',async()=>{
   if(confirm('คืนค่าข้อมูลแผนผัง/เป้าหมายกลับเป็นค่าเริ่มต้น? (KPI และข้อมูลรายบุคคลที่กรอกไว้จะยังอยู่)')){
-    data=JSON.parse(JSON.stringify(DEFAULT_DATA)); await persist(); refreshAll();
+    data=JSON.parse(JSON.stringify(DEFAULT_DATA));
+    data.forEach(p=>{ if(!p.org) p.org='lmn2'; });
+    data=data.concat(JSON.parse(JSON.stringify(SUNFEED_PEOPLE)));
+    await persist(); refreshAll();
   }
 });
 document.getElementById('refreshData').addEventListener('click',async()=>{
   setSync('กำลังดึงข้อมูล...');
-  await loadAll(); refreshAll();
+  await loadAll(); if(ensureOrgs()) await persist(); refreshAll();
 });
 
-(async()=>{ await loadAll(); refreshAll(); })();
+/* ===== สลับสายองค์กร ===== */
+function applyOrgBrand(){
+  const info=ORG_INFO[currentOrg];
+  document.getElementById('brandEyebrow').textContent=info.eyebrow;
+  document.getElementById('brandTitle').textContent=info.title;
+  document.getElementById('brandSub').innerHTML=info.sub;
+  document.body.classList.toggle('org-sunfeed', currentOrg==='sunfeed');
+}
+document.querySelectorAll('.org-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    document.querySelectorAll('.org-btn').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    currentOrg=b.dataset.org;
+    applyOrgBrand(); refreshAll();
+  });
+});
+
+(async()=>{
+  await loadAll();
+  if(ensureOrgs()) await persist();   // เติม org + ทีม Sunfeed ครั้งแรก
+  applyOrgBrand();
+  refreshAll();
+})();
 </script>
 </body>
 </html>
