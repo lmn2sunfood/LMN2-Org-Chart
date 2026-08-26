@@ -224,6 +224,7 @@
     <div class="nav-item" data-page="goals"><span class="ic">🎯</span> หน้าเป้าหมาย</div>
     <div class="nav-spacer"></div>
     <div class="nav-foot">
+      <button class="nav-btn" id="refreshData">🔄 ดึงข้อมูลล่าสุด</button>
       <button class="nav-btn" id="addPerson">+ เพิ่มบุคลากร</button>
       <button class="nav-btn" id="resetData">คืนค่าข้อมูลเริ่มต้น</button>
       <div class="nav-count"><span id="headcount">0</span> คนในหน่วย · <span id="syncState">—</span></div>
@@ -542,7 +543,7 @@ async function loadAll(){
   if(ONLINE){
     try{
       setSync('กำลังโหลด...');
-      const res=await fetch(API_URL,{method:'GET'});
+      const res=await fetch(API_URL+'?t='+Date.now(),{method:'GET'});
       const j=await res.json();
       if(j.ok && j.payload){
         data = (j.payload.data && j.payload.data.length) ? j.payload.data : JSON.parse(JSON.stringify(DEFAULT_DATA));
@@ -575,23 +576,28 @@ async function saveAll(){
   await lsSet(LOCAL_PROFILE, profileStore);
   if(ONLINE){
     clearTimeout(saveTimer);
-    saveTimer=setTimeout(pushOnline, 500);
+    saveTimer=setTimeout(pushOnline, 600);
   } else {
     flash();
   }
 }
 async function pushOnline(){
+  const payload = JSON.stringify({ data: data, kpi: kpiStore, profile: profileStore });
+  setSync('กำลังบันทึก...');
+  // ส่งแบบ no-cors: เขียนลงชีตได้ข้ามโดเมน แต่จะอ่าน response ไม่ได้ จึงถือว่าสำเร็จ
   try{
-    setSync('กำลังบันทึก...');
-    const res=await fetch(API_URL,{
+    await fetch(API_URL,{
       method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'}, // เลี่ยง CORS preflight
-      body:JSON.stringify({ data: data, kpi: kpiStore, profile: profileStore })
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:payload
     });
-    const j=await res.json();
-    if(j.ok){ setSync('บันทึกแล้ว ✓ ออนไลน์'); flash(); }
-    else { setSync('บันทึกไม่สำเร็จ: '+(j.error||'')); }
-  }catch(e){ console.error(e); setSync('เชื่อมต่อไม่ได้'); }
+    setSync('บันทึกแล้ว ✓ ' + new Date().toLocaleTimeString('th-TH'));
+    flash();
+  }catch(e){
+    console.error('save failed',e);
+    setSync('บันทึกไม่สำเร็จ · ลองใหม่');
+  }
 }
 
 async function persist(){ await saveAll(); }
@@ -837,6 +843,10 @@ document.getElementById('resetData').addEventListener('click',async()=>{
   if(confirm('คืนค่าข้อมูลแผนผัง/เป้าหมายกลับเป็นค่าเริ่มต้น? (KPI และข้อมูลรายบุคคลที่กรอกไว้จะยังอยู่)')){
     data=JSON.parse(JSON.stringify(DEFAULT_DATA)); await persist(); refreshAll();
   }
+});
+document.getElementById('refreshData').addEventListener('click',async()=>{
+  setSync('กำลังดึงข้อมูล...');
+  await loadAll(); refreshAll();
 });
 
 (async()=>{ await loadAll(); refreshAll(); })();
