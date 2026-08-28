@@ -3,313 +3,335 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>แผนผังองค์กร LMN2</title>
+<title>แผนผังองค์กรวิศวกรรม</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0f2a3f; --steel:#1f5f7a; --teal:#2a9d8f; --teal-soft:#e3f3f0;
-    --amber:#e9a23b; --amber-soft:#fbf0db; --line:#cdd9df; --paper:#f6f8f9;
-    --white:#fff; --muted:#5d7480; --shadow:0 8px 28px -12px rgba(15,42,63,.28);
-    --red:#c0584e; --nav-w:248px; --nav-2:#123449;
-    --bg-1:#eef6f4; --bg-2:#f4ede0;
+    --ink:#12263a; --line:#d5dee4; --paper:#f6f8f9; --white:#fff; --muted:#5d7480;
+    --shadow:0 8px 28px -12px rgba(15,42,63,.28); --red:#c0584e; --nav-w:250px;
+    --c1:#2a9d8f; --c2:#1f5f7a; --soft:#e3f3f0; --nav2:#123449; --bg1:#eef6f4; --bg2:#f4ede0;
   }
-  /* ===== ธีมสาย Sunfeed : โทนส้มทองอบอุ่น ===== */
-  body.org-sunfeed{
-    --ink:#432a17; --steel:#a15c28; --teal:#c2600c; --teal-soft:#fbeadb;
-    --amber:#d9a02b; --amber-soft:#fcf3dd; --line:#e0d3c6; --paper:#faf7f3;
-    --muted:#7d6653; --shadow:0 8px 28px -12px rgba(67,42,23,.28);
-    --red:#b4453a; --nav-2:#5e3a1c;
-    --bg-1:#fdeee0; --bg-2:#f6e7cf;
-  }
+  /* ===== ธีมสีแต่ละแผนก ===== */
+  body[data-dept="all"]    { --c1:#2a9d8f; --c2:#1f5f7a; --soft:#e0f0ee; --ink:#12263a; --nav2:#123449; --bg1:#eaf5f3; --bg2:#eef2f5;}
+  body[data-dept="lmn1"]   { --c1:#2f7fd4; --c2:#1c4f8a; --soft:#e2eefb; --ink:#132a45; --nav2:#14355c; --bg1:#e8f1fc; --bg2:#eef4fa;}
+  body[data-dept="lmn2"]   { --c1:#2a9d8f; --c2:#1a6b60; --soft:#dff2ef; --ink:#0f2a2a; --nav2:#12403c; --bg1:#e6f5f2; --bg2:#f0f6f2;}
+  body[data-dept="sunfeed"]{ --c1:#d97706; --c2:#96520a; --soft:#fceedd; --ink:#43290f; --nav2:#5e3a13; --bg1:#fdeeda; --bg2:#f8efdd;}
+  body[data-dept="asrs"]   { --c1:#7c56d6; --c2:#4f338f; --soft:#eee7fb; --ink:#241a3d; --nav2:#37245e; --bg1:#efe8fc; --bg2:#f2eefa;}
+  body[data-dept="env"]    { --c1:#3f9942; --c2:#26662a; --soft:#e3f3e2; --ink:#16301a; --nav2:#1d4722; --bg1:#e8f6e7; --bg2:#eff6ec;}
+  body[data-dept="ene"]    { --c1:#c53f6d; --c2:#8a2547; --soft:#fbe5ed; --ink:#3a1424; --nav2:#5b1c36; --bg1:#fce7ef; --bg2:#f9ecf1;}
+
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
     font-family:'IBM Plex Sans Thai',sans-serif;color:var(--ink);
     background:
-      radial-gradient(900px 500px at 88% -5%, var(--bg-1) 0%, transparent 60%),
-      radial-gradient(700px 500px at 5% 100%, var(--bg-2) 0%, transparent 55%),
+      radial-gradient(900px 500px at 88% -5%, var(--bg1) 0%, transparent 60%),
+      radial-gradient(700px 500px at 5% 100%, var(--bg2) 0%, transparent 55%),
       var(--paper);
-    background-attachment:fixed;
-    min-height:100vh;-webkit-font-smoothing:antialiased;
+    background-attachment:fixed;min-height:100vh;-webkit-font-smoothing:antialiased;
     transition:background .3s ease;
   }
-
-  /* ===== Layout ===== */
   .app{display:flex;min-height:100vh;}
-  .nav{
-    width:var(--nav-w);flex-shrink:0;background:linear-gradient(180deg,var(--ink),var(--nav-2));
+
+  /* ===== NAV ===== */
+  .nav{width:var(--nav-w);flex-shrink:0;background:linear-gradient(180deg,var(--ink),var(--nav2));
     color:#cfe0e8;position:fixed;top:0;left:0;bottom:0;display:flex;flex-direction:column;
-    padding:26px 18px;z-index:30;
-  }
-  .nav-brand{margin-bottom:28px;padding:0 6px;}
-  .nav-brand .eyebrow{font-family:'Sora';font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--teal);}
-  .nav-brand h1{font-family:'Sora',sans-serif;font-weight:800;font-size:26px;color:#fff;line-height:1;margin-top:6px;}
-  .nav-brand .sub{font-size:12px;color:#8fadbb;margin-top:8px;line-height:1.4;}
-  .org-switch{display:flex;gap:6px;background:rgba(255,255,255,.07);padding:5px;border-radius:11px;margin-bottom:18px;}
-  .org-btn{flex:1;background:none;border:none;color:#a9c4d1;font-family:'Sora',sans-serif;font-weight:700;font-size:12.5px;padding:8px 6px;border-radius:8px;cursor:pointer;letter-spacing:.04em;transition:background .15s ease,color .15s ease;}
-  .org-btn:hover{color:#fff;}
-  .org-btn.active{background:var(--teal);color:#fff;box-shadow:0 4px 12px -6px rgba(42,157,143,.9);}
-  .org-btn[data-org="sunfeed"].active{background:#d97706;box-shadow:0 4px 12px -6px rgba(217,119,6,.9);}
-  .org-btn[data-org="lmn2"].active{background:#2a9d8f;box-shadow:0 4px 12px -6px rgba(42,157,143,.9);}
+    padding:22px 16px;z-index:30;overflow-y:auto;transition:background .3s ease;}
+  .nav-brand{margin-bottom:16px;padding:0 6px;}
+  .nav-brand .eyebrow{font-family:'Sora';font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--c1);filter:brightness(1.5);}
+  .nav-brand h1{font-family:'Sora',sans-serif;font-weight:800;font-size:23px;color:#fff;line-height:1;margin-top:5px;}
+  .nav-brand .sub{font-size:11.5px;color:#93aebc;margin-top:6px;line-height:1.4;}
 
-  .nav-item{
-    display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:11px;
-    cursor:pointer;color:#bcd2dd;font-weight:600;font-size:14.5px;margin-bottom:6px;
-    transition:background .15s ease,color .15s ease;border:1px solid transparent;
-  }
-  .nav-item .ic{font-size:18px;width:22px;text-align:center;}
-  .nav-item:hover{background:rgba(255,255,255,.06);color:#fff;}
-  .nav-item.active{background:var(--teal);color:#fff;box-shadow:0 6px 18px -8px rgba(42,157,143,.8);}
-  .nav-spacer{flex:1;}
-  .nav-foot{border-top:1px solid rgba(255,255,255,.12);padding-top:14px;}
-  .nav-btn{width:100%;text-align:left;background:rgba(255,255,255,.08);border:none;color:#cfe0e8;font-family:inherit;font-size:13px;font-weight:600;padding:10px 13px;border-radius:9px;cursor:pointer;margin-bottom:8px;transition:background .15s ease;}
+  .nav-sec{font-family:'Sora';font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:#7e9aa9;margin:14px 6px 7px;}
+  .dept-item{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:9px;cursor:pointer;
+    color:#bcd2dd;font-weight:600;font-size:13.5px;margin-bottom:4px;transition:background .15s,color .15s;}
+  .dept-item:hover{background:rgba(255,255,255,.07);color:#fff;}
+  .dept-item.active{background:rgba(255,255,255,.15);color:#fff;}
+  .dept-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+  .dept-item .cnt{margin-left:auto;font-size:11px;color:#8fadbb;font-family:'Sora';font-weight:700;}
+
+  .nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;cursor:pointer;
+    color:#bcd2dd;font-weight:600;font-size:13.5px;margin-bottom:4px;transition:background .15s,color .15s;}
+  .nav-item .ic{font-size:16px;width:20px;text-align:center;}
+  .nav-item:hover{background:rgba(255,255,255,.07);color:#fff;}
+  .nav-item.active{background:var(--c1);color:#fff;}
+  .nav-spacer{flex:1;min-height:12px;}
+  .nav-foot{border-top:1px solid rgba(255,255,255,.12);padding-top:12px;}
+  .nav-btn{width:100%;text-align:left;background:rgba(255,255,255,.08);border:none;color:#cfe0e8;
+    font-family:inherit;font-size:12.5px;font-weight:600;padding:9px 12px;border-radius:8px;cursor:pointer;margin-bottom:6px;}
   .nav-btn:hover{background:rgba(255,255,255,.16);color:#fff;}
-  .nav-count{font-size:11.5px;color:#7 f;color:#7fa0b0;padding:0 6px;}
-  /* Profile page fields */
-  .prof-field{border-top:1px solid var(--line);padding:14px 0 4px;}
-  .prof-field:first-child{border-top:none;}
-  .prof-q{display:flex;align-items:flex-start;gap:9px;font-weight:700;color:var(--ink);font-size:14px;margin-bottom:7px;line-height:1.35;}
-  .prof-q .qnum{font-family:'Sora';font-weight:800;font-size:12px;color:#fff;background:var(--steel);border-radius:6px;min-width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .pc75 .prof-q .qnum{background:var(--ink);}
-  .pc55 .prof-q .qnum{background:var(--teal);}
-  .pc40 .prof-q .qnum{background:var(--amber);}
-  .prof-input{font-family:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;width:100%;resize:vertical;min-height:52px;line-height:1.5;background:var(--paper);color:#233;}
-  .prof-input:focus{outline:none;border-color:var(--teal);background:#fff;box-shadow:0 0 0 3px rgba(42,157,143,.12);}
+  .nav-count{font-size:11px;color:#7fa0b0;padding:2px 6px;line-height:1.5;}
 
-  .main{margin-left:var(--nav-w);flex:1;padding:38px 40px 80px;min-width:0;}
+  .main{margin-left:var(--nav-w);flex:1;padding:34px 38px 80px;min-width:0;}
   .page{display:none;animation:fade .25s ease;}
   .page.active{display:block;}
   @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
 
-  .page-head{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;}
-  .page-head .ph-eyebrow{font-family:'Sora';font-weight:600;letter-spacing:.28em;text-transform:uppercase;font-size:11px;color:var(--teal);}
-  .page-head h2{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(26px,4vw,40px);color:var(--ink);margin-top:6px;line-height:1.05;}
-  .page-head p{color:var(--muted);font-size:14px;margin-top:8px;max-width:56ch;}
-  .page-head .big{font-family:'Sora';font-weight:700;font-size:30px;color:var(--amber);display:block;line-height:1;text-align:right;}
-  .page-head .lbl{letter-spacing:.14em;text-transform:uppercase;font-size:11px;color:var(--muted);}
+  .page-head{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:26px;
+    display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;}
+  .ph-eyebrow{font-family:'Sora';font-weight:600;letter-spacing:.26em;text-transform:uppercase;font-size:10.5px;color:var(--c1);}
+  .page-head h2{font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(24px,4vw,38px);color:var(--ink);margin-top:5px;line-height:1.05;}
+  .page-head p{color:var(--muted);font-size:13.5px;margin-top:7px;max-width:60ch;}
+  .page-head .big{font-family:'Sora';font-weight:700;font-size:28px;color:var(--c1);display:block;line-height:1;text-align:right;}
+  .page-head .lbl{letter-spacing:.14em;text-transform:uppercase;font-size:10.5px;color:var(--muted);}
 
-  /* ===== Level bands (overview) ===== */
-  .level{margin-bottom:14px;padding:6px 0;}
-  .level-head{display:flex;align-items:baseline;gap:12px;margin-bottom:14px;}
-  .level-rank{font-family:'Sora',sans-serif;font-weight:800;font-size:24px;line-height:1;color:#fff;background:var(--steel);border-radius:10px;padding:8px 12px;min-width:58px;text-align:center;}
-  .level-name{font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:var(--ink);text-transform:uppercase;letter-spacing:.06em;}
-  .level-name small{display:block;font-family:'IBM Plex Sans Thai';font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:12.5px;margin-top:2px;}
-  .level-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
-  .lv75 .level-rank{background:var(--ink);}
-  .lv65 .level-rank{background:var(--steel);}
-  .lv55 .level-rank{background:var(--teal);}
-  .lv40 .level-rank{background:var(--amber);}
+  /* ===== แผนผังองค์กร (tree) ===== */
+  .org-tree{display:flex;flex-direction:column;align-items:center;padding-top:6px;}
+  .corp-node{background:linear-gradient(135deg,#12263a,#2a4f6d);color:#fff;font-family:'Sora';font-weight:800;
+    font-size:16px;letter-spacing:.08em;padding:13px 30px;border-radius:12px;box-shadow:var(--shadow);}
+  .tree-stem{width:3px;height:26px;background:var(--line);}
+  .tree-split{width:min(760px,86%);height:3px;background:var(--line);border-radius:2px;}
+  .tree-branches{display:grid;grid-template-columns:1fr 1fr;gap:34px;width:100%;align-items:start;}
+  .branch{display:flex;flex-direction:column;align-items:center;min-width:0;}
+  .branch-stem{width:3px;height:24px;background:var(--line);}
+  .branch .head-card{background:var(--white);border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);overflow:hidden;max-width:400px;width:100%;}
+  .branch .head-top{padding:15px 20px;color:#fff;background:linear-gradient(135deg,#12263a,#2a4f6d);}
+  .branch .head-top .r{font-family:'Sora';font-size:10px;letter-spacing:.15em;text-transform:uppercase;opacity:.85;}
+  .branch .head-top .n{font-size:17px;font-weight:700;margin-top:3px;line-height:1.25;}
+  .branch .head-foot{padding:8px 20px;font-size:11.5px;color:var(--muted);background:var(--paper);border-top:1px solid var(--line);}
+  .dept-rail{height:3px;background:var(--line);border-radius:2px;width:88%;}
+  .dept-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;width:100%;align-items:start;}
+  .dept-branch{display:flex;flex-direction:column;align-items:center;min-width:0;}
+  .dept-drop{width:3px;height:20px;border-radius:2px;opacity:.65;}
+  .dept-box{background:var(--white);border:2px solid var(--line);border-radius:14px;overflow:hidden;
+    box-shadow:0 6px 18px -12px rgba(15,42,63,.5);width:100%;cursor:pointer;transition:transform .14s,box-shadow .14s;}
+  .dept-box:hover{transform:translateY(-3px);box-shadow:0 14px 28px -14px rgba(15,42,63,.55);}
+  .dept-sub{font-size:11px;color:var(--muted);padding:7px 13px 0;}
+  .shared-tag{font-size:9px;background:rgba(255,255,255,.3);padding:1px 6px;border-radius:999px;vertical-align:middle;letter-spacing:.05em;}
+  @media(max-width:980px){
+    .tree-branches{grid-template-columns:1fr;gap:26px;}
+    .tree-split{display:none;}
+  }
 
-  .node-card{background:var(--white);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);position:relative;overflow:hidden;cursor:pointer;padding:18px 20px 15px 24px;transition:transform .15s ease,box-shadow .15s ease;}
+  /* ===== ผังรวม (all) ===== */
+  .heads{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:22px;margin-bottom:12px;}
+  .head-card{background:var(--white);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden;}
+  .head-top{padding:18px 22px;color:#fff;background:linear-gradient(135deg,#12263a,#2a4f6d);}
+  .head-top .r{font-family:'Sora';font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.85;}
+  .head-top .n{font-size:19px;font-weight:700;margin-top:3px;}
+  .head-top .lv{font-family:'Sora';font-weight:700;font-size:12px;opacity:.9;margin-top:3px;}
+  .head-body{padding:14px 18px 18px;}
+  .head-body .lbl2{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:9px;}
+  .dept-chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .dchip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--paper);
+    padding:7px 13px;border-radius:999px;font-weight:700;font-size:13px;cursor:pointer;transition:transform .12s,box-shadow .12s;}
+  .dchip:hover{transform:translateY(-2px);box-shadow:0 8px 18px -10px rgba(0,0,0,.4);}
+  .dchip .dot{width:10px;height:10px;border-radius:50%;}
+  .dchip .num{font-family:'Sora';font-size:11px;color:var(--muted);}
+
+  .all-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;margin-top:26px;}
+  .dept-box{background:var(--white);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);}
+  .dept-box-head{padding:13px 16px;color:#fff;display:flex;justify-content:space-between;align-items:center;}
+  .dept-box-head .dn{font-family:'Sora';font-weight:800;font-size:16px;letter-spacing:.04em;}
+  .dept-box-head .dc{font-size:11.5px;opacity:.9;}
+  .dept-box-list{padding:10px 14px 14px;}
+  .mini-row{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13px;}
+  .mini-row:last-child{border-bottom:none;}
+  .mini-rank{font-family:'Sora';font-weight:700;font-size:10.5px;color:#fff;border-radius:5px;padding:2px 6px;min-width:26px;text-align:center;}
+  .mini-name{flex:1;line-height:1.3;}
+  .mini-name small{display:block;color:var(--muted);font-size:11px;}
+
+  /* ===== Level bands ===== */
+  .level{margin-bottom:12px;padding:4px 0;}
+  .level-head{display:flex;align-items:baseline;gap:11px;margin-bottom:12px;}
+  .level-rank{font-family:'Sora';font-weight:800;font-size:22px;line-height:1;color:#fff;background:var(--c2);border-radius:9px;padding:7px 11px;min-width:54px;text-align:center;}
+  .level-name{font-family:'Sora';font-weight:700;font-size:14px;color:var(--ink);text-transform:uppercase;letter-spacing:.05em;}
+  .level-name small{display:block;font-family:'IBM Plex Sans Thai';font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:12px;margin-top:2px;}
+  .level-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:16px;}
+
+  .node-card{background:var(--white);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+    position:relative;overflow:hidden;cursor:pointer;padding:17px 19px 14px 23px;transition:transform .15s,box-shadow .15s;}
   .node-card:hover{transform:translateY(-3px);box-shadow:0 14px 34px -14px rgba(15,42,63,.4);}
-  .node-card:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
-  .node-card .accent{position:absolute;left:0;top:0;bottom:0;width:5px;}
-  .lv75 .accent{background:linear-gradient(var(--ink),var(--steel));}
-  .lv65 .accent{background:linear-gradient(var(--steel),var(--teal));}
-  .lv55 .accent{background:linear-gradient(var(--teal),#1f8e80);}
-  .lv40 .accent{background:linear-gradient(var(--amber),#c97f1c);}
-  .role-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;}
-  .role-tag{font-family:'Sora',sans-serif;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;display:inline-block;padding:3px 10px;border-radius:999px;}
-  .lv75 .role-tag{background:var(--ink);color:#fff;}
-  .lv65 .role-tag{background:#dbe7ec;color:var(--steel);}
-  .lv55 .role-tag{background:var(--teal-soft);color:var(--teal);}
-  .lv40 .role-tag{background:var(--amber-soft);color:#b8741a;}
-  .rank-chip{font-family:'Sora',sans-serif;font-weight:700;font-size:13px;color:var(--muted);}
-  .person{font-weight:700;font-size:18px;color:var(--ink);line-height:1.25;}
-  .nickname{color:var(--steel);font-weight:600;}
-  .duties{margin-top:11px;border-top:1px dashed var(--line);padding-top:10px;}
-  .d-head{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px;}
-  .chip{display:inline-block;font-size:12.5px;font-weight:500;background:var(--teal-soft);color:var(--steel);padding:4px 10px;border-radius:8px;margin:0 5px 5px 0;}
-  .lv75 .chip,.lv40 .chip{background:var(--amber-soft);color:#b8741a;}
-  .view-hint{margin-top:10px;font-size:11.5px;color:var(--teal);font-weight:600;letter-spacing:.04em;}
-  .empty-note{font-size:13px;color:var(--muted);font-style:italic;padding:6px 0;}
+  .node-card .accent{position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(var(--c1),var(--c2));}
+  .role-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:7px;}
+  .role-tag{font-family:'Sora';font-size:10.5px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+    display:inline-block;padding:3px 9px;border-radius:999px;background:var(--soft);color:var(--c2);}
+  .rank-chip{font-family:'Sora';font-weight:700;font-size:12.5px;color:var(--muted);}
+  .person{font-weight:700;font-size:17px;color:var(--ink);line-height:1.25;}
+  .nickname{color:var(--c1);font-weight:600;}
+  .pcode{font-size:11px;color:var(--muted);margin-top:2px;}
+  .duties{margin-top:10px;border-top:1px dashed var(--line);padding-top:9px;}
+  .d-head{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:6px;}
+  .chip{display:inline-block;font-size:12px;font-weight:500;background:var(--soft);color:var(--c2);padding:4px 9px;border-radius:8px;margin:0 4px 4px 0;}
+  .view-hint{margin-top:9px;font-size:11px;color:var(--c1);font-weight:600;}
+  .empty-note{font-size:12.5px;color:var(--muted);font-style:italic;padding:6px 0;}
 
-  .btn{font-family:'IBM Plex Sans Thai',sans-serif;font-weight:600;font-size:14px;border:none;border-radius:10px;padding:10px 18px;cursor:pointer;transition:filter .15s ease,transform .1s ease;}
-  .btn:active{transform:translateY(1px);}
-  .btn-primary{background:var(--teal);color:#fff;}
+  .btn{font-family:inherit;font-weight:600;font-size:13.5px;border:none;border-radius:9px;padding:10px 17px;cursor:pointer;}
+  .btn-primary{background:var(--c1);color:#fff;}
   .btn-ghost{background:var(--white);color:var(--ink);border:1px solid var(--line);}
-  .btn-amber{background:var(--amber);color:#fff;}
-  .btn:hover{filter:brightness(1.05);}
 
-  /* ===== Person cards (KPI & Goals pages) ===== */
-  .plist{display:flex;flex-direction:column;gap:16px;}
+  /* ===== person cards ===== */
+  .plist{display:flex;flex-direction:column;gap:15px;}
   .pcard{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--white);box-shadow:0 5px 20px -14px rgba(15,42,63,.4);}
-  .pcard-head{padding:15px 20px;display:flex;align-items:center;gap:12px;border-left:6px solid var(--steel);}
-  .pc75 .pcard-head{border-left-color:var(--ink);}
-  .pc65 .pcard-head{border-left-color:var(--steel);}
-  .pc55 .pcard-head{border-left-color:var(--teal);}
-  .pc40 .pcard-head{border-left-color:var(--amber);}
-  .pcard-head .pc-rank{font-family:'Sora';font-weight:800;font-size:15px;color:#fff;background:var(--steel);border-radius:8px;padding:4px 10px;min-width:42px;text-align:center;}
-  .pc75 .pc-rank{background:var(--ink);}
-  .pc55 .pc-rank{background:var(--teal);}
-  .pc40 .pc-rank{background:var(--amber);}
-  .pc-name{font-weight:700;font-size:16.5px;color:var(--ink);line-height:1.2;}
-  .pc-name .nk{color:var(--steel);font-weight:600;}
-  .pc-role{font-size:12px;color:var(--muted);margin-top:2px;}
-  .pcard-body{padding:8px 20px 18px;}
+  .pcard-head{padding:14px 19px;display:flex;align-items:center;gap:11px;border-left:6px solid var(--c1);}
+  .pc-rank{font-family:'Sora';font-weight:800;font-size:14px;color:#fff;background:var(--c2);border-radius:8px;padding:4px 9px;min-width:40px;text-align:center;}
+  .pc-name{font-weight:700;font-size:16px;color:var(--ink);line-height:1.2;}
+  .pc-name .nk{color:var(--c1);font-weight:600;}
+  .pc-role{font-size:11.5px;color:var(--muted);margin-top:2px;}
+  .pc-dept{margin-left:auto;font-family:'Sora';font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;color:#fff;}
+  .pcard-body{padding:8px 19px 17px;}
 
-  /* KPI items */
-  .kpi-item{border-top:1px solid var(--line);padding:13px 0 4px;}
+  .prof-field{border-top:1px solid var(--line);padding:13px 0 4px;}
+  .prof-field:first-child{border-top:none;}
+  .prof-q{display:flex;align-items:flex-start;gap:9px;font-weight:700;color:var(--ink);font-size:13.5px;margin-bottom:6px;line-height:1.35;}
+  .qnum{font-family:'Sora';font-weight:800;font-size:11.5px;color:#fff;background:var(--c2);border-radius:6px;min-width:21px;height:21px;
+    display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .prof-input{font-family:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;width:100%;
+    resize:vertical;min-height:50px;line-height:1.55;background:var(--paper);color:#233;}
+  .prof-input:focus{outline:none;border-color:var(--c1);background:#fff;box-shadow:0 0 0 3px color-mix(in srgb, var(--c1) 18%, transparent);}
+
+  .kpi-item{border-top:1px solid var(--line);padding:12px 0 4px;}
   .kpi-item:first-child{border-top:none;}
   .kpi-item-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
-  .kpi-item-title{font-weight:700;color:var(--ink);font-size:14.5px;flex:1;line-height:1.35;}
-  .kpi-item-target{font-family:'Sora';font-weight:700;color:#fff;background:var(--teal);font-size:12px;white-space:nowrap;padding:3px 10px;border-radius:999px;}
-  .kpi-item-detail{font-size:13px;color:#3a525e;margin-top:6px;line-height:1.55;white-space:pre-wrap;}
+  .kpi-item-title{font-weight:700;color:var(--ink);font-size:14px;flex:1;line-height:1.35;}
+  .kpi-item-target{font-family:'Sora';font-weight:700;color:#fff;background:var(--c1);font-size:11.5px;white-space:nowrap;padding:3px 10px;border-radius:999px;}
+  .kpi-item-detail{font-size:12.8px;color:#3a525e;margin-top:6px;line-height:1.55;white-space:pre-wrap;}
   .item-actions{display:flex;gap:8px;margin-top:8px;}
-  .mini{background:none;border:1px solid var(--line);border-radius:7px;font-size:12px;color:var(--muted);padding:4px 12px;cursor:pointer;font-family:inherit;}
+  .mini{background:none;border:1px solid var(--line);border-radius:7px;font-size:11.5px;color:var(--muted);padding:4px 11px;cursor:pointer;font-family:inherit;}
   .mini:hover{background:var(--paper);color:var(--ink);}
   .mini.del:hover{color:var(--red);border-color:var(--red);}
-  .add-item{width:100%;margin-top:12px;background:var(--teal-soft);color:var(--teal);border:1px dashed var(--teal);border-radius:8px;padding:9px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;}
-  .add-item:hover{filter:brightness(.97);}
-  .add-item.amber{background:var(--amber-soft);color:#b8741a;border-color:var(--amber);}
+  .add-item{width:100%;margin-top:11px;background:var(--soft);color:var(--c2);border:1px dashed var(--c1);border-radius:8px;
+    padding:9px;font-weight:600;font-size:12.5px;cursor:pointer;font-family:inherit;}
 
   .inline-form{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px;margin-top:10px;display:flex;flex-direction:column;gap:8px;}
   .inline-form input,.inline-form textarea{font-family:inherit;font-size:13px;border:1px solid var(--line);border-radius:7px;padding:8px 10px;width:100%;resize:vertical;}
   .inline-form textarea{min-height:64px;}
   .form-row{display:flex;gap:8px;justify-content:flex-end;}
-  .form-row .save{background:var(--teal);color:#fff;border:none;border-radius:7px;padding:7px 16px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;}
-  .form-row .cancel{background:none;border:1px solid var(--line);border-radius:7px;padding:7px 14px;font-size:13px;cursor:pointer;font-family:inherit;color:var(--muted);}
+  .form-row .save{background:var(--c1);color:#fff;border:none;border-radius:7px;padding:7px 16px;font-weight:600;font-size:12.5px;cursor:pointer;font-family:inherit;}
+  .form-row .cancel{background:none;border:1px solid var(--line);border-radius:7px;padding:7px 14px;font-size:12.5px;cursor:pointer;font-family:inherit;color:var(--muted);}
 
-  /* Goals page */
-  .goal-block{border-top:1px solid var(--line);padding:14px 0 6px;}
+  .goal-block{border-top:1px solid var(--line);padding:13px 0 6px;}
   .goal-block:first-child{border-top:none;}
   .goal-title-row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;}
-  .goal-title{font-weight:700;color:var(--ink);font-size:14.5px;flex:1;line-height:1.35;}
-  .goal-target{font-family:'Sora';font-weight:700;color:var(--teal);font-size:12px;white-space:nowrap;background:var(--teal-soft);padding:3px 9px;border-radius:7px;}
-  .task-list{margin-top:9px;display:flex;flex-direction:column;gap:6px;}
-  .task-item{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#3a525e;padding:7px 11px;background:var(--paper);border-radius:8px;align-items:flex-start;}
-  .task-item .t-txt{flex:1;}
-  .task-item .t-freq{color:var(--muted);font-size:12px;white-space:nowrap;}
-  .task-item .t-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;line-height:1;opacity:.5;padding:0 2px;}
-  .task-item .t-del:hover{opacity:1;}
+  .goal-title{font-weight:700;color:var(--ink);font-size:14px;flex:1;line-height:1.35;}
+  .goal-target{font-family:'Sora';font-weight:700;color:var(--c2);font-size:11.5px;white-space:nowrap;background:var(--soft);padding:3px 9px;border-radius:7px;}
+  .task-list{margin-top:8px;display:flex;flex-direction:column;gap:6px;}
+  .task-item{display:flex;justify-content:space-between;gap:10px;font-size:12.8px;color:#3a525e;padding:7px 11px;background:var(--paper);border-radius:8px;align-items:flex-start;}
+  .t-txt{flex:1;} .t-freq{color:var(--muted);font-size:11.5px;white-space:nowrap;}
+  .t-del{background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;line-height:1;opacity:.5;padding:0 2px;}
+  .t-del:hover{opacity:1;}
   .add-task-row{margin-top:9px;display:grid;grid-template-columns:1fr 140px auto;gap:8px;}
-  .add-task-row input{font-family:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;}
-  .add-task-row .mini-btn{background:var(--teal);color:#fff;border:none;border-radius:8px;padding:0 14px;font-weight:600;cursor:pointer;font-size:13px;}
+  .add-task-row input{font-family:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;}
+  .mini-btn{background:var(--c1);color:#fff;border:none;border-radius:8px;padding:0 14px;font-weight:600;cursor:pointer;font-size:12.5px;}
   .add-goal-inline{display:grid;grid-template-columns:1fr 150px auto;gap:8px;margin-top:12px;}
-  .add-goal-inline input{font-family:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;}
-  .add-goal-inline .mini-btn{background:var(--amber);color:#fff;border:none;border-radius:8px;padding:0 14px;font-weight:600;cursor:pointer;font-size:13px;}
+  .add-goal-inline input{font-family:inherit;font-size:12.5px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;}
 
-  /* Modal (edit person from overview) */
-  .overlay{position:fixed;inset:0;background:rgba(15,42,63,.55);backdrop-filter:blur(3px);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;z-index:60;overflow-y:auto;}
+  /* modal */
+  .overlay{position:fixed;inset:0;background:rgba(15,42,63,.55);backdrop-filter:blur(3px);display:none;
+    align-items:flex-start;justify-content:center;padding:40px 16px;z-index:60;overflow-y:auto;}
   .overlay.open{display:flex;}
-  .modal{background:var(--white);border-radius:18px;max-width:600px;width:100%;box-shadow:0 30px 70px -20px rgba(15,42,63,.6);overflow:hidden;animation:pop .2s ease;}
-  @keyframes pop{from{transform:translateY(12px) scale(.98);opacity:0;}to{transform:none;opacity:1;}}
-  .modal-head{padding:22px 26px;color:#fff;position:relative;}
-  .modal-head .m-role{font-family:'Sora';font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;}
-  .modal-head .m-name{font-size:23px;font-weight:700;margin-top:4px;line-height:1.2;}
-  .modal-head .m-rank{font-family:'Sora';font-weight:700;font-size:13px;opacity:.9;margin-top:4px;}
-  .modal-head .close{position:absolute;top:16px;right:18px;background:rgba(255,255,255,.2);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:20px;cursor:pointer;line-height:1;}
-  .modal-head .close:hover{background:rgba(255,255,255,.32);}
-  .modal-body{padding:22px 26px 8px;}
-  .section-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:4px 0 10px;}
-  .edit-field{display:flex;flex-direction:column;gap:4px;margin-bottom:12px;}
-  .edit-row{display:flex;gap:12px;}
+  .modal{background:var(--white);border-radius:18px;max-width:600px;width:100%;box-shadow:0 30px 70px -20px rgba(15,42,63,.6);overflow:hidden;}
+  .modal-head{padding:21px 25px;color:#fff;position:relative;background:linear-gradient(135deg,var(--c2),var(--c1));}
+  .modal-head .m-role{font-family:'Sora';font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;opacity:.85;}
+  .modal-head .m-name{font-size:22px;font-weight:700;margin-top:4px;line-height:1.2;}
+  .modal-head .m-rank{font-family:'Sora';font-weight:700;font-size:12.5px;opacity:.9;margin-top:4px;}
+  .modal-head .close{position:absolute;top:15px;right:17px;background:rgba(255,255,255,.2);border:none;color:#fff;
+    width:33px;height:33px;border-radius:50%;font-size:19px;cursor:pointer;line-height:1;}
+  .modal-body{padding:21px 25px 8px;}
+  .section-label{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:4px 0 10px;}
+  .edit-field{display:flex;flex-direction:column;gap:4px;margin-bottom:11px;}
+  .edit-row{display:flex;gap:11px;}
   .edit-field.half{flex:1;}
-  .edit-field label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;}
-  .edit-field input,.edit-field select{font-family:inherit;font-size:14px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;width:100%;}
-  .modal-foot{padding:14px 26px 22px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);margin-top:6px;}
+  .edit-field label{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600;}
+  .edit-field input,.edit-field select{font-family:inherit;font-size:13.5px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;width:100%;}
+  .modal-foot{padding:13px 25px 21px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;border-top:1px solid var(--line);margin-top:6px;}
 
-  .saved-flash{position:fixed;bottom:24px;left:calc(50% + var(--nav-w)/2);transform:translateX(-50%);background:var(--ink);color:#fff;padding:11px 22px;border-radius:999px;font-size:13.5px;font-weight:600;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:90;}
+  .saved-flash{position:fixed;bottom:22px;left:calc(50% + var(--nav-w)/2);transform:translateX(-50%);background:var(--ink);
+    color:#fff;padding:10px 21px;border-radius:999px;font-size:13px;font-weight:600;box-shadow:var(--shadow);
+    opacity:0;pointer-events:none;transition:opacity .25s;z-index:90;}
   .saved-flash.show{opacity:1;}
-
-  /* mobile nav toggle */
-  .nav-toggle{display:none;position:fixed;top:14px;left:14px;z-index:40;background:var(--ink);color:#fff;border:none;width:44px;height:44px;border-radius:11px;font-size:20px;cursor:pointer;box-shadow:var(--shadow);}
+  .nav-toggle{display:none;position:fixed;top:12px;left:12px;z-index:40;background:var(--ink);color:#fff;border:none;
+    width:42px;height:42px;border-radius:10px;font-size:19px;cursor:pointer;box-shadow:var(--shadow);}
   .nav-scrim{display:none;position:fixed;inset:0;background:rgba(15,42,63,.5);z-index:25;}
 
-  @media(max-width:860px){
-    .nav{transform:translateX(-100%);transition:transform .28s ease;}
+  @media(max-width:880px){
+    .nav{transform:translateX(-100%);transition:transform .28s;}
     .nav.open{transform:translateX(0);}
     .nav-scrim.show{display:block;}
     .nav-toggle{display:block;}
-    .main{margin-left:0;padding:70px 20px 80px;}
+    .main{margin-left:0;padding:66px 18px 80px;}
     .saved-flash{left:50%;}
     .add-task-row,.add-goal-inline{grid-template-columns:1fr;}
     .edit-row{flex-direction:column;}
   }
 </style>
 </head>
-<body>
+<body data-dept="all">
 <div class="app">
-
-  <!-- ===== Left Nav ===== -->
   <nav class="nav" id="nav">
     <div class="nav-brand">
-      <div class="eyebrow" id="brandEyebrow">Clean Zone Unit</div>
-      <h1 id="brandTitle">LMN2</h1>
-      <div class="sub" id="brandSub">ระบบแผนผัง · KPI · เป้าหมาย<br>หน่วยซ่อมบำรุงเครื่องจักร</div>
+      <div class="eyebrow">Engineering</div>
+      <h1 id="brandTitle">ผังรวมองค์กร</h1>
+      <div class="sub" id="brandSub">แผนผัง · ข้อมูลบุคคล · KPI · เป้าหมาย</div>
     </div>
-    <div class="org-switch">
-      <button class="org-btn active" data-org="lmn2">LMN2</button>
-      <button class="org-btn" data-org="sunfeed">Sunfeed</button>
-    </div>
-    <div class="nav-item active" data-page="overview"><span class="ic">🗂️</span> หน้ารวมทั้งหมด</div>
+
+    <div class="nav-sec">แผนก</div>
+    <div class="dept-item active" data-dept="all"><span class="dept-dot" style="background:#2a9d8f"></span> ผังรวมทั้งหมด <span class="cnt" id="cnt-all">0</span></div>
+    <div class="dept-item" data-dept="lmn1"><span class="dept-dot" style="background:#2f7fd4"></span> LMN1 <span class="cnt" id="cnt-lmn1">0</span></div>
+    <div class="dept-item" data-dept="lmn2"><span class="dept-dot" style="background:#2a9d8f"></span> LMN2 <span class="cnt" id="cnt-lmn2">0</span></div>
+    <div class="dept-item" data-dept="sunfeed"><span class="dept-dot" style="background:#d97706"></span> SUNFEED <span class="cnt" id="cnt-sunfeed">0</span></div>
+    <div class="dept-item" data-dept="asrs"><span class="dept-dot" style="background:#7c56d6"></span> ASRS <span class="cnt" id="cnt-asrs">0</span></div>
+    <div class="dept-item" data-dept="env"><span class="dept-dot" style="background:#3f9942"></span> ENV <span class="cnt" id="cnt-env">0</span></div>
+    <div class="dept-item" data-dept="ene"><span class="dept-dot" style="background:#c53f6d"></span> ENE <span class="cnt" id="cnt-ene">0</span></div>
+
+    <div class="nav-sec">หน้า</div>
+    <div class="nav-item active" data-page="overview"><span class="ic">🗂️</span> แผนผัง</div>
     <div class="nav-item" data-page="profile"><span class="ic">👤</span> ข้อมูลรายบุคคล</div>
-    <div class="nav-item" data-page="kpi"><span class="ic">📊</span> หน้า KPI</div>
-    <div class="nav-item" data-page="goals"><span class="ic">🎯</span> หน้าเป้าหมาย</div>
+    <div class="nav-item" data-page="kpi"><span class="ic">📊</span> KPI</div>
+    <div class="nav-item" data-page="goals"><span class="ic">🎯</span> เป้าหมาย</div>
+
     <div class="nav-spacer"></div>
     <div class="nav-foot">
       <button class="nav-btn" id="refreshData">🔄 ดึงข้อมูลล่าสุด</button>
       <button class="nav-btn" id="addPerson">+ เพิ่มบุคลากร</button>
       <button class="nav-btn" id="resetData">คืนค่าข้อมูลเริ่มต้น</button>
-      <div class="nav-count"><span id="headcount">0</span> คนในหน่วย · <span id="syncState">—</span></div>
+      <div class="nav-count"><span id="headcount">0</span> คนทั้งหมด<br><span id="syncState">—</span></div>
     </div>
   </nav>
   <div class="nav-scrim" id="navScrim"></div>
   <button class="nav-toggle" id="navToggle">☰</button>
 
-  <!-- ===== Main ===== -->
   <main class="main">
-
-    <!-- Page 1: Overview -->
     <section class="page active" id="page-overview">
       <div class="page-head">
         <div>
-          <div class="ph-eyebrow">Organization Map · By Level</div>
-          <h2>แผนผังองค์กรรวม</h2>
-          <p>จัดเรียงตามระดับตำแหน่ง คลิกที่การ์ดเพื่อดู/แก้ไขข้อมูลบุคคล เครื่องจักร และเป้าหมาย</p>
+          <div class="ph-eyebrow" id="ovEyebrow">Organization Map</div>
+          <h2 id="ovTitle">ผังรวมองค์กร</h2>
+          <p id="ovDesc">โครงสร้างทั้งหมด แบ่งตามหัวหน้าสายและแผนก คลิกที่แผนกเพื่อดูรายละเอียด</p>
         </div>
         <div><span class="big" id="headcount2">0</span><span class="lbl">บุคลากร</span></div>
       </div>
-      <div id="levels"></div>
+      <div id="ovBody"></div>
     </section>
 
-    <!-- Page: Profile (ข้อมูลรายบุคคล) -->
     <section class="page" id="page-profile">
-      <div class="page-head">
-        <div>
-          <div class="ph-eyebrow">Individual Profile</div>
-          <h2>ข้อมูลรายบุคคล</h2>
-          <p>รายละเอียดเชิงลึกของแต่ละคน — พันธกิจ งานประจำวัน งานที่อยากปรับปรุง กระบวนการทำงาน และแนวทางประเมินรางวัล (แก้ไขได้ทุกช่อง)</p>
-        </div>
-      </div>
+      <div class="page-head"><div>
+        <div class="ph-eyebrow">Individual Profile</div>
+        <h2>ข้อมูลรายบุคคล</h2>
+        <p>พันธกิจ · งานประจำวัน · งานที่อยากปรับปรุง · กระบวนการ · แนวทางประเมินรางวัล (แก้ไขได้ทุกช่อง)</p>
+      </div></div>
       <div class="plist" id="profileList"></div>
     </section>
 
-    <!-- Page 2: KPI -->
     <section class="page" id="page-kpi">
-      <div class="page-head">
-        <div>
-          <div class="ph-eyebrow">Key Performance Indicators</div>
-          <h2>หน้า KPI รายบุคคล</h2>
-          <p>KPI ประจำแต่ละคน (แยกอิสระจากเป้าหมาย) — เพิ่มหัวข้อ KPI, Target และรายละเอียดงานได้เอง</p>
-        </div>
-      </div>
+      <div class="page-head"><div>
+        <div class="ph-eyebrow">Key Performance Indicators</div>
+        <h2>KPI รายบุคคล</h2>
+        <p>เพิ่มหัวข้อ KPI, Target และรายละเอียดงานได้เอง</p>
+      </div></div>
       <div class="plist" id="kpiList"></div>
     </section>
 
-    <!-- Page 3: Goals -->
     <section class="page" id="page-goals">
-      <div class="page-head">
-        <div>
-          <div class="ph-eyebrow">Goals &amp; Key Actions</div>
-          <h2>หน้าเป้าหมาย &amp; ทีเด็ด</h2>
-          <p>เป้าหมายและทีเด็ดของแต่ละคนตามข้อมูลในไฟล์ — เพิ่ม/แก้ไข/ลบเป้าหมายและงานได้</p>
-        </div>
-      </div>
+      <div class="page-head"><div>
+        <div class="ph-eyebrow">Goals &amp; Key Actions</div>
+        <h2>เป้าหมาย &amp; ทีเด็ด</h2>
+        <p>เป้าหมายและทีเด็ดของแต่ละคน — เพิ่ม/แก้ไข/ลบได้</p>
+      </div></div>
       <div class="plist" id="goalsList"></div>
     </section>
-
   </main>
 </div>
 
@@ -317,536 +339,521 @@
 <div class="saved-flash" id="flash">บันทึกแล้ว</div>
 
 <script>
+const API_URL = "https://script.google.com/macros/s/AKfycbxD2LHjl_QEajbb9hgYZh38rXz-1ZD2m1YbJCCy5FcSVxYfpNs0jUDgopE13BBRu34l/exec";
+const LOCAL_STORE="org_data_v4", LOCAL_KPI="org_kpi_v4", LOCAL_PROFILE="org_profile_v4";
+const ONLINE = !!API_URL;
+
+const DEPTS = {
+  lmn1:   {name:"LMN1",    color:"#2f7fd4", desc:"ไก่เป็น · ห้องล้วง"},
+  lmn2:   {name:"LMN2",    color:"#2a9d8f", desc:"Clean Zone"},
+  sunfeed:{name:"SUNFEED", color:"#d97706", desc:"โรงงานอาหารสัตว์"},
+  asrs:   {name:"ASRS",    color:"#7c56d6", desc:"คลังสินค้าอัตโนมัติ"},
+  env:    {name:"ENV",     color:"#3f9942", desc:"สิ่งแวดล้อม"},
+  ene:    {name:"ENE",     color:"#c53f6d", desc:"พลังงาน"}
+};
+const HEADS = [
+  {id:"h_phum", name:"นายพิทยุตม์ ทรัพย์สมบูรณ์", nickname:"ภูมิ", rank:75, role:"ผู้จัดการฝ่าย", depts:["lmn1","lmn2","sunfeed"]},
+  {id:"h_nat",  name:"นายณัฏฐวัสส์ ไตรยงค์",      nickname:"",     rank:75, role:"ผู้จัดการฝ่าย", depts:["asrs","env","ene","sunfeed"]}
+];
+const LEVEL_NAMES={75:{th:"ระดับ 75",sub:"ผู้จัดการฝ่าย"},65:{th:"ระดับ 65",sub:"ผู้จัดการส่วน / ผู้เชี่ยวชาญ"},
+  55:{th:"ระดับ 55",sub:"ผู้จัดการแผนก"},40:{th:"ระดับ 40",sub:"เจ้าหน้าที่"}};
+
+const REWARD_COMMON="1. BD คิดตามเครื่องจักรที่รับผิดชอบ <10 นาที ได้ 80% / <15 นาที 50% / มากกว่า 15 นาที 0\n2. ปรับปรุงงานโปรเจค มูลค่า 720,000 บาท/ปี/คน\n3. PB หรือ ย่น ย่อ ยุบ 2 เรื่อง/เดือน\n4. ลดพลังงานรวม 50,000 หน่วย/ปี";
+
 const DEFAULT_DATA = [
-  {
-    id:"p_phum", rank:75, role:"รักษาการผู้จัดการฝ่าย",
-    name:"นายพิทยุตม์ ทรัพย์สมบูรณ์", nickname:"ภูมิ",
-    machines:["กำกับดูแลภาพรวมหน่วย LMN2"],
-    note:"(ยังไม่มีเป้าหมายรายบุคคลในไฟล์ — เพิ่มได้)",
-    goals:[ {title:"กำกับดูแลและขับเคลื่อนเป้าหมายของฝ่าย LMN2", target:"", tasks:[]} ]
-  },
-  {
-    id:"p_bank", rank:65, role:"รักษาการผู้จัดการส่วน",
-    name:"นายคงฤทธิ์ จันทะสิงห์", nickname:"แบงค์",
-    machines:["เครื่อง X-Ray","เครื่อง CCM"],
+  // ---------- LMN1 ----------
+  {id:"p_miu",   dept:"lmn1", rank:55, role:"ผู้จัดการแผนก LMN1", name:"นางสาวณัฐณิชา นาคทั่ง", nickname:"มิ้ว", code:"", machines:[], goals:[]},
+  {id:"p_plai",  dept:"lmn1", rank:55, role:"ผู้จัดการแผนก LMN1", name:"นางสาวชญานี รินทะลึก", nickname:"ปลาย", code:"630120",
+    machines:["ไก่เป็น ระบบลำเลียงกล่อง","Stunner","Auto Rehang"], goals:[]},
+  {id:"p_tawan", dept:"lmn1", rank:40, role:"เจ้าหน้าที่", name:"นายอาทิตย์ เขตบุรี", nickname:"ตะวัน", code:"", machines:[], goals:[]},
+  {id:"p_tang",  dept:"lmn1", rank:40, role:"เจ้าหน้าที่", name:"นายธนาดล อุเทนธรรม", nickname:"ตั๋ง", code:"", machines:[], goals:[]},
+
+  // ---------- LMN2 ----------
+  {id:"p_bank",  dept:"lmn2", rank:65, role:"รักษาการผู้จัดการส่วน LMN2", name:"นายคงฤทธิ์ จันทะสิงห์", nickname:"แบงค์", code:"623011",
+    machines:["เครื่อง X-Ray","เครื่อง CCM","Metal detector","Line Packing"],
     goals:[
       {title:"เป้าหมาย 1 : ลดเวลาเบรคดาวน์เครื่องจักรหลักพื้นที่ Cleanzone (X-Ray/CCM)", target:"", tasks:[
         {txt:"ตรวจเช็คความสมบูรณ์อุปกรณ์ Safety Sensor X-ray", freq:"1 ครั้ง/วัน"},
-        {txt:"ตรวจเช็คระยะชุดบด สกรู รังผึ้ง ชุดใบมีด", freq:"1 ครั้ง/สัปดาห์"}
-      ]},
+        {txt:"ตรวจเช็คระยะชุดบด สกรู รังผึ้ง ชุดใบมีด", freq:"1 ครั้ง/สัปดาห์"}]},
       {title:"เป้าหมาย 2 : คุณภาพเครื่องจักร CCM", target:"ST1>50% ST2>25%", tasks:[
-        {txt:"ตรวจเช็ค Yield stage 1 2 เครื่อง CCM", freq:"1 ครั้ง/วัน"}
-      ]},
+        {txt:"ตรวจเช็ค Yield stage 1 2 เครื่อง CCM", freq:"1 ครั้ง/วัน"}]},
       {title:"เป้าหมาย 3 : นวัตกรรม และการปรับปรุงงาน", target:"2 เรื่อง/เดือน", tasks:[
-        {txt:"ขับเคลื่อนนโยบายการลดพลังงานและต้นทุนในกระบวนการผลิต", freq:"2,500,000 หน่วย/ปี"}
-      ]}
-    ]
-  },
-  {
-    id:"p_kob", rank:65, role:"ผู้เชี่ยวชาญ",
-    name:"นายสัญญา ไก่ฟ้า", nickname:"กบ",
+        {txt:"ขับเคลื่อนนโยบายการลดพลังงานและต้นทุนในกระบวนการผลิต", freq:"2,500,000 หน่วย/ปี"}]}
+    ]},
+  {id:"p_kob",   dept:"lmn2", rank:65, role:"ผู้เชี่ยวชาญส่วนงานวิศวกรรม", name:"นายสัญญา ไก่ฟ้า", nickname:"กบ", code:"491338",
     machines:["Chiller","ราว Weighing"],
     goals:[
       {title:"เป้าหมาย 1 : ลดเวลาเบรคดาวน์เครื่องจักรหลักพื้นที่ Cleanzone (Chiller/Weighing)", target:"", tasks:[
         {txt:"ตรวจเช็คกระแสมอเตอร์ Chiller A B 1-4", freq:"1 ครั้ง/วัน"},
-        {txt:"ตรวจเช็คระยะตึงโซ่และการทำงานของ tension", freq:"1 ครั้ง/วัน"}
-      ]},
+        {txt:"ตรวจเช็คระยะตึงโซ่และการทำงานของ tension", freq:"1 ครั้ง/วัน"}]},
       {title:"เป้าหมาย 2 : คุณภาพเครื่องจักร Weighing (ไก่แขวนย้อน)", target:"< 3%", tasks:[
-        {txt:"ตรวจเช็ค % ไก่แขวนย้อน", freq:"1 ครั้ง/วัน"}
-      ]},
+        {txt:"ตรวจเช็ค % ไก่แขวนย้อน", freq:"1 ครั้ง/วัน"}]},
       {title:"เป้าหมาย 3 : นวัตกรรม และการปรับปรุงงาน", target:"2 เรื่อง/เดือน", tasks:[
-        {txt:"ขับเคลื่อนนโยบายการลดพลังงานและต้นทุนในกระบวนการผลิต", freq:"2,500,000 หน่วย/ปี"}
-      ]}
-    ]
-  },
-  {
-    id:"p_serid", rank:55, role:"ผู้จัดการแผนก",
-    name:"นายประเสริฐ คุณารักษ์", nickname:"เสริฐ",
-    machines:["เครื่อง Belt Grade (3 เครื่อง)"],
+        {txt:"ขับเคลื่อนนโยบายการลดพลังงานและต้นทุนในกระบวนการผลิต", freq:"2,500,000 หน่วย/ปี"}]}
+    ]},
+  {id:"p_serid", dept:"lmn2", rank:55, role:"ผู้จัดการแผนก LMN2", name:"นายประเสริฐ คุณารักษ์", nickname:"เสริฐ", code:"600932",
+    machines:["Belt Grade (3 เครื่อง)","Multitray","Injector","Vacuum Pack","Conveyor"],
     goals:[
-      {title:"เป้าหมาย 1 : ลดเวลาเบรคดาวน์เครื่องจักรหลักพื้นที่ Cleanzone (Belt Grade/I-Cut)", target:"BG 20 นาที/เดือน", tasks:[
+      {title:"เป้าหมาย 1 : ลดเวลาเบรคดาวน์เครื่องจักรหลักพื้นที่ Cleanzone (Belt Grade)", target:"BG 20 นาที/เดือน", tasks:[
         {txt:"ตรวจเช็คสถานะสายพาน Weigh BG2 ปีกบน +- 1 g", freq:"1 ครั้ง/วัน"},
-        {txt:"ตรวจเช็คสถานะสายพาน Weigh + Discharge BG ขาซี", freq:"1 ครั้ง/วัน"},
-        {txt:"ตรวจเช็คความสมบูรณ์ชุดจับใบมีดเครื่อง I-cut 22 122", freq:"1 ครั้ง/สัปดาห์"}
-      ]},
+        {txt:"ตรวจเช็คสถานะสายพาน Weigh + Discharge BG ขาซี", freq:"1 ครั้ง/วัน"}]},
       {title:"เป้าหมาย 2 : คุณภาพเครื่องจักร BG", target:"> 95%", tasks:[
-        {txt:"ตรวจเช็ค Accuracy ของน้ำหนัก ปีกบน ปีกกลาง ขาซี", freq:"1 ครั้ง/วัน"}
-      ]},
+        {txt:"ตรวจเช็ค Accuracy ของน้ำหนัก ปีกบน ปีกกลาง ขาซี", freq:"1 ครั้ง/วัน"}]},
       {title:"เป้าหมาย 3 : นวัตกรรม และการปรับปรุงงาน", target:"2 เรื่อง/เดือน", tasks:[
-        {txt:"ขับเคลื่อนนโยบายการลดพลังงานและต้นทุนในกระบวนการผลิต", freq:"2,500,000 หน่วย/ปี"}
-      ]}
-    ]
-  },
-  {
-    id:"p_boom", rank:40, role:"เจ้าหน้าที่",
-    name:"นายศุภณัฐ พฤกษชาติ", nickname:"บูม",
-    machines:["Auto Debone (2 เครื่อง)","Toridas 2 loop"],
-    note:"รหัส 680415",
+        {txt:"ขับเคลื่อนนโยบายการลดพลังงานและต้นทุนในกระบวนการผลิต", freq:"2,500,000 หน่วย/ปี"}]}
+    ]},
+  {id:"p_boom",  dept:"lmn2", rank:40, role:"เจ้าหน้าที่", name:"นายศุภณัฐ พฤกษชาติ", nickname:"บูม", code:"680415",
+    machines:["Auto Debone Foodmate (2 เครื่อง)","Toridas 2 loop"],
     goals:[
       {title:"เป้าหมาย 1 : ลดเวลาเบรคดาวน์เครื่องจักรหลักพื้นที่ Cleanzone (Auto Debone/Toridas)", target:"", tasks:[
         {txt:"ตรวจเช็คชุดเกียร์ Pre-cutter เครื่อง Drum 1-4", freq:"1 ครั้ง/วัน"},
         {txt:"ตรวจเช็คกระแสมอเตอร์ขับเครื่อง Thigh 1-4", freq:"1 ครั้ง/วัน"},
-        {txt:"ตรวจเช็คเทอมินอลมอเตอร์ใบมีด", freq:"1 ครั้ง/สัปดาห์"}
-      ]},
+        {txt:"ตรวจเช็คเทอมินอลมอเตอร์ใบมีด", freq:"1 ครั้ง/สัปดาห์"}]},
       {title:"เป้าหมาย 2 : คุณภาพเครื่องจักร Auto debone", target:"> 71.5%", tasks:[
-        {txt:"ตรวจเช็ค Yield เครื่อง Drum Thigh Debone", freq:"1 ครั้ง/วัน"}
-      ]},
+        {txt:"ตรวจเช็ค Yield เครื่อง Drum Thigh Debone", freq:"1 ครั้ง/วัน"}]},
       {title:"เป้าหมาย 3 : นวัตกรรม และการปรับปรุงงาน", target:"2 เรื่อง/เดือน", tasks:[
-        {txt:"ขับเคลื่อนนโยบายการลดพลังงานและต้นทุนในกระบวนการผลิต", freq:"2,500,000 หน่วย/ปี"}
-      ]}
-    ]
-  },
-  {
-    id:"p_nip", rank:40, role:"เจ้าหน้าที่",
-    name:"นายนิพิฐพนธ์ หิริ", nickname:"ฟอร์ด",
-    machines:["เครื่อง I-Cut (2 Line)"],
-    note:"รหัส 690633",
+        {txt:"ขับเคลื่อนนโยบายการลดพลังงานและต้นทุนในกระบวนการผลิต", freq:"2,500,000 หน่วย/ปี"}]}
+    ]},
+  {id:"p_ford",  dept:"lmn2", rank:40, role:"เจ้าหน้าที่", name:"นายนิพิฐพนธ์ หิริ", nickname:"ฟอร์ด", code:"690633",
+    machines:["Metal detector","I-Cut (2 Line)","Line Packing"],
     goals:[
       {title:"เป้าหมาย 1 : ลดเวลาเบรคดาวน์เครื่องจักรหลักพื้นที่ Cleanzone (I-Cut)", target:"", tasks:[
-        {txt:"ตรวจเช็คความสมบูรณ์ชุดจับใบมีดเครื่อง I-cut 22,122", freq:"1 ครั้ง/สัปดาห์"}
-      ]},
-      {title:"เป้าหมาย 2 (I-Cut) : คุณภาพเครื่องจักร I-cut (2 Line)", target:"ACCU > 90%", tasks:[
-        {txt:"ตรวจเช็ค Accuracy ของน้ำหนัก BLK ตาม STD Dev.1", freq:"1 ครั้ง/วัน"}
-      ]},
+        {txt:"ตรวจเช็คความสมบูรณ์ชุดจับใบมีดเครื่อง I-cut 22,122", freq:"1 ครั้ง/สัปดาห์"}]},
+      {title:"เป้าหมาย 2 : คุณภาพเครื่องจักร I-cut (2 Line)", target:"ACCU > 90%", tasks:[
+        {txt:"ตรวจเช็ค Accuracy ของน้ำหนัก BLK ตาม STD Dev.1", freq:"1 ครั้ง/วัน"}]},
       {title:"เป้าหมาย 3 : นวัตกรรม และการปรับปรุงงาน", target:"2 เรื่อง/เดือน", tasks:[
-        {txt:"ขับเคลื่อนนโยบายการลดพลังงานและต้นทุนในกระบวนการผลิต", freq:"2,500,000 หน่วย/ปี"}
-      ]}
-    ]
-  }
+        {txt:"ขับเคลื่อนนโยบายการลดพลังงานและต้นทุนในกระบวนการผลิต", freq:"2,500,000 หน่วย/ปี"}]}
+    ]},
+
+  // ---------- SUNFEED ----------
+  {id:"p_sippo", dept:"sunfeed", rank:40, role:"เจ้าหน้าที่", name:"นายกฤตยชญ์ จันทร์เดช", nickname:"สิปโป", code:"690511",
+    machines:["งานซ่อมบำรุง","งานคลังสินค้า","บอยเลอร์","ระบบน้ำ/คลอรีน"], goals:[]},
+  {id:"p_phet",  dept:"sunfeed", rank:40, role:"เจ้าหน้าที่", name:"นายอภิสิทธิ์ เรืองชัยวัฒนกุล", nickname:"เพชร", code:"690631",
+    machines:["เครื่องอัดเม็ด","สกรูถังไมโครบิต"], goals:[]},
+  {id:"p_happy", dept:"sunfeed", rank:40, role:"เจ้าหน้าที่", name:"นายวรภพ ก้อนศิลา", nickname:"แฮปปี้", code:"690519",
+    machines:[], goals:[]},
+  {id:"p_pik",   dept:"sunfeed", rank:40, role:"เจ้าหน้าที่", name:"นายยุทธนากร สีหาชาติ", nickname:"ปิ๊ก", code:"690383",
+    machines:["Mixer","Hammer Mill","Conveyor","พรีมิกซ์","Mix Roller Mill"], goals:[]},
+
+  // ---------- ASRS ----------
+  {id:"p_bas",   dept:"asrs", rank:55, role:"ผู้จัดการแผนก ASRS", name:"นายสิงหา พึ่งประสม", nickname:"บาส", code:"",
+    machines:["ระบบคลังสินค้าอัตโนมัติ ASRS","WCS/WMS","AGV"], goals:[]},
+  {id:"p_fuse",  dept:"asrs", rank:40, role:"เจ้าหน้าที่", name:"นายพรพิพัฒน์ กรรฐโรจน์", nickname:"ฟิวส์", code:"",
+    machines:["คลัง CS2","Conveyor","Dashboard ASRS"], goals:[]},
+  {id:"p_nick",  dept:"asrs", rank:40, role:"เจ้าหน้าที่", name:"นายกันตพัฒน์", nickname:"นิค", code:"",
+    machines:["คลัง CS2","Spare part CS2"], goals:[]},
+
+  // ---------- ENV ----------
+  {id:"p_jep",   dept:"env", rank:40, role:"เจ้าหน้าที่", name:"นายณัฐพนธ์ สิงห์เส", nickname:"เจป", code:"",
+    machines:["ระบบบำบัดน้ำเสีย","โรงผลิตแก๊สชีวภาพ"], goals:[]},
+  {id:"p_don",   dept:"env", rank:40, role:"เจ้าหน้าที่", name:"นายภาณุพงศ์ พาประกอบ", nickname:"ดล", code:"",
+    machines:["ระบบบำบัดน้ำเสีย","ระบบผลิตน้ำประปา"], goals:[]},
+
+  // ---------- ENE ----------
+  {id:"p_jeep",  dept:"ene", rank:55, role:"ผู้จัดการแผนก ENE", name:"นายวิษุวัต ว่องไพกุล", nickname:"จี๊บ", code:"",
+    machines:["Biogas / บ่อแก๊ส","Generator Biogas","Solarcell","Bioscrubber","Sub 115 kV"], goals:[]}
 ];
-
-/* ============================================================
-   การเชื่อมต่อออนไลน์ (Google Apps Script)
-   1) Deploy Code.gs เป็น Web App แล้วคัดลอก URL มาวางที่ API_URL
-   2) ตั้ง PIN ให้ตรงกับใน Code.gs (ตัวแปร EDIT_PIN)
-   ถ้า API_URL ยังว่าง ระบบจะทำงานแบบออฟไลน์ (เก็บในเครื่อง) อัตโนมัติ
-   ============================================================ */
-const API_URL = "https://script.google.com/macros/s/AKfycbxD2LHjl_QEajbb9hgYZh38rXz-1ZD2m1YbJCCy5FcSVxYfpNs0jUDgopE13BBRu34l/exec";          // << URL ของ Web App
-const LOCAL_STORE = "lmn2_orgchart_v3";
-const LOCAL_KPI   = "lmn2_kpi_v1";
-
-const LOCAL_PROFILE = "lmn2_profile_v1";
-
-let data = [];
-let kpiStore = {};           // { personId: [ {id,title,target,detail} ] }
-let profileStore = {};       // { personId: {mission,daily,improve,process,reward} }
-const ONLINE = !!API_URL;
-
-const PROFILE_FIELDS = [
-  {key:'mission', label:'พันธกิจ หน้าที่'},
-  {key:'daily',   label:'งานประจำแต่ละวันที่ทำ'},
-  {key:'improve', label:'งานที่อยากปรับปรุง / ปัญหาที่พบบ่อยๆ'},
-  {key:'process', label:'กระบวนการในการทำ'},
-  {key:'reward',  label:'ถ้าเราอยากให้รางวัล ควรประเมินอย่างไร'}
-];
-
-// ค่าประเมินรางวัลที่ทุกคนใช้ร่วมกัน
-const REWARD_COMMON =
-  "1. BD คิดตามเครื่องจักรที่รับผิดชอบ <10 นาที ได้ 80% / <15 นาที 50% / มากกว่า 15 นาที 0\n"+
-  "2. ปรับปรุงงานโปรเจค มูลค่า 720,000 บาท/ปี/คน\n"+
-  "3. PB หรือ ย่น ย่อ ยุบ 2 เรื่อง/เดือน\n"+
-  "4. ลดพลังงานรวม 50,000 หน่วย/ปี";
 
 const DEFAULT_PROFILE = {
-  p_bank: {
-    mission:
-      "1. รับผิดชอบเครื่องจักรในไลน์ผลิต Clean zone ได้แก่ X-ray, Metal detector, CCM, Weighing, Auto weight, เครื่องจักร Line Packing ทั้งหมด ทั้งการจัดแผน PM การทำ WI และสำรองอะไหล่ Spare Part รวมถึงแก้ไขปัญหาเมื่อเครื่องจักรเกิดเบรคดาวน์\n"+
-      "2. พัฒนาทักษะเฉพาะทางของทีมงานช่าง\n"+
-      "3. รับผิดชอบในการเปรียบเทียบสเปค จัดหาเครื่องจักรใหม่ งานโปรเจคปรับปรุงงานต่างๆ เช่น การปรับปรุงระบบ Packing line ใหม่ การหาเครื่องจักรสำหรับ Sunfood 2\n"+
-      "4. รับผิดชอบงานตอบรับ และแก้ไข complain, comment หมอ และ Auditor\n"+
-      "5. รับผิดชอบดูแลงานในส่วนของ ASRS Inbound CS3 จัดทีมงานและการแก้ไขปัญหาให้ไม่ติดขัด",
-    daily:
-      "1. การจัดแผนงานประจำวันให้กับทีมงาน แจกจ่ายงานที่ต้องทำในแต่ละวัน\n"+
-      "2. การติดตามประสิทธิภาพและปัญหาที่พบจากเครื่องจักรที่รับผิดชอบ แก้ไขรวมถึงป้องกันการเกิดปัญหา และการ Spare part อะไหล่ ปรับปรุงแผน PM\n"+
-      "3. ติดตามงานโปรเจคที่ได้รับมอบหมาย ความคืบหน้า แผนการดำเนินงานต่อไป ให้อยู่ในตามแผนที่วางไว้\n"+
-      "4. การปรับปรุงงานในจุดงานของผลิตและวิศวะ ตามแผนกต่างๆที่ได้สำรวจหรือประชุมร่วมกัน\n"+
-      "5. Morning talk Focus งานประจำวันก่อนเริ่มงานกับทีมงานวิศวกรรม",
-    improve:
-      "1. ปริมาณเครื่องจักรไม่สอดคล้องกับปริมาณทีมงานที่ต้องควบคุมเครื่อง\n"+
-      "2. ทักษะของทีมงานแต่ละคนไม่เท่ากัน ทั้งในด้านความละเอียดในงาน และความเรียบร้อยของงาน",
-    process:
-      "1. การนำเครื่องมือ AI มาช่วยในจัดการงานอย่างเป็นระบบ เช่น ออกแบบโปรแกรมมาช่วยในการ PM และจัดการอะไหล่ Spare part ให้เหมาะสม\n"+
-      "2. การใช้ AI สร้างหน้าเว็บออนไลน์ รวบรวมคู่มือการซ่อมทำ SOP (Standard Operating Procedure) ให้มีมาตรฐาน มีวิดีโอ ภาพประกอบให้ชัดเจน เครื่องจักรทั้งหมด",
-    reward: REWARD_COMMON
-  },
-  p_serid: {
-    mission:
-      "1. รับผิดชอบเครื่องจักรหลักไลน์ผลิต clean zone เครื่อง Belt Grader ขาซี, ปีก Multitray, injector, Vacuum Pack, เครื่องล้างตะกร้า เขียง ถาด และ Conveyor สายพานลำเลียงทั้งหมด การจัดแผน PM, WI และ Spare Part รวมถึงแก้ไขปัญหาเมื่อเครื่องจักรเกิดเบรคดาวน์\n"+
-      "2. ปรับปรุงกระบวน Flow การผลิตในจุดที่เป็นปัญหาหรือคอขวดของการทำงาน\n"+
-      "3. ดูแลงาน Project ลดกระบวนการทำงานและหาเครื่องจักรทดแทนคน\n"+
-      "4. ถ่ายทอดวิธีการทำงานและทักษะความรู้ความสามารถที่ถูกต้องให้ทีมงานช่าง และสร้างเป็นมาตรฐาน\n"+
-      "5. ดูแลและควบคุมอุปกรณ์เครื่องมือส่วนกลาง งานช่างทั้งหมด",
-    daily:
-      "1. การจัดแผนงานประจำวันให้กับทีมงาน\n"+
-      "2. การติดตามปรับปรุง ลด Defect ลดขั้นตอนการทำงานของกระบวนการผลิต ร่วมกับส่วนงานที่เกี่ยวข้อง\n"+
-      "3. ติดตามปรับอะไหล่ spare part สำคัญ ไม่ให้กระทบต่อความเสียหายของเครื่องจักร\n"+
-      "4. ติดตามงานโปรเจคที่ได้รับมอบหมาย ความคืบหน้า แผนการดำเนินงานต่อไป ให้อยู่ในตามแผนที่วางไว้\n"+
-      "5. การปรับปรุงงานในจุดงานของผลิตและวิศวะ ตามแผนกต่างๆที่ได้สำรวจหรือประชุมร่วมกัน\n"+
-      "6. Morning talk Focus งานประจำวันก่อนเริ่มงานกับทีมงานวิศวกรรม",
-    improve:
-      "1. จัดหาเครื่องจักรที่สามารถนำมาทดแทนคนและเพิ่มประสิทธิภาพการทำงาน\n"+
-      "2. ลดปัญหา Defect และความสูญเสียของหน้างาน ปรับปรุงประสิทธิภาพเครื่องจักร\n"+
-      "3. การซ่อมหรือแก้ไข วิเคราะห์การแก้ไข เครื่องจักรใช้เวลานาน",
-    process:
-      "1. จัดหานวัตกรรมใหม่ๆ เครื่องจักรที่สามารถนำมาทดแทนคนและเพิ่มประสิทธิภาพการทำงานได้\n"+
-      "2. นำเครื่องมือ AI มาร่วมใช้วิเคราะห์ปัญหาและวิธีลดกระบวนการทำงาน และปรับปรุงเครื่องจักร\n"+
-      "3. เพิ่มศักยภาพการซ่อมแก้ไขปัญหาของทีมงาน จัดทำรูปแบบการอบรม ใช้ AI ช่วยวิเคราะห์การแก้ไขปัญหาแต่ละเครื่องจักร",
-    reward: REWARD_COMMON
-  },
-  p_kob: {
-    mission:
-      "1. ดูแลแผนการบำรุงรักษาเครื่องจักร LMN2\n"+
-      "2. ดูแลทีมงานช่างให้ปฏิบัติงานให้ได้ตามเป้าหมาย ลดการเบรกดาวน์\n"+
-      "3. นำนวัตกรรมเกี่ยวกับการปรับปรุงงาน ลดต้นทุน เพิ่มผลผลิตให้ปรับใช้กับงาน\n"+
-      "4. ดูแลช่วยงานซ่อมบำรุงรักษาสายงานฟาร์ม\n"+
-      "5. ช่วยดูแลงานซ่อมบำรุง mn ตามภารกิจ",
-    daily:
-      "1. ติดตามภารกิจงานประจำวันของทีมงานช่างแต่ละกะ\n"+
-      "2. ติดตามแผน และผลการทำ pm รวมถึงการติดตามปรับแผนการทำ pm ให้เหมาะสม\n"+
-      "3. งานว่าจ้างซัพพลายเออร์จุดงานต่างๆ งานเปิดซ่อมและซื้ออุปกรณ์เครื่องจักรและจุดงานเสียต้องปรับปรุง\n"+
-      "4. งานวางแผนการเข้าปรับปรุง/แผนการทำ pm ฟาร์ม ที่ได้รับมอบหมายแต่ละจุด\n"+
-      "5. งานตรวจติดตามเครื่องจักรต่างๆ ในความดูแลรับผิดชอบ",
-    improve:
-      "1. งานจุดที่ยังเป็นคอขวดของการผลิต เช่น เนื้อหล่นพื้น งานซัพพอร์ตระบบการผลิต\n"+
-      "2. ปรับปรุงงานระบบลอกหนังไก่ หาเครื่องจักรที่ราคาไม่แพงแต่มีคุณภาพ\n"+
-      "3. ปรับปรุงระบบควบคุมพัดลมฟาร์มให้มีประสิทธิภาพ ทันสมัย\n"+
-      "4. ปรับปรุงระบบฟีดออโต และการพิมพ์ถุงและกล่อง\n"+
-      "5. อยากให้มีบุคลากรที่รับผิดชอบเปิด pr เนื่องจากบ่อยครั้งที่ภารกิจงานไม่คืบหน้า หมดเวลาไปกับการเปิด pr แต่ละ job",
-    process: "",
-    reward: REWARD_COMMON
-  },
-  p_boom: {
-    mission:
-      "1. รับผิดชอบเครื่องจักรในไลน์ผลิต Clean zone ได้แก่ Auto Debone Foodmate, Toridas ทั้งการจัดแผน PM การทำ WI และสำรองอะไหล่ Spare Part รวมถึงแก้ไขปัญหาเมื่อเครื่องจักรเกิดเบรคดาวน์\n"+
-      "2. ติดตามงานแก้ไข Comment จากลูกค้า, หมอ, QA, จป และ Auditor\n"+
-      "3. งานปรับปรุงกระบวนการผลิตในไลน์ผลิตตามจุดงานต่างๆ กับฝ่ายผลิต เพิ่ม Flow ลดคน และลดเวลา",
-    daily:
-      "1. การจัดแผนงานและแจกจ่ายงานให้กับทีมงานใน Morning Talk กับทีมงานประจำวัน\n"+
-      "2. การติดตามประสิทธิภาพและปัญหาที่พบจากเครื่องจักรที่รับผิดชอบ แก้ไขรวมถึงป้องกันการเกิดปัญหา และการ Spare part อะไหล่ ปรับปรุงแผน PM\n"+
-      "3. หาจุดปรับปรุงงานทั้งในไลน์ผลิต และการทำงานในแผนก รวมทั้งการใช้ AI ในการปรับปรุง",
-    improve:
-      "1. Master plan ตอนนี้ยังไม่สะดวกต่อการปรับเปลี่ยนหลายๆ รายการ เพราะจะทำให้มีข้อมูลตกหล่นได้ถ้าเปลี่ยนบางจุดผิดพลาด และระบบใบ PM ยังเป็นระบบออฟไลน์\n"+
-      "2. การตอบรับ Comment จากทุกฝ่าย เอกสาร และไฟล์ต่างๆ มีจำนวนมาก และใช้เวลามากในการค้นหา\n"+
-      "3. สายพานในไลน์ Clean zone มีจำนวนมาก แต่ไม่มีการทำทะเบียนสายพานที่เป็นปัจจุบันและครบถ้วน\n"+
-      "4. Link หรือฟอร์มต่างๆ ที่ทีมงานต้องใช้ในการทำงานประจำวันมีจำนวนมาก ไม่สะดวกและใช้เวลาในการหา เช่น อะไหล่เครื่องจักร ระบบเบิกของ และการหา Code Item เป็นต้น\n"+
-      "5. ปัญหาการเข้างาน การลาต่างๆ ของทีมงานไม่เป็นระบบ และไม่มีประวัติย้อนหลังให้ทุกคนในแผนกดู ทำให้เป็นปัญหาในการจัดการแผนงาน",
-    process:
-      "1. ใช้ AI ในการสร้างเว็บแอปปรับปรุง Master plan ใหม่ให้สามารถแก้ไขได้เป็นระบบ และง่ายต่อการใช้งานจ่ายงาน PM\n"+
-      "2. ใช้ AI ในการสร้างเว็บแอปรวบรวมเอกสารต่างๆ ไฟล์ และเว็บแอปที่ทำ เข้ามาอยู่ในแอปเดียว\n"+
-      "3. ใช้ AI ในการสร้างเว็บแอปทำทะเบียนสายพานในไลน์ Clean zone โดยเป็นระบบกดดูข้อมูลได้เลยแต่ละเส้นในแผน Layout\n"+
-      "4. สร้าง Line Official Account ที่มีริชเมนู เช่น Link หรือฟอร์มต่างๆ ที่ทีมงานใช้ในการทำงานเป็นประจำวัน\n"+
-      "5. ใช้ AI ทำระบบลาออนไลน์ ให้ผนวกเข้ากับระบบ Line Official Account ให้แจ้งเตือนตลอดเวลามีการลา และสะดวกต่อการใช้งาน",
-    reward: REWARD_COMMON
-  },
-  p_nip: {
-    mission:
-      "1) รับผิดชอบเครื่องจักรในไลน์ผลิต Clean zone ได้แก่ Metal detector, I-Cut, เครื่องจักร Line Packing การทำ WI และสำรองอะไหล่ Spare Part รวมถึงแก้ไขปัญหาเมื่อเครื่องจักรเกิดเบรคดาวน์\n"+
-      "2) ติดตาม Supplier ส่งมอบเครื่องจักรให้ทดลอง และเข้ามา PM เครื่องจักร\n"+
-      "3) พัฒนาเว็บไซต์ที่ช่วยอำนวยความสะดวกให้กับแผนก เช่น เว็บที่ช่วยในการสรุปงานหยุดผลิตของแต่ละสัปดาห์ และเว็บที่ใช้ในการค้นหาปัญหาของเครื่องจักรและวิธีการแก้ไข",
-    daily:
-      "1) การจัดแผนงานประจำวันให้กับทีมงาน แจกจ่ายงานที่ต้องทำในแต่ละวัน\n"+
-      "2) การติดตามประสิทธิภาพและปัญหาที่พบจากเครื่องจักรที่รับผิดชอบ แก้ไขรวมถึงป้องกันการเกิดปัญหา และการ Spare part อะไหล่\n"+
-      "3) Morning talk Focus งานประจำวันก่อนเริ่มงานกับทีมงานวิศวกรรม",
-    improve:
-      "1) ระบบในการทำเอกสารหลายๆ อย่าง เช่น ระบบสรุปหยุดผลิตที่ต้องกรอกข้อมูลใน google sheet\n"+
-      "2) ไม่สามารถรู้ได้ว่าอุปกรณ์เกิดความเสียหาย มีสาเหตุมาจากอะไร และไม่รู้วิธีแก้ไข",
-    process:
-      "1) จัดทำเว็บไซต์ที่สามารถทำการสรุปหยุดผลิตได้ในโทรศัพท์ และง่ายต่อการทำงาน\n"+
-      "2) ทำเว็บที่สามารถแสดงสาเหตุ วิธีการตรวจสอบ และแสดงวิธีการแก้ไขของแต่ละเครื่องจักร",
-    reward: REWARD_COMMON
-  }
+  p_bank:{
+    mission:"1. รับผิดชอบเครื่องจักรในไลน์ผลิต Clean zone ได้แก่ X-ray, Metal detector, CCM, Weighing, Auto weight, เครื่องจักร Line Packing ทั้งหมด ทั้งการจัดแผน PM การทำ WI และสำรองอะไหล่ Spare Part รวมถึงแก้ไขปัญหาเมื่อเครื่องจักรเกิดเบรคดาวน์\n2. พัฒนาทักษะเฉพาะทางของทีมงานช่าง\n3. รับผิดชอบในการเปรียบเทียบสเปค จัดหาเครื่องจักรใหม่ งานโปรเจคปรับปรุงงานต่างๆ เช่น การปรับปรุงระบบ Packing line ใหม่ การหาเครื่องจักรสำหรับ Sunfood 2\n4. รับผิดชอบงานตอบรับ และแก้ไข complain, comment หมอ และ Auditor\n5. รับผิดชอบดูแลงานในส่วนของ ASRS Inbound CS3 จัดทีมงานและการแก้ไขปัญหาให้ไม่ติดขัด",
+    daily:"1. การจัดแผนงานประจำวันให้กับทีมงาน แจกจ่ายงานที่ต้องทำในแต่ละวัน\n2. การติดตามประสิทธิภาพและปัญหาที่พบจากเครื่องจักรที่รับผิดชอบ แก้ไขรวมถึงป้องกันการเกิดปัญหา และการ Spare part อะไหล่ ปรับปรุงแผน PM\n3. ติดตามงานโปรเจคที่ได้รับมอบหมาย ความคืบหน้า แผนการดำเนินงานต่อไป ให้อยู่ในตามแผนที่วางไว้\n4. การปรับปรุงงานในจุดงานของผลิตและวิศวะ ตามแผนกต่างๆที่ได้สำรวจหรือประชุมร่วมกัน\n5. Morning talk Focus งานประจำวันก่อนเริ่มงานกับทีมงานวิศวกรรม",
+    improve:"1. ปริมาณเครื่องจักรไม่สอดคล้องกับปริมาณทีมงานที่ต้องควบคุมเครื่อง\n2. ทักษะของทีมงานแต่ละคนไม่เท่ากัน ทั้งในด้านความละเอียดในงาน และความเรียบร้อยของงาน",
+    process:"1. การนำเครื่องมือ AI มาช่วยในจัดการงานอย่างเป็นระบบ เช่น ออกแบบโปรแกรมมาช่วยในการ PM และจัดการอะไหล่ Spare part ให้เหมาะสม\n2. การใช้ AI สร้างหน้าเว็บออนไลน์ รวบรวมคู่มือการซ่อมทำ SOP (Standard Operating Procedure) ให้มีมาตรฐาน มีวิดีโอ ภาพประกอบให้ชัดเจน เครื่องจักรทั้งหมด",
+    reward:REWARD_COMMON},
+  p_serid:{
+    mission:"1. รับผิดชอบเครื่องจักรหลักไลน์ผลิต clean zone เครื่อง Belt Grader ขาซี, ปีก Multitray, injector, Vacuum Pack, เครื่องล้างตะกร้า เขียง ถาด และ Conveyor สายพานลำเลียงทั้งหมด การจัดแผน PM, WI และ Spare Part รวมถึงแก้ไขปัญหาเมื่อเครื่องจักรเกิดเบรคดาวน์\n2. ปรับปรุงกระบวน Flow การผลิตในจุดที่เป็นปัญหาหรือคอขวดของการทำงาน\n3. ดูแลงาน Project ลดกระบวนการทำงานและหาเครื่องจักรทดแทนคน\n4. ถ่ายทอดวิธีการทำงานและทักษะความรู้ความสามารถที่ถูกต้องให้ทีมงานช่าง และสร้างเป็นมาตรฐาน\n5. ดูแลและควบคุมอุปกรณ์เครื่องมือส่วนกลาง งานช่างทั้งหมด",
+    daily:"1. การจัดแผนงานประจำวันให้กับทีมงาน\n2. การติดตามปรับปรุง ลด Defect ลดขั้นตอนการทำงานของกระบวนการผลิต ร่วมกับส่วนงานที่เกี่ยวข้อง\n3. ติดตามปรับอะไหล่ spare part สำคัญ ไม่ให้กระทบต่อความเสียหายของเครื่องจักร\n4. ติดตามงานโปรเจคที่ได้รับมอบหมาย ความคืบหน้า แผนการดำเนินงานต่อไป\n5. การปรับปรุงงานในจุดงานของผลิตและวิศวะ ตามแผนกต่างๆที่ได้สำรวจหรือประชุมร่วมกัน\n6. Morning talk Focus งานประจำวันก่อนเริ่มงานกับทีมงานวิศวกรรม",
+    improve:"1. จัดหาเครื่องจักรที่สามารถนำมาทดแทนคนและเพิ่มประสิทธิภาพการทำงาน\n2. ลดปัญหา Defect และความสูญเสียของหน้างาน ปรับปรุงประสิทธิภาพเครื่องจักร\n3. การซ่อมหรือแก้ไข วิเคราะห์การแก้ไข เครื่องจักรใช้เวลานาน",
+    process:"1. จัดหานวัตกรรมใหม่ๆ เครื่องจักรที่สามารถนำมาทดแทนคนและเพิ่มประสิทธิภาพการทำงานได้\n2. นำเครื่องมือ AI มาร่วมใช้วิเคราะห์ปัญหาและวิธีลดกระบวนการทำงาน และปรับปรุงเครื่องจักร\n3. เพิ่มศักยภาพการซ่อมแก้ไขปัญหาของทีมงาน จัดทำรูปแบบการอบรม ใช้ AI ช่วยวิเคราะห์การแก้ไขปัญหาแต่ละเครื่องจักร",
+    reward:REWARD_COMMON},
+  p_kob:{
+    mission:"1. ดูแลแผนการบำรุงรักษาเครื่องจักร LMN2\n2. ดูแลทีมงานช่างให้ปฏิบัติงานให้ได้ตามเป้าหมาย ลดการเบรกดาวน์\n3. นำนวัตกรรมเกี่ยวกับการปรับปรุงงาน ลดต้นทุน เพิ่มผลผลิตให้ปรับใช้กับงาน\n4. ดูแลช่วยงานซ่อมบำรุงรักษาสายงานฟาร์ม\n5. ช่วยดูแลงานซ่อมบำรุง mn ตามภารกิจ",
+    daily:"1. ติดตามภารกิจงานประจำวันของทีมงานช่างแต่ละกะ\n2. ติดตามแผน และผลการทำ pm รวมถึงการติดตามปรับแผนการทำ pm ให้เหมาะสม\n3. งานว่าจ้างซัพพลายเออร์จุดงานต่างๆ งานเปิดซ่อมและซื้ออุปกรณ์เครื่องจักรและจุดงานเสียต้องปรับปรุง\n4. งานวางแผนการเข้าปรับปรุง/แผนการทำ pm ฟาร์ม ที่ได้รับมอบหมายแต่ละจุด\n5. งานตรวจติดตามเครื่องจักรต่างๆ ในความดูแลรับผิดชอบ",
+    improve:"1. งานจุดที่ยังเป็นคอขวดของการผลิต เช่น เนื้อหล่นพื้น งานซัพพอร์ตระบบการผลิต\n2. ปรับปรุงงานระบบลอกหนังไก่ หาเครื่องจักรที่ราคาไม่แพงแต่มีคุณภาพ\n3. ปรับปรุงระบบควบคุมพัดลมฟาร์มให้มีประสิทธิภาพ ทันสมัย\n4. ปรับปรุงระบบฟีดออโต และการพิมพ์ถุงและกล่อง\n5. อยากให้มีบุคลากรที่รับผิดชอบเปิด pr เนื่องจากบ่อยครั้งที่ภารกิจงานไม่คืบหน้า หมดเวลาไปกับการเปิด pr แต่ละ job",
+    process:"1. นำนวัตกรรม AI มาปรับใช้กับงานให้มากขึ้น เพื่อเพิ่มคุณภาพงาน การลดคน ลดต้นทุนผลิต การออกแบบปรับปรุงดูแลรักษาเครื่องจักร\n2. การสร้างทำ WI แมนนวลเครื่องจักรต่างๆ เพื่อให้ user จุดงานต่างๆ และทีมช่างมีความรู้ความเข้าใจในการใช้และบำรุงดูแลรักษาเครื่องจักร",
+    reward:REWARD_COMMON},
+  p_boom:{
+    mission:"1. รับผิดชอบเครื่องจักรในไลน์ผลิต Clean zone ได้แก่ Auto Debone Foodmate, Toridas ทั้งการจัดแผน PM การทำ WI และสำรองอะไหล่ Spare Part รวมถึงแก้ไขปัญหาเมื่อเครื่องจักรเกิดเบรคดาวน์\n2. ติดตามงานแก้ไข Comment จากลูกค้า, หมอ, QA, จป และ Auditor\n3. งานปรับปรุงกระบวนการผลิตในไลน์ผลิตตามจุดงานต่างๆ กับฝ่ายผลิต เพิ่ม Flow ลดคน และลดเวลา\n4. ปรับตั้งเพิ่มประสิทธิภาพเครื่อง Toridas ทั้งการเพิ่ม %Yields และลด %Defect",
+    daily:"1. การจัดแผนงานและแจกจ่ายงานให้กับทีมงานใน Morning Talk กับทีมงานประจำวัน\n2. การติดตามประสิทธิภาพและปัญหาที่พบจากเครื่องจักรที่รับผิดชอบ แก้ไขรวมถึงป้องกันการเกิดปัญหา และการ Spare part อะไหล่ ปรับปรุงแผน PM\n3. หาจุดปรับปรุงงานทั้งในไลน์ผลิต และการทำงานในแผนก รวมทั้งการใช้ AI ในการปรับปรุง",
+    improve:"1. Master plan ตอนนี้ยังไม่สะดวกต่อการปรับเปลี่ยนหลายๆ รายการ เพราะจะทำให้มีข้อมูลตกหล่นได้ถ้าเปลี่ยนบางจุดผิดพลาด และระบบใบ PM ยังเป็นระบบออฟไลน์\n2. การตอบรับ Comment จากทุกฝ่าย เอกสาร และไฟล์ต่างๆ มีจำนวนมาก และใช้เวลามากในการค้นหา\n3. สายพานในไลน์ Clean zone มีจำนวนมาก แต่ไม่มีการทำทะเบียนสายพานที่เป็นปัจจุบันและครบถ้วน\n4. Link หรือฟอร์มต่างๆ ที่ทีมงานต้องใช้ในการทำงานประจำวันมีจำนวนมาก ไม่สะดวกและใช้เวลาในการหา\n5. ปัญหาการเข้างาน การลาต่างๆ ของทีมงานไม่เป็นระบบ และไม่มีประวัติย้อนหลังให้ทุกคนในแผนกดู",
+    process:"1. ใช้ AI ในการสร้างเว็บแอปปรับปรุง Master plan ใหม่ให้สามารถแก้ไขได้เป็นระบบ และง่ายต่อการใช้งานจ่ายงาน PM\n2. ใช้ AI ในการสร้างเว็บแอปรวบรวมเอกสารต่างๆ ไฟล์ และเว็บแอปที่ทำ เข้ามาอยู่ในแอปเดียว\n3. ใช้ AI ในการสร้างเว็บแอปทำทะเบียนสายพานในไลน์ Clean zone โดยเป็นระบบกดดูข้อมูลได้เลยแต่ละเส้นในแผน Layout\n4. สร้าง Line Official Account ของแผนกที่มีริชเมนู เช่น Link หรือฟอร์มต่างๆ ที่ทีมงานใช้ประจำวัน\n5. ใช้ AI ทำระบบลาออนไลน์ ให้ผนวกเข้ากับระบบ Line Official Account",
+    reward:REWARD_COMMON},
+  p_ford:{
+    mission:"1) รับผิดชอบเครื่องจักรในไลน์ผลิต Clean zone ได้แก่ Metal detector, I-Cut, เครื่องจักร Line Packing การทำ WI และสำรองอะไหล่ Spare Part รวมถึงแก้ไขปัญหาเมื่อเครื่องจักรเกิดเบรคดาวน์\n2) ติดตาม Supplier ส่งมอบเครื่องจักรให้ทดลอง และเข้ามา PM เครื่องจักร\n3) พัฒนาเว็บไซต์ที่ช่วยอำนวยความสะดวกให้กับแผนก เช่น เว็บที่ช่วยในการสรุปงานหยุดผลิตของแต่ละสัปดาห์ และเว็บที่ใช้ในการค้นหาปัญหาของเครื่องจักรและวิธีการแก้ไข",
+    daily:"1) การจัดแผนงานประจำวันให้กับทีมงาน แจกจ่ายงานที่ต้องทำในแต่ละวัน\n2) การติดตามประสิทธิภาพและปัญหาที่พบจากเครื่องจักรที่รับผิดชอบ แก้ไขรวมถึงป้องกันการเกิดปัญหา และการ Spare part อะไหล่\n3) Morning talk Focus งานประจำวันก่อนเริ่มงานกับทีมงานวิศวกรรม",
+    improve:"1) ระบบในการทำเอกสารหลายๆ อย่าง เช่น ระบบสรุปหยุดผลิตที่ต้องกรอกข้อมูลใน google sheet\n2) ไม่สามารถรู้ได้ว่าอุปกรณ์เกิดความเสียหาย มีสาเหตุมาจากอะไร และไม่รู้วิธีแก้ไข",
+    process:"1) จัดทำเว็บไซต์ที่สามารถทำการสรุปหยุดผลิตได้ในโทรศัพท์ และง่ายต่อการทำงาน\n2) ทำเว็บที่สามารถแสดงสาเหตุ วิธีการตรวจสอบ และแสดงวิธีการแก้ไขของแต่ละเครื่องจักร",
+    reward:REWARD_COMMON},
+  p_plai:{
+    mission:"1. การจัดการเครื่องจักร: ควบคุมดูแลการทำงานของเครื่องจักรและจัดทำแผน PM เชิงรุก เพื่อลดอัตราการหยุดชะงักของสายการผลิต (Machine Downtime)\n2. การเพิ่มประสิทธิภาพ: ปรับปรุงกระบวนการผลิตเพื่อขจัดปัญหาคอขวด และผลักดันการนำเทคโนโลยีเครื่องจักรมาใช้ทดแทนแรงงานในจุดที่เหมาะสม\n3. การพัฒนาบุคลากร: เสริมสร้างศักยภาพทีมงานผ่านการสอนงาน (Coaching) และการถ่ายทอดทักษะความเชี่ยวชาญที่ถูกต้องตามมาตรฐาน\n4. ดูแลเครื่องจักรหลัก: ไก่เป็น ระบบลำเลียงกล่อง, Stunner, Auto Rehang",
+    daily:"1. การจัดแผนงานประจำวันให้กับทีมงาน แจกจ่ายงานที่ต้องทำในแต่ละวัน\n2. การติดตามประสิทธิภาพและปัญหาที่พบจากเครื่องจักรที่รับผิดชอบ แก้ไขรวมถึงป้องกันการเกิดปัญหา และการ Spare part อะไหล่ ปรับปรุงแผน PM\n3. ติดตามงานโปรเจคที่ได้รับมอบหมาย ความคืบหน้า แผนการดำเนินงานต่อไป\n4. การปรับปรุงงานในจุดงานของผลิตและวิศวะ ตามแผนกต่างๆ ที่ได้สำรวจหรือประชุมร่วมกัน\n5. Morning talk Focus งานประจำวันก่อนเริ่มงานกับทีมงานวิศวกรรม",
+    improve:"1. ทักษะการวิเคราะห์หน้างานของช่างแต่ละทีมไม่เท่ากัน ทำให้เมื่อเจอปัญหาเดียวกัน ช่างแต่ละทีมมีวิธีแก้ปัญหาและเวลาในการแก้ไขไม่เท่ากัน ซึ่งบางปัญหาอาจต้องรอผู้ชำนาญการเข้ามาแก้ไขปัญหาให้\n2. เมื่ออยากสืบสภาพกับปัญหาเครื่องจักรที่เคยเกิดขึ้นซ้ำ ช่างเข้าถึงข้อมูลได้ยาก",
+    process:"1. การพัฒนาทักษะ: ดำเนินการจัดอบรมทักษะการเดินเครื่องจักร (Machine Operation Skills) เป็นประจำทุกเดือน เพื่อรักษามาตรฐานและยกระดับศักยภาพของทีมงาน\n2. การจัดการปัญหา: สร้างระบบการตอบโต้ปัญหาหน้างานเชิงรุก โดยการจัดทำ QWI ทันทีที่พบประเด็นใหม่ พร้อมสื่อสารและถ่ายทอดความรู้แก่ทีมงานในรูปแบบ Digital Knowledge Hub ผ่าน Line Group\n3. จัดทำ Web app เพื่อให้ช่างได้ทำการลงบันทึกงานประจำวัน และสามารถเข้าถึงข้อมูลย้อนหลัง การซ่อมสร้าง สาเหตุ วิธีการแก้ปัญหา และข้อมูล Breakdown ของเครื่องจักรทุกเครื่องในไลน์ผลิตได้",
+    reward:"1. %Break Down เครื่องจักรหลักไก่เป็น ห้องล้วง (คิดตามสัดส่วนผลงานเทียบเป้าหมาย)\n2. ปรับปรุงงานโปรเจค มูลค่า 720,000 บาท/ปี/คน\n3. PB หรือ ย่น ย่อ ยุบ 2 เรื่อง/เดือน\n4. ลดพลังงานรวม 25,000 หน่วย/ปี"},
+  p_pik:{
+    mission:"ดูแลให้เครื่องจักรไลน์บดผสมของโรงงานให้สามารถทำงานได้อย่างต่อเนื่อง มีประสิทธิภาพ และลดการหยุดเครื่องจาก Breakdown โดยมุ่งเน้นการบำรุงรักษาเชิงป้องกัน การวิเคราะห์ปัญหา และคิดการปรับปรุงเครื่องจักรให้ดีขึ้น เช่น ตรวจสอบสภาพเครื่องจักร Mixer, Hammer Mill, Conveyor, พรีมิกซ์ การ PM จัดทำ Spare Part กับ Master Plan วิเคราะห์สาเหตุ BD ติดตามงานซ่อมจากช่างและซัพ เป็นต้น",
+    daily:"~7.30 - 8.00 น. Morning talk\n~8.00 - 12.00 น. ติดตามงานซ่อมบำรุงของช่าง หรือซัพ พร้อมกับเดินตรวจเช็คเครื่องจักรไลน์บดผสม ติดตามและวิเคราะห์ BD ที่หน้างาน\n~13.00 - 13.30 น. ประชุม sunfeed\n~13.30 - 17.30 น. ติดตามงานกับช่างซ่อมหรือซัพ หากมีเวลาว่างจะทำ Master plan หรือนำปัญหาที่พบหน้างานมาวิเคราะห์เพื่อหาวิธีแก้ปัญหา\n~ทุกวัน เดินตรวจดูไลน์บดผสม\n~1 อาทิตย์ ตรวจสอบเครื่องโม่ Mix Roller Mill",
+    improve:"การค้นหาหรือการเตรียม Spare Part เพื่อนำไปทำการเปลี่ยนหรือซ่อมเครื่องจักรอาจใช้เวลาค้นหาเป็นชั่วโมง หากเป็นคนที่ไม่เคยเบิกไม่รู้จักเครื่องจักรตัวนั้น และเป็นเรื่องที่น่าเบื่อเมื่อต้องคอยติดต่อคนที่รู้ เพื่อให้ระบุรหัสเบิกของนั้นๆ ให้ตลอด จะทำการแก้ไขปัญหานี้โดยการทำไฟล์เก็บข้อมูล Spare part ที่จำเป็น เสียบ่อย หรือต้องเปลี่ยนตามรอบ ของเครื่องจักรนั้นๆ",
+    process:"แบบเก่า : ช่างแจ้ง Part → วิศวกรหา Part No. → เช็ก Stock → หา Supplier → ทำ PR → ส่งอนุมัติ\nแบบใหม่ : เลือกเครื่อง → เลือก Spare Part → ระบบแสดง Part No./Stock → สร้าง PR",
+    reward:"ประเมินจากผลลัพธ์ Before–After โดยดู 3 เรื่องหลัก คือ ลดเวลา ลดต้นทุน และลดความเสี่ยงของเครื่องจักร เช่น การลดเวลาค้นหา Spare Part การลด Stock ที่ไม่จำเป็น หรือการทำให้ Critical Spare พร้อมใช้งานมากขึ้น แล้วให้คะแนนรวม 100 คะแนนตามผลลัพธ์จริง ถ้าผลงานสามารถนำไปใช้ได้จริงและสร้างผลประหยัด เพิ่มประสิทธิภาพให้โรงงานได้ ก็ควรได้รับรางวัลสูงขึ้น"},
+  p_phet:{
+    mission:"1. PM กับช่างเครื่องหลัง morning talk (ทุกวัน)\n2. จัดทำแผน master plan เครื่องอัดเม็ดและติดตามงานช่างกับปีโป้ (ทำอยู่เรื่อยๆ)\n3. สืบสภาพปัญหาของมอเตอร์ทิป ที่สกรูถังไมโครบิต (งานไม่คาดคิด)",
+    daily:"1. เดิน PM กับช่างเพื่อตรวจเช็คความเรียบร้อยว่าช่างไป PM ครบตามแผนหรือเปล่า (ได้เดินไลน์ผลิตไปด้วย จุดไหนที่ไม่รู้จะได้รู้)\n2. สืบประวัติเครื่องจักรและทำรอบเปลี่ยนอะไหล่ของเครื่องจักร และเช็คประวัติ breakdown ย้อนหลังเพื่อเป็นข้อมูลมาจัดทำแผน PM\n2.1 เดินเข้าไลน์ผลิตเมื่อได้รับแจ้งซ่อมเครื่องจักร\n3. เดินเข้าไลน์ผลิตเพื่อสอบถามข้อมูลจากช่างหน้างานว่าปัญหาเกิดจากอะไร",
+    improve:"1. ตอน PM ที่ช่างไปอัดจารบี บางทีไม่รู้ว่าที่อัดจารบีเข้าไปมันเข้าหรือไม่เข้า ส่วนใหญ่จะรอดูพอมีจารบีของเก่าปิ้นออกมาถึงพอ แต่บางทีอัดเข้าไปแล้วก็ไม่มีจารบีปิ้นออกมา ทำให้ไม่รู้ว่าที่ช่างอัดเข้าไปมันเข้าหรือไม่เข้า\n2. มีช่างไป PM น้อยในบางวัน ทำให้งาน PM บางวันใช้เวลานาน\n3. ยังไม่มีแผนประวัติการเปลี่ยนอะไหล่เครื่องจักร รอบเปลี่ยน ทำให้ไม่รู้ว่าเครื่องจักรตัวนี้เคยเปลี่ยนอะไหล่ไปช่วงไหนหรือถึงรอบเปลี่ยนช่วงไหน",
+    process:"ลดปัญหาการเกิด breakdown ของเครื่องจักร\n1. จัดทำแผน PM ของเครื่องจักร และ master plan ของเครื่องจักร เพื่อป้องกันการเกิด breakdown\n2. เช็คประวัติการเกิด breakdown ย้อนหลัง เพื่อจะได้ลงบันทึกว่าเครื่องจักรตัวนี้เกิดปัญหาอะไร และแก้ปัญหาอะไรไป และจะได้ลงบันทึกว่ามีการเปลี่ยนอะไหล่ไปช่วงไหน เพื่อนำข้อมูลมาลงบันทึกลงในแผน PM และ master plan",
+    reward:"1. ดูจากความสามารถของช่าง\n2. ความใส่ใจในหน้าที่และความรับผิดชอบของตัวเอง"},
+  p_happy:{
+    mission:"ดูแลให้เครื่องจักรไลน์บดผสมของโรงงานให้สามารถทำงานได้อย่างต่อเนื่อง มีประสิทธิภาพ และลดการหยุดเครื่องจาก Breakdown โดยมุ่งเน้นการบำรุงรักษาเชิงป้องกัน การวิเคราะห์ปัญหา และคิดการปรับปรุงเครื่องจักรให้ดีขึ้น เช่น ตรวจสอบสภาพเครื่องจักร Mixer, Hammer Mill, Conveyor, พรีมิกซ์ การ PM จัดทำ Spare Part กับ Master Plan วิเคราะห์สาเหตุ BD ติดตามงานซ่อมจากช่างและซัพ เป็นต้น",
+    daily:"~7.30 - 8.00 น. Morning talk\n~8.00 - 12.00 น. ติดตามงานซ่อมบำรุงของช่าง หรือซัพ พร้อมกับเดินตรวจเช็คเครื่องจักรไลน์บดผสม ติดตามและวิเคราะห์ BD ที่หน้างาน\n~13.00 - 13.30 น. ประชุม sunfeed\n~13.30 - 17.30 น. ติดตามงานกับช่างซ่อมหรือซัพ หากมีเวลาว่างจะทำ Master plan หรือนำปัญหาที่พบหน้างานมาวิเคราะห์เพื่อหาวิธีแก้ปัญหา\n~ทุกวัน เดินตรวจดูไลน์บดผสม\n~1 อาทิตย์ ตรวจสอบเครื่องโม่ Mix Roller Mill",
+    improve:"การค้นหาหรือการเตรียม Spare Part เพื่อนำไปทำการเปลี่ยนหรือซ่อมเครื่องจักรอาจใช้เวลาค้นหาเป็นชั่วโมง หากเป็นคนที่ไม่เคยเบิกไม่รู้จักเครื่องจักรตัวนั้น และเป็นเรื่องที่น่าเบื่อเมื่อต้องคอยติดต่อคนที่รู้ เพื่อให้ระบุรหัสเบิกของนั้นๆ ให้ตลอด จะทำการแก้ไขปัญหานี้โดยการทำไฟล์เก็บข้อมูล Spare part ที่จำเป็น เสียบ่อย หรือต้องเปลี่ยนตามรอบ ของเครื่องจักรนั้นๆ",
+    process:"แบบเก่า : ช่างแจ้ง Part → วิศวกรหา Part No. → เช็ก Stock → หา Supplier → ทำ PR → ส่งอนุมัติ\nแบบใหม่ : เลือกเครื่อง → เลือก Spare Part → ระบบแสดง Part No./Stock → สร้าง PR",
+    reward:"ประเมินจากผลลัพธ์ Before–After โดยดู 3 เรื่องหลัก คือ ลดเวลา ลดต้นทุน และลดความเสี่ยงของเครื่องจักร เช่น การลดเวลาค้นหา Spare Part การลด Stock ที่ไม่จำเป็น หรือการทำให้ Critical Spare พร้อมใช้งานมากขึ้น แล้วให้คะแนนรวม 100 คะแนนตามผลลัพธ์จริง"},
+  p_bas:{
+    mission:"หัวใจหลักคือการบริหารจัดการและดูแลรักษาระบบคลังสินค้าอัตโนมัติให้สามารถจัดเก็บ จัดจ่าย และเคลื่อนย้ายสินค้าได้อย่างถูกต้อง รวดเร็ว ปลอดภัย และมีเสถียรภาพสูงสุด เพื่อสนับสนุนกระบวนการทางธุรกิจและโลจิสติกส์ของบริษัทซันฟู้ดได้อย่างไม่สะดุด\n- การบำรุงรักษาและการป้องกัน PM ให้มีประสิทธิภาพสูงสุด\n- การจัดการข้อมูลและระบบควบคุม สามารถตรวจสอบความถูกต้องในกระบวนการได้อย่างมีระบบที่สามารถอ้างอิงได้\n- ระบบอะไหล่ Spare part ให้ครอบคลุมและสามารถตอบโต้สถานการณ์ฉุกเฉินได้อย่างรวดเร็ว\n- ข้อมูลบันทึก Dashboard สำหรับติดตามสถานะความเบี่ยงเบนของระบบ\n- การควบคุมและดูแลสมาชิกภายในทีมอย่างเป็นระบบ ลดความขัดแย้งที่อาจจะเกิดขึ้น\n- จัดหาอุปกรณ์ที่เหมาะสมต่อการปฏิบัติงาน ส่งเสริมสวัสดิภาพให้เป็นไปตามจริยธรรมมนุษย์\n- การพัฒนาและปรับปรุงระบบ ลดต้นทุน เพิ่มมูลค่าในสายงาน",
+    daily:"[ต้นสัปดาห์ (อังคาร)]\nเน้นการวางแผน กำหนดเป้าหมาย ทบทวนภาพรวมหรือปัญหาค้างคาจากสัปดาห์ที่ผ่านมา (เช่น Downtime ที่เกิดขึ้น, Alarm บ่อยๆ)\nสรุปงานซ่อมบำรุงใหญ่ (PM) หรือแผนงานสำคัญที่จะต้องทำในสัปดาห์นี้ รวมถึงเช็คแผนการทำงานรายวัน (Daily Routine) ว่าลูกน้องแต่ละคนรับผิดชอบอะไร\nเช็กอะไหล่ (Spare Parts) ที่จำเป็นว่ามีพร้อมไหม หากมีการเปลี่ยนแปลง Lead time เรามีแผนการป้องกันอย่างไร\n[ปลายสัปดาห์ (เสาร์)]\nติดตามสอบถามสถานะงานตามแผน (เช่น งาน PM ตามรอบคืบหน้าไปถึงไหนแล้ว?)\nเช็คปัญหา \"งานน่าเบื่อ\" หรือข้อขัดข้องที่เกิดขึ้นซ้ำๆ ในช่วงต้นสัปดาห์\nการแก้ไขปัญหาและสนับสนุน (Troubleshooting & Support): หากพบว่างานล่าช้ากว่ากำหนด ให้ลงไปช่วยติดตามอย่างใกล้ชิด\nตรวจสอบข้อมูลระบบ WCS/WMS ว่ามีความผิดพลาดเรื่องตำแหน่ง Lock สินค้าหรือไม่",
+    improve:"กระบวนการโหลดสินค้า CS3 เพราะไม่สามารถใช้ทรัพยากรมนุษย์ ศักยภาพ ได้อย่างคุ้มค่า อยากให้ทุกคนได้มีเวทีที่สามารถแสดงความสามารถในการพัฒนาปรับปรุงระบบได้ ไม่ใช่มาเดินบังคับรถ ขับ AGV เคลื่อนย้ายสินค้าไปวันๆ และตกกระทบด้วยเวลาที่ไม่เพียงพอ ไม่สามารถประเมินหรือจัดงานอื่นๆ ได้ในวันที่ควรจะเป็น",
+    process:"ความไม่กล้าคิด ไม่กล้าทำ ให้เราลองเปลี่ยนบทบาทหัวหน้าจาก \"ผู้สั่งการ\" เป็น \"ผู้สนับสนุน\" ทีมมักจะไม่กล้าคิดหรือเสนอ เพราะกลัวทำไม่ได้ หรือกลัวเพิ่มภาระให้ตัวเอง\nเปลี่ยนคำถามในการสื่อสาร แทนที่จะถามว่า \"งานซ่อมเสร็จหรือยัง?\" ให้ลองถามว่า \"จุดนี้มีตรงไหนที่ทำยากไหม? มีเครื่องมืออะไรที่จะช่วยให้เราทำงานนี้ไวขึ้นได้บ้าง?\"\nสนับสนุนเรื่องทรัพยากร: เมื่อทีมเสนอไอเดีย หัวหน้าต้องช่วยประสานงานหาเครื่องมือ งบประมาณเล็กๆ น้อยๆ หรือช่วยคุยกับฝ่ายอื่นเพื่อขอทดลอง",
+    reward:"เมื่อทีมเริ่มแบ่งเวลามาพัฒนาสำเร็จ ต้องมีผลตอบแทนที่มองเห็นได้ชัดเจน\nประเมินผลงานที่ \"การปรับปรุง\" ไม่ใช่แค่ \"การประคองงาน\": เพิ่มสัดส่วนคะแนน KPI ประจำปีในเรื่อง \"การคิดค้น/เสนอแนวทางปรับปรุงงาน (Kaizen) ดีเด่น\" ให้ทุกคนรู้สึกถึงความสำคัญในการพัฒนาและสิ่งตอบแทนที่จะได้รับ"},
+  p_fuse:{
+    mission:"[ทำทุกวัน]\n- Morning talk ประจำวัน ติดตามปัญหาหน้างาน เพื่อนำมาปรึกษากับทีมงาน หาแนวทางแก้ไขป้องกันการเกิดซ้ำ\n- Focus งานปรับปรุงแก้ไข หรือหาจุดบกพร่องใหม่\n- ติดตาม PM ประจำเดือน\n[สัปดาห์/ครั้ง]\n- งานติดตามอะไหล่ Spare part CS2 ระบบใหม่\n- เคลียร์ Daily Report ของแต่ละสัปดาห์ เพื่อทราบ Cap ในการจัดเก็บจัดจ่ายของแต่ละเดือน และเวลาที่เสียกับปัญหาเบรคดาวน์ประจำวัน",
+    daily:"[ทำทุกวัน]\n- Morning talk ประจำวัน ติดตามปัญหาหน้างาน\n- Focus งานปรับปรุงแก้ไข หรือหาจุดบกพร่องใหม่\n- ติดตาม PM ประจำเดือน\n[สัปดาห์/ครั้ง]\n- งานติดตามอะไหล่ Spare part CS2 ระบบใหม่\n- เคลียร์ Daily Report ของแต่ละสัปดาห์",
+    improve:"[กำลังดำเนินการ]\n- งานติดตั้ง Blower เป่าแห้งพาเลท คลัง CS2 อยู่ในขั้นตอนการรวบรวมอุปกรณ์การติดตั้ง\n- งานปรับปรุง Dashboard ASRS\n[ดำเนินการเสร็จสิ้น]\n- งานปรับปรุง Mappings Pallet CS2 ย้ายจุดติดตั้ง Sensor ยึดซัพพอร์ทให้แข็งแรง และทำการ์ดป้องกัน ครบทั้ง 10 station\n[ปรับปรุงเพิ่มเติมในอนาคต]\n- งานติดตั้งตู้ Load center 12 ช่อง 3 เฟส CS2\n- การทำประตู service สำหรับเข้าคลัง CS2 ปัจจุบันต้องเดินเข้าออกบน Conveyor ซึ่งมีความเสี่ยงต่อการเกิดอุบัติเหตุ",
+    process:"- การจัดหาอุปกรณ์แผ่นฮีตเตอร์ หรือสร้าง Location ที่มีการติดตั้งอุปกรณ์สำหรับการอบงาโดยเฉพาะ เพื่อลดขั้นตอนไม่ต้องเข้าไปในคลัง และประหยัดเวลาในการ PM\n- ขั้นตอน: 1. สั่ง Survey ไป Location ที่มีการติดอุปกรณ์ 2. สั่งยื่นงา และรอเครื่องอบงานประมาณ 15 นาที สามารถเปิดรับงานได้ปกติ",
+    reward:"- การตรงต่อเวลาในการเข้างาน\n- การให้ความสนใจ และ Focus กับหน้างาน\n- ทักษะในการแก้ไขปัญหา\n- มีความคิดริเริ่ม ที่จะเพิ่มเติม หรือปรับปรุง\n- ให้ความร่วมมือต่อกิจกรรมต่างๆ ในการทำงาน"},
+  p_nick:{
+    mission:"[ทำทุกวัน]\n- Morning talk ประจำวัน ติดตามปัญหาหน้างาน เพื่อนำมาปรึกษากับทีมงาน หาแนวทางแก้ไขป้องกันการเกิดซ้ำ\n- Focus งานปรับปรุงแก้ไข หรือหาจุดบกพร่องใหม่\n- ติดตาม PM ประจำเดือน\n[สัปดาห์/ครั้ง]\n- งานติดตามอะไหล่ Spare part CS2 ระบบใหม่\n- เคลียร์ Daily Report ของแต่ละสัปดาห์",
+    daily:"",
+    improve:"[กำลังดำเนินการ]\n- งานติดตั้ง Blower เป่าแห้งพาเลท คลัง CS2\n- งานปรับปรุง Dashboard ASRS\n[ดำเนินการเสร็จสิ้น]\n- งานปรับปรุง Mappings Pallet CS2 ครบทั้ง 10 station\n[ปรับปรุงเพิ่มเติมในอนาคต]\n- งานติดตั้งตู้ Load center 12 ช่อง 3 เฟส CS2\n- การทำประตู service สำหรับเข้าคลัง CS2",
+    process:"- การจัดหาอุปกรณ์แผ่นฮีตเตอร์ หรือสร้าง Location ที่มีการติดตั้งอุปกรณ์สำหรับการอบงาโดยเฉพาะ เพื่อลดขั้นตอนไม่ต้องเข้าไปในคลัง\n- ขั้นตอน: 1. สั่ง Survey ไป Location 2. สั่งยื่นงา และรอเครื่องอบงานประมาณ 15 นาที",
+    reward:"- การตรงต่อเวลาในการเข้างาน\n- การให้ความสนใจ และ Focus กับหน้างาน\n- ทักษะในการแก้ไขปัญหา\n- มีความคิดริเริ่ม ที่จะเพิ่มเติม หรือปรับปรุง\n- ให้ความร่วมมือต่อกิจกรรมต่างๆ"},
+  p_jeep:{
+    mission:"O&M BIOGAS & งานปรับปรุงงาน\n- operate & PM บ่อแก๊ส / generator biogas\n[งาน Project]\n- งานปรับปรุงบ่อ RU: ติดตั้งใบกวนใหม่, เคลียตะกอนบ่อ SW3 RU, ติดตั้งผ้าใบใหม่ SW3 RU, ทำฝาใบกวนใหม่\n- ปรับปรุง bioscrubber: ซ่อมถัง bioscrubber & ติดตั้งย้ายตู้ control ใหม่\n- autodrain น้ำท่อแก๊ส: ติดตั้งปั๊ม autodrain, แก้ไขท่อแก๊สใต้ถนนใหม่\n- งานปรับปรุงพัดลมห้องเจน / ซ่อมแซมแก้ไข silencer\n- monitoring Solarcell ทั้งเครือ\n[monitoring Operate & PM & project ENV]\n- ติดตาม monitoring งานผลิตน้ำดีและบำบัดน้ำเสีย และงาน PM อุปกรณ์เครื่องจักรในระบบ\n- raw water ติดตั้งรอกยกปั๊ม และ screen rotary\n- ติดตั้งปั๊มเติมอากาศเพิ่มบ่อ AS / นำบ่อตกตะกอน 4-5 กลับมาใช้งาน\n- งาน auto drain ถัง scrubber / งานติดตั้งปั๊มโรงฟัก no.2\n- งานปรับปรุงติดตั้งระบบไฟฟ้าใหม่ของ ENV\n[งานอื่นๆ] PM sub 115 kV sun2",
+    daily:"เช้า morning talk ENE & ENV ทุกเช้า ทุกวัน\nupdate การผลิตไฟฟ้า SOLARCELL + BIOGAS ทุกวัน เช้า\nงานราชการ เอกสาร กกพ สัปดาห์แรกของเดือน ทุกเดือน\nที่เหลือแพลนงาน ตาม project ที่ต้องติดตามในสัปดาห์",
+    improve:"ปัญหาการจัดการกลิ่น และการจัดการมูลไก่จากฟาร์ม (แผนฟาร์มและบ่อแก๊สไม่สอดคล้องกัน ปัญหาพื้นที่กองมูลไก่)",
+    process:"1. project autodrain น้ำท่อแก๊ส ลดคน 1 คนในการเดรนน้ำทุกวัน และลด breakdown gen biogas จาก pressure low\n2. project autodrain น้ำถัง bioscrubber ลดคน 1 คนในการเติม เดรนน้ำ เพิ่มประสิทธิภาพการบำบัดแก๊ส คุมค่า PH ให้อยู่ในเกณฑ์\n3. ติดตั้งชุด control ควบคุมระยะไกล ลดคนเปิด-ปิดน้ำส่งน้ำโรงฟัก ลดความเสี่ยง breakdown น้ำขาดจาก human error\n4. ติดตั้งรอกสไลด์ยกปั๊มบ่อ raw water และ EQ ลดระยะเวลา breakdown เนื่องจากเดิมใช้แมคโครในการยกปั๊ม\n5. ติดตั้ง screen บ่อ raw water แก้ไขปัญหาปั๊มมีเศษติด ทำให้ปั๊มเสียหายบ่อย",
+    reward:"ประเมินจาก KPI ความสำเร็จของงานที่ได้รับมอบหมาย"},
+  p_jep:{
+    mission:"พันธกิจ คือ งานติดตามน้ำเสีย และวางแผนปรับปรุงระบบ รายงานน้ำ งานแก้ไขปัญหาเครื่องจักรเสียหน้างาน งานปรับปรุงระบบเพื่อเพิ่มประสิทธิภาพ ลดต้นทุน งานแก้ไขปัญหาเรื่องกลิ่นรบกวน โรงผลิตแก๊สชีวภาพ\n- งานเอกสารตรวจระบบ เช่น ทส. 1,2 รว.1,2\n- งานเก็บตัวอย่างน้ำเสีย",
+    daily:"งานติดตามน้ำเสีย และวางแผนปรับปรุงระบบ รายงานน้ำ งานแก้ไขปัญหาเครื่องจักรเสียหน้างาน — ทุกวัน\nงานปรับปรุงระบบเพื่อเพิ่มประสิทธิภาพ ลดต้นทุน — 3 วัน/สัปดาห์\nงานแก้ไขปัญหาเรื่องกลิ่นรบกวน โรงผลิตแก๊สชีวภาพ — 2 วัน/สัปดาห์\nงานเอกสารตามรอบการจัดส่ง รว. 2 ครั้งต่อปี, ทส. กับน้ำเสีย ทุกเดือน",
+    improve:"ยังไม่มีการสำรอง หรือปรับปรุงให้ระบบมีประสิทธิภาพสูงสุด และเรื่องการทำงานของทีมงาน ไม่ Active กับงานเท่าไหร่ และไม่ค่อยสื่อสารกับทางหัวหน้า",
+    process:"1. จัดเรียงงานให้เหมาะสม และให้ทีมงานรายงานทุกครั้งที่เกิดปัญหา มีการบันทึกความคืบหน้างานทุกครั้งโดยทีมงาน หลังจบวันแยกกับการรายงานประจำวัน",
+    reward:"ประเมินจาก % ความคืบหน้าของงาน และความถูกต้องของงาน"},
+  p_don:{
+    mission:"- ดูแลระบบบำบัดน้ำเสียให้ผ่านเกณฑ์มาตรฐาน\n- ดูแลระบบผลิตน้ำประปาให้ได้มาตรฐาน\n- การควบคุมต้นทุนค่าใช้จ่ายให้อยู่ในเป้า\n[งานปฏิบัติการ (Operation)]\n- ติดตามตรวจเช็คคุณภาพน้ำดี-น้ำเสียประจำวัน\n- การ Operate ระบบบำบัดน้ำเสียประจำวัน\n[งานบำรุงรักษา (Maintenance)]\n- จัดทำแผน PM เครื่องจักรและติดตามงาน PM\n- จัดแผนงานทีมงานในแต่ละสัปดาห์\n[งานเอกสาร/รายงาน (Documentation)]\n- งานตรวจน้ำเสียประจำเดือน / ตรวจน้ำผิวดิน / รายงาน CoP / เอกสาร ทส.1-2, รว.1-2",
+    daily:"- รายงานผลติดตามคุณภาพน้ำและค่าพารามิเตอร์ประจำวัน\n- งานโปรเจคที่ได้รับมอบหมายและข้อมูลซัพพอร์ต\n- การหาเทคโนโลยีใหม่ๆ มาใช้ในระบบพร้อมข้อมูลซัพพอร์ต\n- ติดตามงานทีมงานและสรุปงานทีมงานประจำวัน",
+    improve:"- การตรวจวัดค่าพารามิเตอร์น้ำประจำวัน\n- ทีมงานไม่มีความกระตือรือร้นในการทำงาน อาจจะทำให้งานล่าช้า ขาดการสื่อสาร\n- อยากปรับปรุงให้ระบบมีเทคโนโลยีที่สามารถติดตามระบบได้ทันทีทันเหตุการณ์ พวก SCADA",
+    process:"- การติดตั้งกล้อง CCTV เพื่อลดระยะเวลาการเดินเช็คระบบของทีม เนื่องจากปัจจุบันมีพื้นที่และจุดตรวจเช็คหลายจุด และแต่ละจุดอยู่ห่างกันมาก",
+    reward:"- ควรประเมินตามผลงานให้ได้ตามเกณฑ์หรือเป้า\n- ความคืบหน้าของโปรเจค\n- หน้าที่รับผิดชอบและดูแลตามหน้างาน"},
+  p_sippo:{
+    mission:"- ติดตามงานช่างซ่อมบำรุง\n- จัดแผน PM ช่างซ่อมบำรุง\n- ติดตามงานเสียเวลาหรือเบรคดาวน์\n- หาวิธีแก้ไขไม่ให้เกิดการเบรคดาวน์ซ้ำ\n- ติดตามงานหลังแก้ไขปัญหา\n- ติดต่อซัพเข้าทำงานส่วนงานซ่อมบำรุง\n- ติดตามงานช่างคลังสินค้า / จัดแผน PM ช่างคลังสินค้า\n- ติดตามงานช่างบอยเลอร์ / ติดต่อซัพเข้าทำงานส่วนงานบอยเลอร์\n- งานระบบน้ำ ตรวจเช็คและเก็บข้อมูลค่าคลอรีน\n[งานรองที่กลายเป็นงานหลัก]\n- งานออกแบบเขียนแบบ (ส่วนของซ่อมบำรุง)\n- งานออกแบบเขียนแบบ (งาน คปอ.)",
+    daily:"[ทุกวัน]\n- รายงานงานที่ทำเมื่อวานทุกเช้าช่วง Morning Talk\n- ตรวจดูรายงานการทำงานของช่างซ่อมบำรุง / ช่างคลังสินค้า / ช่างบอยเลอร์\n- ตรวจเช็คอีเมล\n- ลงข้อมูลค่าคลอรีนในน้ำ\n- ตรวจดูงานที่ได้รับมอบหมายจากหัวหน้า / แผนกต่างๆ\n- เดินไลน์ผลิต เก็บข้อมูลเบรคดาวน์\n- ประชุมรายงานปัญหา 13.00 น.\n[สัปดาห์]\n- ประชุมโปรเจค (ทุกวันพฤหัสบดี)\n[ไม่แน่นอน]\n- ติดตามการทำงานของซัพพลายเออร์ที่ติดต่อเข้ามาทำงานหน้างาน\n- เดินไลน์ผลิตเก็บข้อมูลเครื่องจักรแผนกคลังสินค้า\n- งานออกแบบ เขียนแบบส่วนของซ่อมบำรุง/คปอ.",
+    improve:"- ระบบลงข้อมูลการทำงานแต่ละวันของช่างซ่อมบำรุง / คลังสินค้า\n- ระบบ PM ของช่างคลังสินค้า\n- ปัญหาเบรคดาวน์ของเครื่องจักรในไลน์ผลิต\n- ปัญหาการค้นข้อมูลย้อนหลัง\n- การโดสคลอรีนที่ไม่มีระบบอินเตอร์ล็อค\n- งานออกแบบที่กินเวลางานส่วนอื่นๆ",
+    process:"- การลงข้อมูล ควรลงข้อมูลแค่ในระบบที่เดียวพอ (ระบบที่สามารถดูข้อมูลตอนไหนที่ไหนก็ได้)\n- จัดโฟลเดอร์ไฟล์ต่างๆ ให้เป็นระเบียบเรียบร้อย ไม่ใส่ข้อมูลไว้ในไฟล์ของคนใดคนหนึ่ง ลดเวลาในการหาข้อมูล\n- ทำระบบอินเตอร์ล็อคปั๊มคลอรีน ให้โดสเฉพาะช่วงที่ปั๊มบาดาลทำงาน ลดงานการเสียเวลาปรับอัตราการโดส\n- ควรมีแผนกที่ต้องโฟกัสเป็นหลักจริงๆ หลังจากครบกำหนดเวลาค่อยเปลี่ยนแผนกโฟกัส",
+    reward:"- ความสำคัญของงานที่ทำสำเร็จ\n- สามารถแจ้งแนวทางการแก้ไขปัญหา ที่สามารถนำไปปรับปรุงให้ดีขึ้นได้จริง"}
 };
 
-/* ---------- helper: local storage fallback ---------- */
-async function lsGet(k){ try{ const r=await window.storage.get(k); return r&&r.value?JSON.parse(r.value):null; }catch(e){ return null; } }
-async function lsSet(k,v){ try{ await window.storage.set(k,JSON.stringify(v)); }catch(e){} }
+const PROFILE_FIELDS=[
+  {key:'mission',label:'พันธกิจ หน้าที่'},
+  {key:'daily',  label:'งานประจำแต่ละวันที่ทำ'},
+  {key:'improve',label:'งานที่อยากปรับปรุง / ปัญหาที่พบบ่อยๆ'},
+  {key:'process',label:'กระบวนการในการทำ'},
+  {key:'reward', label:'ถ้าเราอยากให้รางวัล ควรประเมินอย่างไร'}
+];
 
-function setSync(txt){ const el=document.getElementById('syncState'); if(el) el.textContent=txt; }
+let data=[], kpiStore={}, profileStore={}, currentDept='all', currentPage='overview';
 
-/* ---------- โหลดข้อมูล (ออนไลน์ก่อน, ถ้าไม่มีค่อยใช้ในเครื่อง) ---------- */
+/* ---------- storage ---------- */
+async function lsGet(k){try{const r=await window.storage.get(k);return r&&r.value?JSON.parse(r.value):null;}catch(e){return null;}}
+async function lsSet(k,v){try{await window.storage.set(k,JSON.stringify(v));}catch(e){}}
+function setSync(t){const el=document.getElementById('syncState');if(el)el.textContent=t;}
+
 async function loadAll(){
   if(ONLINE){
     try{
       setSync('กำลังโหลด...');
       const res=await fetch(API_URL+'?t='+Date.now(),{method:'GET'});
       const j=await res.json();
-      if(j.ok && j.payload){
-        data = (j.payload.data && j.payload.data.length) ? j.payload.data : JSON.parse(JSON.stringify(DEFAULT_DATA));
-        kpiStore = j.payload.kpi || {};
-        profileStore = (j.payload.profile && Object.keys(j.payload.profile).length) ? j.payload.profile : JSON.parse(JSON.stringify(DEFAULT_PROFILE));
-        setSync('ออนไลน์ ✓ ทุกคนแก้ได้');
+      if(j.ok&&j.payload){
+        data=(j.payload.data&&j.payload.data.length)?j.payload.data:JSON.parse(JSON.stringify(DEFAULT_DATA));
+        kpiStore=j.payload.kpi||{};
+        profileStore=(j.payload.profile&&Object.keys(j.payload.profile).length)?j.payload.profile:JSON.parse(JSON.stringify(DEFAULT_PROFILE));
+        setSync('ออนไลน์ ✓');
         return;
       }
       throw new Error(j.error||'no payload');
-    }catch(e){
-      console.error('online load failed',e);
-      setSync('โหลดออนไลน์ไม่ได้ · ใช้ข้อมูลในเครื่อง');
-    }
+    }catch(e){console.error(e);setSync('โหลดออนไลน์ไม่ได้ · ใช้ในเครื่อง');}
   }
-  // fallback local
-  const d=await lsGet(LOCAL_STORE);
-  const k=await lsGet(LOCAL_KPI);
-  const pr=await lsGet(LOCAL_PROFILE);
-  data = d && d.length ? d : JSON.parse(JSON.stringify(DEFAULT_DATA));
-  kpiStore = k || {};
-  profileStore = (pr && Object.keys(pr).length) ? pr : JSON.parse(JSON.stringify(DEFAULT_PROFILE));
-  if(!ONLINE) setSync('ออฟไลน์ (ในเครื่อง)');
+  const d=await lsGet(LOCAL_STORE),k=await lsGet(LOCAL_KPI),pr=await lsGet(LOCAL_PROFILE);
+  data=d&&d.length?d:JSON.parse(JSON.stringify(DEFAULT_DATA));
+  kpiStore=k||{};
+  profileStore=(pr&&Object.keys(pr).length)?pr:JSON.parse(JSON.stringify(DEFAULT_PROFILE));
+  if(!ONLINE)setSync('ออฟไลน์ (ในเครื่อง)');
 }
-
-/* ---------- บันทึกข้อมูล ---------- */
 let saveTimer;
 async function saveAll(){
-  await lsSet(LOCAL_STORE, data);
-  await lsSet(LOCAL_KPI, kpiStore);
-  await lsSet(LOCAL_PROFILE, profileStore);
-  if(ONLINE){
-    clearTimeout(saveTimer);
-    saveTimer=setTimeout(pushOnline, 600);
-  } else {
-    flash();
-  }
+  await lsSet(LOCAL_STORE,data);await lsSet(LOCAL_KPI,kpiStore);await lsSet(LOCAL_PROFILE,profileStore);
+  if(ONLINE){clearTimeout(saveTimer);saveTimer=setTimeout(pushOnline,600);}else flash();
 }
 async function pushOnline(){
-  const payload = JSON.stringify({ data: data, kpi: kpiStore, profile: profileStore });
   setSync('กำลังบันทึก...');
-  // ส่งเป็น FormData (form-encoded) ทำงานกับ no-cors ได้แน่นอน
-  // Apps Script อ่านได้จาก e.parameter.payload
   try{
-    const fd = new FormData();
-    fd.append('payload', payload);
-    await fetch(API_URL,{ method:'POST', mode:'no-cors', body:fd });
-    setSync('บันทึกแล้ว ✓ ' + new Date().toLocaleTimeString('th-TH'));
-    flash();
-  }catch(e){
-    console.error('save failed',e);
-    setSync('บันทึกไม่สำเร็จ · ลองใหม่');
-  }
+    const fd=new FormData();
+    fd.append('payload',JSON.stringify({data:data,kpi:kpiStore,profile:profileStore}));
+    await fetch(API_URL,{method:'POST',mode:'no-cors',body:fd});
+    setSync('บันทึกแล้ว ✓ '+new Date().toLocaleTimeString('th-TH'));flash();
+  }catch(e){console.error(e);setSync('บันทึกไม่สำเร็จ');}
 }
-
-async function persist(){ await saveAll(); }
-async function persistKpi(){ await saveAll(); }
-async function persistProfile(){ await saveAll(); }
-
-const LEVEL_NAMES = {
-  75:{th:"ระดับ 75", sub:"รักษาการผู้จัดการฝ่าย"},
-  65:{th:"ระดับ 65", sub:"รักษาการผู้จัดการส่วน / ผู้เชี่ยวชาญ"},
-  55:{th:"ระดับ 55", sub:"ผู้จัดการแผนก"},
-  40:{th:"ระดับ 40", sub:"เจ้าหน้าที่"}
-};
-
-/* ===== สายองค์กร (org) ===== */
-let currentOrg = 'lmn2';
-const ORG_INFO = {
-  lmn2:    {eyebrow:'Clean Zone Unit', title:'LMN2',    sub:'ระบบแผนผัง · KPI · เป้าหมาย<br>หน่วยซ่อมบำรุงเครื่องจักร'},
-  sunfeed: {eyebrow:'Organization',    title:'Sunfeed', sub:'ระบบแผนผัง · KPI · เป้าหมาย<br>สายงาน Sunfeed'}
-};
-const ORG_LEVEL_NAMES = {
-  75:{th:"ระดับ 75", sub:"ผู้จัดการฝ่าย"},
-  65:{th:"ระดับ 65", sub:"ผู้จัดการส่วน / ผู้เชี่ยวชาญ"},
-  55:{th:"ระดับ 55", sub:"ผู้จัดการแผนก"},
-  40:{th:"ระดับ 40", sub:"เจ้าหน้าที่"}
-};
-
-// บุคลากรสาย Sunfeed (ค่าเริ่มต้น)
-const SUNFEED_PEOPLE = [
-  {id:"s_phum",  org:"sunfeed", rank:75, role:"ผู้จัดการฝ่าย", name:"นายพิทยุตม์ ทรัพย์สมบูรณ์", nickname:"ภูมิ", machines:[], goals:[]},
-  {id:"s_nat",   org:"sunfeed", rank:75, role:"ผู้จัดการฝ่าย", name:"นายณัฏฐวัสส์ ไตรยงค์",      nickname:"",    machines:[], goals:[]},
-  {id:"s_sippo", org:"sunfeed", rank:40, role:"เจ้าหน้าที่",   name:"นายกฤตยชญ์ จันทร์เดช",      nickname:"สิปโป", note:"รหัส 690511", machines:[], goals:[]},
-  {id:"s_phet",  org:"sunfeed", rank:40, role:"เจ้าหน้าที่",   name:"นายอภิสิทธิ์ เรืองชัยวัฒนกุล", nickname:"เพชร",  note:"รหัส 690631", machines:[], goals:[]},
-  {id:"s_happy", org:"sunfeed", rank:40, role:"เจ้าหน้าที่",   name:"นายวรภพ ก้อนศิลา",          nickname:"แฮปปี้", note:"รหัส 690519", machines:[], goals:[]},
-  {id:"s_pik",   org:"sunfeed", rank:40, role:"เจ้าหน้าที่",   name:"นายยุทธนากร สีหาชาติ",       nickname:"ปิ๊ก",   note:"รหัส 690383", machines:[], goals:[]}
-];
-
-// เติม org ให้คนเก่า (ถือเป็น LMN2) และเติมทีม Sunfeed ถ้ายังไม่มี
-function ensureOrgs(){
-  let changed=false;
-  data.forEach(p=>{ if(!p.org){ p.org='lmn2'; changed=true; } });
-  if(!data.some(p=>p.org==='sunfeed')){
-    data=data.concat(JSON.parse(JSON.stringify(SUNFEED_PEOPLE)));
-    changed=true;
-  }
-  return changed;
-}
+const persist=saveAll, persistKpi=saveAll, persistProfile=saveAll;
 
 let flashT;
-function flash(){ const f=document.getElementById('flash'); f.classList.add('show'); clearTimeout(flashT); flashT=setTimeout(()=>f.classList.remove('show'),1300); }
-function esc(s){return (s||"").replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function lvClass(r){ if(r>=75)return'lv75'; if(r>=65)return'lv65'; if(r>=55)return'lv55'; return'lv40'; }
-function pcClass(r){ if(r>=75)return'pc75'; if(r>=65)return'pc65'; if(r>=55)return'pc55'; return'pc40'; }
-function headColor(r){
-  if(r>=75) return 'linear-gradient(135deg,var(--ink),var(--steel))';
-  if(r>=65) return 'linear-gradient(135deg,var(--steel),var(--teal))';
-  if(r>=55) return 'linear-gradient(135deg,var(--teal),var(--steel))';
-  return 'linear-gradient(135deg,var(--amber),var(--steel))';
-}
-// คนเฉพาะสายที่เลือกอยู่
-function orgData(){ return data.filter(p=>(p.org||'lmn2')===currentOrg); }
-function sortedPeople(){ return orgData().sort((a,b)=>b.rank-a.rank); }
+function flash(){const f=document.getElementById('flash');f.classList.add('show');clearTimeout(flashT);flashT=setTimeout(()=>f.classList.remove('show'),1300);}
+function esc(s){return(s||"").replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function deptOf(p){return p.dept||'lmn2';}
+function scoped(){return currentDept==='all'?[...data]:data.filter(p=>deptOf(p)===currentDept);}
+function sortedPeople(){return scoped().sort((a,b)=>b.rank-a.rank);}
+function deptColor(d){return (DEPTS[d]||{}).color||'#2a9d8f';}
 
-/* ===== Overview page ===== */
+/* ---------- Overview ---------- */
 function renderOverview(){
-  const host=document.getElementById('levels'); host.innerHTML='';
-  const list=orgData();
-  const c=list.length;
-  document.getElementById('headcount').textContent=c;
-  document.getElementById('headcount2').textContent=c;
-  const names = currentOrg==='sunfeed' ? ORG_LEVEL_NAMES : LEVEL_NAMES;
+  const host=document.getElementById('ovBody');host.innerHTML='';
+  document.getElementById('headcount').textContent=data.length;
+  Object.keys(DEPTS).forEach(d=>{
+    const el=document.getElementById('cnt-'+d);
+    if(el)el.textContent=data.filter(p=>deptOf(p)===d).length;
+  });
+  document.getElementById('cnt-all').textContent=data.length;
+
+  if(currentDept==='all'){
+    document.getElementById('headcount2').textContent=data.length;
+    document.getElementById('ovEyebrow').textContent='Organization Map';
+    document.getElementById('ovTitle').textContent='ผังรวมองค์กร';
+    document.getElementById('ovDesc').textContent='โครงสร้างทั้งหมด แบ่งตามหัวหน้าสายและแผนก คลิกที่แผนกเพื่อดูรายละเอียด';
+    // ===== แผนผังองค์กร (tree with connectors) =====
+    const tree=document.createElement('div');tree.className='org-tree';
+    let html='<div class="tree-top"><div class="corp-node">ฝ่ายวิศวกรรม · SUNFOOD</div></div><div class="tree-stem"></div><div class="tree-split"></div>';
+    html+='<div class="tree-branches">';
+    HEADS.forEach(h=>{
+      const nick=h.nickname?` (${esc(h.nickname)})`:'';
+      const owned=h.depts.map(d=>{
+        const people=data.filter(p=>deptOf(p)===d).sort((a,b)=>b.rank-a.rank);
+        const shared=HEADS.filter(x=>x.depts.includes(d)).length>1;
+        const rows=people.length?people.map(p=>{
+          const nk=p.nickname?` (${esc(p.nickname)})`:'';
+          return `<div class="mini-row"><span class="mini-rank" style="background:${DEPTS[d].color}">${p.rank}</span>
+            <span class="mini-name">${esc(p.name)}${nk}<small>${esc(p.role)}</small></span></div>`;
+        }).join(''):'<div class="empty-note">ยังไม่มีสมาชิก</div>';
+        return `<div class="dept-branch">
+          <div class="dept-drop" style="background:${DEPTS[d].color}"></div>
+          <div class="dept-box" data-goto="${d}" style="border-color:${DEPTS[d].color}">
+            <div class="dept-box-head" style="background:${DEPTS[d].color}">
+              <span class="dn">${DEPTS[d].name}${shared?' <span class="shared-tag">ร่วม</span>':''}</span>
+              <span class="dc">${people.length} คน</span>
+            </div>
+            <div class="dept-sub">${DEPTS[d].desc}</div>
+            <div class="dept-box-list">${rows}</div>
+          </div></div>`;
+      }).join('');
+      html+=`<div class="branch">
+        <div class="branch-stem"></div>
+        <div class="head-card">
+          <div class="head-top"><div class="r">${esc(h.role)} · ระดับ ${h.rank}</div>
+          <div class="n">${esc(h.name)}${nick}</div></div>
+          <div class="head-foot">ดูแล ${h.depts.length} แผนก</div>
+        </div>
+        <div class="branch-stem"></div>
+        <div class="dept-rail"></div>
+        <div class="dept-row">${owned}</div>
+      </div>`;
+    });
+    html+='</div>';
+    tree.innerHTML=html;
+    host.appendChild(tree);
+    host.querySelectorAll('[data-goto]').forEach(c=>c.addEventListener('click',()=>selectDept(c.dataset.goto)));
+    return;
+  }
+
+  // department view
+  const list=scoped();
+  document.getElementById('headcount2').textContent=list.length;
+  const info=DEPTS[currentDept];
+  document.getElementById('ovEyebrow').textContent=info.desc;
+  document.getElementById('ovTitle').textContent='แผนก '+info.name;
+  const heads=HEADS.filter(h=>h.depts.includes(currentDept)).map(h=>h.name+(h.nickname?` (${h.nickname})`:'')).join(' · ');
+  document.getElementById('ovDesc').textContent='หัวหน้าสาย: '+heads+' — คลิกที่การ์ดเพื่อดู/แก้ไขข้อมูล';
+
   const ranks=[...new Set(list.map(p=>p.rank))].sort((a,b)=>b-a);
   ranks.forEach(rank=>{
-    const people=list.filter(p=>p.rank===rank);
-    const band=document.createElement('div'); band.className='level '+lvClass(rank);
-    const info=names[rank]||{th:'ระดับ '+rank,sub:''};
-    band.innerHTML=`<div class="level-head"><span class="level-rank">${rank}</span><span class="level-name">${esc(info.th)}<small>${esc(info.sub)}</small></span></div><div class="level-cards"></div>`;
+    const band=document.createElement('div');band.className='level';
+    const nm=LEVEL_NAMES[rank]||{th:'ระดับ '+rank,sub:''};
+    band.innerHTML=`<div class="level-head"><span class="level-rank">${rank}</span>
+      <span class="level-name">${esc(nm.th)}<small>${esc(nm.sub)}</small></span></div><div class="level-cards"></div>`;
     const cards=band.querySelector('.level-cards');
-    people.forEach(p=>cards.appendChild(orgCard(p)));
+    list.filter(p=>p.rank===rank).forEach(p=>cards.appendChild(personCard(p)));
     host.appendChild(band);
   });
 }
-function orgCard(p){
-  const el=document.createElement('div'); el.className='node-card '+lvClass(p.rank); el.tabIndex=0;
+function personCard(p){
+  const el=document.createElement('div');el.className='node-card';el.tabIndex=0;
   const nick=p.nickname?` <span class="nickname">(${esc(p.nickname)})</span>`:'';
   const chips=(p.machines||[]).map(m=>`<span class="chip">${esc(m)}</span>`).join('');
   el.innerHTML=`<div class="accent"></div>
     <div class="role-row"><span class="role-tag">${esc(p.role)}</span><span class="rank-chip">ระดับ ${p.rank}</span></div>
     <div class="person">${esc(p.name)}${nick}</div>
+    ${p.code?`<div class="pcode">รหัส ${esc(p.code)}</div>`:''}
     <div class="duties"><div class="d-head">เครื่องจักร / ความรับผิดชอบ</div>${chips||'<span class="empty-note">—</span>'}</div>
     <div class="view-hint">▸ คลิกเพื่อดู/แก้ไขข้อมูล</div>`;
   el.addEventListener('click',()=>openModal(p.id));
-  el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();openModal(p.id);} });
+  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openModal(p.id);}});
   return el;
 }
-
-/* ===== shared person-card header ===== */
 function pcHead(p){
   const nick=p.nickname?` <span class="nk">(${esc(p.nickname)})</span>`:'';
-  return `<div class="pcard-head"><span class="pc-rank">${p.rank}</span>
-    <div><div class="pc-name">${esc(p.name)}${nick}</div><div class="pc-role">${esc(p.role)}</div></div></div>`;
+  const d=deptOf(p);
+  return `<div class="pcard-head" style="border-left-color:${deptColor(d)}">
+    <span class="pc-rank" style="background:${deptColor(d)}">${p.rank}</span>
+    <div><div class="pc-name">${esc(p.name)}${nick}</div><div class="pc-role">${esc(p.role)}${p.code?' · รหัส '+esc(p.code):''}</div></div>
+    <span class="pc-dept" style="background:${deptColor(d)}">${(DEPTS[d]||{}).name||d}</span></div>`;
 }
 
-/* ===== KPI page (independent data) ===== */
+/* ---------- Profile ---------- */
+function renderProfile(){
+  const host=document.getElementById('profileList');host.innerHTML='';
+  sortedPeople().forEach(p=>{
+    const prof=profileStore[p.id]||{};
+    const wrap=document.createElement('div');wrap.className='pcard';
+    let f='';
+    PROFILE_FIELDS.forEach((fd,i)=>{
+      f+=`<div class="prof-field"><div class="prof-q"><span class="qnum">${i+1}</span><span>${esc(fd.label)}</span></div>
+        <textarea class="prof-input" data-prof="${p.id}:${fd.key}" placeholder="กรอกรายละเอียด...">${esc(prof[fd.key]||'')}</textarea></div>`;
+    });
+    wrap.innerHTML=pcHead(p)+`<div class="pcard-body">${f}</div>`;
+    host.appendChild(wrap);
+  });
+  host.querySelectorAll('[data-prof]').forEach(t=>t.addEventListener('change',()=>{
+    const[pid,key]=t.dataset.prof.split(':');
+    if(!profileStore[pid])profileStore[pid]={};
+    profileStore[pid][key]=t.value;persistProfile();
+  }));
+}
+
+/* ---------- KPI ---------- */
 function renderKpi(){
-  const host=document.getElementById('kpiList'); host.innerHTML='';
+  const host=document.getElementById('kpiList');host.innerHTML='';
   sortedPeople().forEach(p=>{
     const items=kpiStore[p.id]||[];
-    const wrap=document.createElement('div'); wrap.className='pcard '+pcClass(p.rank);
-    let itemsHtml='';
-    if(!items.length){ itemsHtml='<div class="empty-note">ยังไม่มี KPI — กดปุ่มด้านล่างเพื่อเพิ่ม</div>'; }
-    else items.forEach((it,idx)=>{
-      itemsHtml+=`<div class="kpi-item">
+    const wrap=document.createElement('div');wrap.className='pcard';
+    let h=items.length?items.map((it,i)=>`<div class="kpi-item">
         <div class="kpi-item-top"><div class="kpi-item-title">${esc(it.title)}</div>${it.target?`<div class="kpi-item-target">${esc(it.target)}</div>`:''}</div>
         ${it.detail?`<div class="kpi-item-detail">${esc(it.detail)}</div>`:''}
-        <div class="item-actions"><button class="mini" data-kedit="${p.id}:${idx}">แก้ไข</button><button class="mini del" data-kdel="${p.id}:${idx}">ลบ</button></div>
-      </div>`;
-    });
-    wrap.innerHTML=pcHead(p)+`<div class="pcard-body">${itemsHtml}<button class="add-item" data-kadd="${p.id}">+ เพิ่ม KPI</button></div>`;
+        <div class="item-actions"><button class="mini" data-kedit="${p.id}:${i}">แก้ไข</button><button class="mini del" data-kdel="${p.id}:${i}">ลบ</button></div>
+      </div>`).join(''):'<div class="empty-note">ยังไม่มี KPI</div>';
+    wrap.innerHTML=pcHead(p)+`<div class="pcard-body">${h}<button class="add-item" data-kadd="${p.id}">+ เพิ่ม KPI</button></div>`;
     host.appendChild(wrap);
   });
   host.querySelectorAll('[data-kadd]').forEach(b=>b.addEventListener('click',()=>kpiForm(b.dataset.kadd,null,b)));
   host.querySelectorAll('[data-kedit]').forEach(b=>b.addEventListener('click',()=>{const[pid,i]=b.dataset.kedit.split(':');kpiForm(pid,+i,b.closest('.kpi-item'));}));
-  host.querySelectorAll('[data-kdel]').forEach(b=>b.addEventListener('click',()=>{const[pid,i]=b.dataset.kdel.split(':');if(confirm('ลบ KPI นี้?')){kpiStore[pid].splice(+i,1);if(!kpiStore[pid].length)delete kpiStore[pid];persistKpi();renderKpi();}}));
+  host.querySelectorAll('[data-kdel]').forEach(b=>b.addEventListener('click',()=>{const[pid,i]=b.dataset.kdel.split(':');
+    if(confirm('ลบ KPI นี้?')){kpiStore[pid].splice(+i,1);if(!kpiStore[pid].length)delete kpiStore[pid];persistKpi();renderKpi();}}));
 }
 function kpiForm(pid,idx,anchor){
   const editing=idx!==null&&idx!==undefined;
   const cur=editing?kpiStore[pid][idx]:{title:'',target:'',detail:''};
-  const f=document.createElement('div'); f.className='inline-form';
-  f.innerHTML=`<input class="kf-title" placeholder="หัวข้อ KPI (เช่น ลดเบรคดาวน์เครื่องจักร)" value="${esc(cur.title)}">
-    <input class="kf-target" placeholder="Target / เป้าหมาย (เช่น < 20 นาที/เดือน)" value="${esc(cur.target)}">
+  const f=document.createElement('div');f.className='inline-form';
+  f.innerHTML=`<input class="kf-title" placeholder="หัวข้อ KPI" value="${esc(cur.title)}">
+    <input class="kf-target" placeholder="Target / เป้าหมาย" value="${esc(cur.target)}">
     <textarea class="kf-detail" placeholder="รายละเอียดของงาน...">${esc(cur.detail)}</textarea>
     <div class="form-row"><button class="cancel">ยกเลิก</button><button class="save">บันทึก</button></div>`;
-  if(editing) anchor.appendChild(f); else anchor.parentNode.insertBefore(f,anchor);
+  if(editing)anchor.appendChild(f);else anchor.parentNode.insertBefore(f,anchor);
   f.querySelector('.kf-title').focus();
   f.querySelector('.cancel').addEventListener('click',renderKpi);
   f.querySelector('.save').addEventListener('click',()=>{
-    const title=f.querySelector('.kf-title').value.trim();
-    const target=f.querySelector('.kf-target').value.trim();
-    const detail=f.querySelector('.kf-detail').value.trim();
-    if(!title){f.querySelector('.kf-title').focus();return;}
+    const t=f.querySelector('.kf-title').value.trim();if(!t)return;
+    const tg=f.querySelector('.kf-target').value.trim(),de=f.querySelector('.kf-detail').value.trim();
     if(!kpiStore[pid])kpiStore[pid]=[];
-    if(editing)kpiStore[pid][idx]={...cur,title,target,detail};
-    else kpiStore[pid].push({id:'k_'+Date.now(),title,target,detail});
-    persistKpi(); renderKpi();
+    if(editing)kpiStore[pid][idx]={...cur,title:t,target:tg,detail:de};
+    else kpiStore[pid].push({id:'k_'+Date.now(),title:t,target:tg,detail:de});
+    persistKpi();renderKpi();
   });
 }
 
-/* ===== Goals page ===== */
+/* ---------- Goals ---------- */
 function renderGoals(){
-  const host=document.getElementById('goalsList'); host.innerHTML='';
+  const host=document.getElementById('goalsList');host.innerHTML='';
   sortedPeople().forEach(p=>{
-    const wrap=document.createElement('div'); wrap.className='pcard '+pcClass(p.rank);
-    let gHtml='';
-    if(!p.goals||!p.goals.length){ gHtml='<div class="empty-note">ยังไม่มีเป้าหมาย — เพิ่มได้ด้านล่าง</div>'; }
-    else p.goals.forEach((g,gi)=>{
-      let tasks='';
-      if(!g.tasks||!g.tasks.length) tasks='<div class="empty-note">ยังไม่มีงาน</div>';
-      else tasks=g.tasks.map((t,ti)=>`<div class="task-item"><span class="t-txt">${esc(t.txt)}</span><span class="t-freq">${esc(t.freq||'')}</span><button class="t-del" data-tdel="${p.id}:${gi}:${ti}" title="ลบงาน">✕</button></div>`).join('');
-      gHtml+=`<div class="goal-block">
-        <div class="goal-title-row"><div class="goal-title">${esc(g.title)}</div>${g.target?`<div class="goal-target">${esc(g.target)}</div>`:''}<button class="t-del" data-gdel="${p.id}:${gi}" title="ลบเป้าหมาย" style="font-size:15px;">🗑</button></div>
+    const wrap=document.createElement('div');wrap.className='pcard';
+    let g=(p.goals&&p.goals.length)?p.goals.map((go,gi)=>{
+      const tasks=(go.tasks&&go.tasks.length)?go.tasks.map((t,ti)=>
+        `<div class="task-item"><span class="t-txt">${esc(t.txt)}</span><span class="t-freq">${esc(t.freq||'')}</span><button class="t-del" data-tdel="${p.id}:${gi}:${ti}">✕</button></div>`
+      ).join(''):'<div class="empty-note">ยังไม่มีงาน</div>';
+      return `<div class="goal-block">
+        <div class="goal-title-row"><div class="goal-title">${esc(go.title)}</div>${go.target?`<div class="goal-target">${esc(go.target)}</div>`:''}<button class="t-del" data-gdel="${p.id}:${gi}">🗑</button></div>
         <div class="task-list">${tasks}</div>
         <div class="add-task-row"><input placeholder="เพิ่มงาน / ทีเด็ด..." data-ttxt="${p.id}:${gi}"><input placeholder="ความถี่ / Target" data-tfreq="${p.id}:${gi}"><button class="mini-btn" data-tadd="${p.id}:${gi}">เพิ่ม</button></div>
       </div>`;
-    });
-    wrap.innerHTML=pcHead(p)+`<div class="pcard-body">${gHtml}
-      <div class="add-goal-inline"><input placeholder="ชื่อเป้าหมายใหม่..." data-gtitle="${p.id}"><input placeholder="Target" data-gtarget="${p.id}"><button class="mini-btn" data-gadd="${p.id}">+ เพิ่มเป้าหมาย</button></div>
-    </div>`;
+    }).join(''):'<div class="empty-note">ยังไม่มีเป้าหมาย</div>';
+    wrap.innerHTML=pcHead(p)+`<div class="pcard-body">${g}
+      <div class="add-goal-inline"><input placeholder="ชื่อเป้าหมายใหม่..." data-gtitle="${p.id}"><input placeholder="Target" data-gtarget="${p.id}"><button class="mini-btn" data-gadd="${p.id}">+ เพิ่มเป้าหมาย</button></div></div>`;
     host.appendChild(wrap);
   });
-  bindGoals(host);
-}
-function bindGoals(host){
   host.querySelectorAll('[data-tadd]').forEach(b=>b.addEventListener('click',()=>{
-    const[pid,gi]=b.dataset.tadd.split(':'); const p=data.find(x=>x.id===pid);
+    const[pid,gi]=b.dataset.tadd.split(':');const p=data.find(x=>x.id===pid);
     const txt=host.querySelector(`[data-ttxt="${pid}:${gi}"]`).value.trim();
     const freq=host.querySelector(`[data-tfreq="${pid}:${gi}"]`).value.trim();
-    if(!txt)return; p.goals[gi].tasks=p.goals[gi].tasks||[]; p.goals[gi].tasks.push({txt,freq}); persist(); renderGoals();
-  }));
+    if(!txt)return;p.goals[gi].tasks=p.goals[gi].tasks||[];p.goals[gi].tasks.push({txt,freq});persist();renderGoals();}));
   host.querySelectorAll('[data-tdel]').forEach(b=>b.addEventListener('click',()=>{
-    const[pid,gi,ti]=b.dataset.tdel.split(':'); const p=data.find(x=>x.id===pid);
-    p.goals[gi].tasks.splice(+ti,1); persist(); renderGoals();
-  }));
+    const[pid,gi,ti]=b.dataset.tdel.split(':');const p=data.find(x=>x.id===pid);
+    p.goals[gi].tasks.splice(+ti,1);persist();renderGoals();}));
   host.querySelectorAll('[data-gdel]').forEach(b=>b.addEventListener('click',()=>{
-    const[pid,gi]=b.dataset.gdel.split(':'); const p=data.find(x=>x.id===pid);
-    if(confirm('ลบเป้าหมายนี้และงานทั้งหมด?')){p.goals.splice(+gi,1);persist();renderGoals();}
-  }));
+    const[pid,gi]=b.dataset.gdel.split(':');const p=data.find(x=>x.id===pid);
+    if(confirm('ลบเป้าหมายนี้?')){p.goals.splice(+gi,1);persist();renderGoals();}}));
   host.querySelectorAll('[data-gadd]').forEach(b=>b.addEventListener('click',()=>{
-    const pid=b.dataset.gadd; const p=data.find(x=>x.id===pid);
-    const title=host.querySelector(`[data-gtitle="${pid}"]`).value.trim();
-    const target=host.querySelector(`[data-gtarget="${pid}"]`).value.trim();
-    if(!title)return; p.goals=p.goals||[]; p.goals.push({title,target,tasks:[]}); persist(); renderGoals();
-  }));
+    const pid=b.dataset.gadd;const p=data.find(x=>x.id===pid);
+    const t=host.querySelector(`[data-gtitle="${pid}"]`).value.trim();
+    const tg=host.querySelector(`[data-gtarget="${pid}"]`).value.trim();
+    if(!t)return;p.goals=p.goals||[];p.goals.push({title:t,target:tg,tasks:[]});persist();renderGoals();}));
 }
 
-/* ===== Modal (edit person) ===== */
+/* ---------- Modal ---------- */
 function openModal(id){
-  const p=data.find(x=>x.id===id); if(!p)return;
-  const m=document.getElementById('modal'); const nick=p.nickname?` (${esc(p.nickname)})`:'';
-  m.innerHTML=`<div class="modal-head" style="background:${headColor(p.rank)}">
+  const p=data.find(x=>x.id===id);if(!p)return;
+  const m=document.getElementById('modal');const nick=p.nickname?` (${esc(p.nickname)})`:'';
+  const opts=Object.keys(DEPTS).map(d=>`<option value="${d}"${deptOf(p)===d?' selected':''}>${DEPTS[d].name}</option>`).join('');
+  m.innerHTML=`<div class="modal-head">
       <button class="close" data-close>×</button>
       <div class="m-role">${esc(p.role)}</div>
       <div class="m-name">${esc(p.name)}${nick}</div>
-      <div class="m-rank">ระดับ ${p.rank}</div>
+      <div class="m-rank">ระดับ ${p.rank} · ${(DEPTS[deptOf(p)]||{}).name||''}</div>
     </div>
     <div class="modal-body">
-      <div class="section-label">ข้อมูลบุคคล (แก้ไขได้)</div>
+      <div class="section-label">ข้อมูลบุคคล</div>
       <div class="edit-field"><label>ชื่อ-นามสกุล</label><input id="f_name" value="${esc(p.name)}"></div>
       <div class="edit-row">
         <div class="edit-field half"><label>ชื่อเล่น</label><input id="f_nick" value="${esc(p.nickname||'')}"></div>
-        <div class="edit-field half"><label>ระดับ (ตัวเลข)</label><input id="f_rank" type="number" value="${p.rank}"></div>
+        <div class="edit-field half"><label>รหัสพนักงาน</label><input id="f_code" value="${esc(p.code||'')}"></div>
+      </div>
+      <div class="edit-row">
+        <div class="edit-field half"><label>ระดับ</label><input id="f_rank" type="number" value="${p.rank}"></div>
+        <div class="edit-field half"><label>แผนก</label><select id="f_dept">${opts}</select></div>
       </div>
       <div class="edit-field"><label>ตำแหน่ง</label><input id="f_role" value="${esc(p.role)}"></div>
       <div class="edit-field"><label>เครื่องจักร / ความรับผิดชอบ (คั่นด้วย ,)</label><input id="f_machines" value="${esc((p.machines||[]).join(', '))}"></div>
-      ${p.note?`<div class="empty-note">หมายเหตุ: ${esc(p.note)}</div>`:''}
-      <div class="empty-note">▸ ข้อมูลรายบุคคล 5 หัวข้อ ที่หน้า "ข้อมูลรายบุคคล" · เป้าหมาย/ทีเด็ด ที่หน้า "เป้าหมาย" · KPI ที่หน้า "KPI"</div>
+      <div class="empty-note">▸ ข้อมูล 5 หัวข้อที่หน้า "ข้อมูลรายบุคคล" · เป้าหมายที่หน้า "เป้าหมาย" · KPI ที่หน้า "KPI"</div>
     </div>
     <div class="modal-foot">
       <button class="btn btn-ghost" data-del-person>ลบบุคคลนี้</button>
       <button class="btn btn-primary" data-close>เสร็จสิ้น</button>
     </div>`;
-  m.querySelector('#f_name').addEventListener('change',e=>{p.name=e.target.value;persist();refreshAll();});
-  m.querySelector('#f_nick').addEventListener('change',e=>{p.nickname=e.target.value;persist();refreshAll();});
-  m.querySelector('#f_rank').addEventListener('change',e=>{p.rank=parseInt(e.target.value,10)||0;persist();refreshAll();openModal(id);});
-  m.querySelector('#f_role').addEventListener('change',e=>{p.role=e.target.value;persist();refreshAll();});
-  m.querySelector('#f_machines').addEventListener('change',e=>{p.machines=e.target.value.split(',').map(s=>s.trim()).filter(Boolean);persist();refreshAll();});
-  m.querySelector('[data-del-person]').addEventListener('click',()=>{ if(confirm('ลบบุคคลนี้ออกจากระบบ?')){data=data.filter(x=>x.id!==id);persist();refreshAll();closeModal();} });
+  const on=(sel,fn)=>m.querySelector(sel).addEventListener('change',fn);
+  on('#f_name',e=>{p.name=e.target.value;persist();refreshAll();});
+  on('#f_nick',e=>{p.nickname=e.target.value;persist();refreshAll();});
+  on('#f_code',e=>{p.code=e.target.value;persist();refreshAll();});
+  on('#f_rank',e=>{p.rank=parseInt(e.target.value,10)||0;persist();refreshAll();openModal(id);});
+  on('#f_dept',e=>{p.dept=e.target.value;persist();refreshAll();openModal(id);});
+  on('#f_role',e=>{p.role=e.target.value;persist();refreshAll();});
+  on('#f_machines',e=>{p.machines=e.target.value.split(',').map(s=>s.trim()).filter(Boolean);persist();refreshAll();});
+  m.querySelector('[data-del-person]').addEventListener('click',()=>{
+    if(confirm('ลบบุคคลนี้ออกจากระบบ?')){data=data.filter(x=>x.id!==id);persist();refreshAll();closeModal();}});
   m.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',closeModal));
   document.getElementById('overlay').classList.add('open');
 }
@@ -854,93 +861,48 @@ function closeModal(){document.getElementById('overlay').classList.remove('open'
 document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')closeModal();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
-/* ===== render all ===== */
-/* ===== Profile page (ข้อมูลรายบุคคล) ===== */
-function renderProfile(){
-  const host=document.getElementById('profileList'); host.innerHTML='';
-  sortedPeople().forEach(p=>{
-    const prof=profileStore[p.id]||{};
-    const wrap=document.createElement('div'); wrap.className='pcard '+pcClass(p.rank);
-    let fieldsHtml='';
-    PROFILE_FIELDS.forEach((f,i)=>{
-      fieldsHtml+=`<div class="prof-field">
-        <div class="prof-q"><span class="qnum">${i+1}</span><span>${esc(f.label)}</span></div>
-        <textarea class="prof-input" data-prof="${p.id}:${f.key}" placeholder="กรอกรายละเอียด...">${esc(prof[f.key]||'')}</textarea>
-      </div>`;
-    });
-    wrap.innerHTML=pcHead(p)+`<div class="pcard-body">${fieldsHtml}</div>`;
-    host.appendChild(wrap);
-  });
-  host.querySelectorAll('[data-prof]').forEach(t=>{
-    t.addEventListener('change',()=>{
-      const [pid,key]=t.dataset.prof.split(':');
-      if(!profileStore[pid]) profileStore[pid]={};
-      profileStore[pid][key]=t.value;
-      persistProfile();
-    });
-  });
+function refreshAll(){renderOverview();renderProfile();renderKpi();renderGoals();}
+
+/* ---------- nav ---------- */
+function selectDept(d){
+  currentDept=d;
+  document.body.setAttribute('data-dept',d);
+  document.querySelectorAll('.dept-item').forEach(x=>x.classList.toggle('active',x.dataset.dept===d));
+  document.getElementById('brandTitle').textContent=d==='all'?'ผังรวมองค์กร':DEPTS[d].name;
+  document.getElementById('brandSub').textContent=d==='all'?'แผนผัง · ข้อมูลบุคคล · KPI · เป้าหมาย':DEPTS[d].desc;
+  if(d==='all'&&currentPage!=='overview')selectPage('overview');
+  refreshAll();closeNav();
 }
-
-function refreshAll(){ renderOverview(); renderProfile(); renderKpi(); renderGoals(); }
-
-/* ===== nav ===== */
-document.querySelectorAll('.nav-item').forEach(it=>{
-  it.addEventListener('click',()=>{
-    document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
-    it.classList.add('active');
-    const page=it.dataset.page;
-    document.querySelectorAll('.page').forEach(pg=>pg.classList.remove('active'));
-    document.getElementById('page-'+page).classList.add('active');
-    closeNav();
-  });
-});
+function selectPage(pg){
+  currentPage=pg;
+  document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.dataset.page===pg));
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+pg).classList.add('active');
+  closeNav();
+}
+document.querySelectorAll('.dept-item').forEach(it=>it.addEventListener('click',()=>selectDept(it.dataset.dept)));
+document.querySelectorAll('.nav-item').forEach(it=>it.addEventListener('click',()=>selectPage(it.dataset.page)));
 function openNav(){document.getElementById('nav').classList.add('open');document.getElementById('navScrim').classList.add('show');}
 function closeNav(){document.getElementById('nav').classList.remove('open');document.getElementById('navScrim').classList.remove('show');}
 document.getElementById('navToggle').addEventListener('click',openNav);
 document.getElementById('navScrim').addEventListener('click',closeNav);
 
-/* ===== toolbar (ทุกคนแก้ได้) ===== */
 document.getElementById('addPerson').addEventListener('click',()=>{
-  const id=(currentOrg==='sunfeed'?'s_':'p_')+Date.now();
-  data.push({id,org:currentOrg,rank:40,role:'เจ้าหน้าที่',name:'ชื่อใหม่',nickname:'',machines:[],goals:[]});
-  persist(); refreshAll(); openModal(id);
+  const id='p_'+Date.now();
+  const d=currentDept==='all'?'lmn2':currentDept;
+  data.push({id,dept:d,rank:40,role:'เจ้าหน้าที่',name:'ชื่อใหม่',nickname:'',code:'',machines:[],goals:[]});
+  persist();refreshAll();openModal(id);
 });
 document.getElementById('resetData').addEventListener('click',async()=>{
-  if(confirm('คืนค่าข้อมูลแผนผัง/เป้าหมายกลับเป็นค่าเริ่มต้น? (KPI และข้อมูลรายบุคคลที่กรอกไว้จะยังอยู่)')){
+  if(confirm('คืนค่าโครงสร้างและข้อมูลกลับเป็นค่าเริ่มต้นทั้งหมด?')){
     data=JSON.parse(JSON.stringify(DEFAULT_DATA));
-    data.forEach(p=>{ if(!p.org) p.org='lmn2'; });
-    data=data.concat(JSON.parse(JSON.stringify(SUNFEED_PEOPLE)));
-    await persist(); refreshAll();
+    profileStore=JSON.parse(JSON.stringify(DEFAULT_PROFILE));
+    await persist();refreshAll();
   }
 });
-document.getElementById('refreshData').addEventListener('click',async()=>{
-  setSync('กำลังดึงข้อมูล...');
-  await loadAll(); if(ensureOrgs()) await persist(); refreshAll();
-});
+document.getElementById('refreshData').addEventListener('click',async()=>{setSync('กำลังดึงข้อมูล...');await loadAll();refreshAll();});
 
-/* ===== สลับสายองค์กร ===== */
-function applyOrgBrand(){
-  const info=ORG_INFO[currentOrg];
-  document.getElementById('brandEyebrow').textContent=info.eyebrow;
-  document.getElementById('brandTitle').textContent=info.title;
-  document.getElementById('brandSub').innerHTML=info.sub;
-  document.body.classList.toggle('org-sunfeed', currentOrg==='sunfeed');
-}
-document.querySelectorAll('.org-btn').forEach(b=>{
-  b.addEventListener('click',()=>{
-    document.querySelectorAll('.org-btn').forEach(x=>x.classList.remove('active'));
-    b.classList.add('active');
-    currentOrg=b.dataset.org;
-    applyOrgBrand(); refreshAll();
-  });
-});
-
-(async()=>{
-  await loadAll();
-  if(ensureOrgs()) await persist();   // เติม org + ทีม Sunfeed ครั้งแรก
-  applyOrgBrand();
-  refreshAll();
-})();
+(async()=>{await loadAll();refreshAll();})();
 </script>
 </body>
 </html>
