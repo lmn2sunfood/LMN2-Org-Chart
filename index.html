@@ -170,7 +170,13 @@
   .pc-name{font-weight:700;font-size:16px;color:var(--ink);line-height:1.2;}
   .pc-name .nk{color:var(--c1);font-weight:600;}
   .pc-role{font-size:11.5px;color:var(--muted);margin-top:2px;}
-  .pc-dept{margin-left:auto;font-family:'Sora';font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;color:#fff;}
+  .pc-dept{font-family:'Sora';font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;color:#fff;}
+  .pcard-head > .pc-dept:last-child{margin-left:auto;}
+  .fill-badge{margin-left:auto;font-family:'Sora';font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:999px;margin-right:7px;}
+  .fill-badge + .pc-dept{margin-left:0;}
+  .fill-badge.full{background:#dff2ec;color:#1a7a68;}
+  .fill-badge.part{background:#fdf0dc;color:#a86a10;}
+  .fill-badge.none{background:#fbe4e2;color:#b0463c;}
   .pcard-body{padding:8px 19px 17px;}
 
   .prof-field{border-top:1px solid var(--line);padding:13px 0 4px;}
@@ -362,7 +368,7 @@ const REWARD_COMMON="1. BD คิดตามเครื่องจักร�
 
 const DEFAULT_DATA = [
   // ---------- LMN1 ----------
-  {id:"p_miu",   dept:"lmn1", rank:55, role:"ผู้จัดการแผนก LMN1", name:"นางสาวณัฐณิชา นาคทั่ง", nickname:"มิ้ว", code:"", machines:[], goals:[]},
+  {id:"p_miu",   dept:"lmn1", rank:55, role:"ผู้จัดการแผนก LMN1", name:"นางสาวณัฐณิชา นาคทั่ง", nickname:"มิ้ว", code:"620313", machines:["ราวไก่เป็น"], goals:[]},
   {id:"p_plai",  dept:"lmn1", rank:55, role:"ผู้จัดการแผนก LMN1", name:"นางสาวชญานี รินทะลึก", nickname:"ปลาย", code:"630120",
     machines:["ไก่เป็น ระบบลำเลียงกล่อง","Stunner","Auto Rehang"], goals:[]},
   {id:"p_tawan", dept:"lmn1", rank:40, role:"เจ้าหน้าที่", name:"นายอาทิตย์ เขตบุรี", nickname:"ตะวัน", code:"", machines:[], goals:[]},
@@ -403,7 +409,7 @@ const DEFAULT_DATA = [
         {txt:"ขับเคลื่อนนโยบายการลดพลังงานและต้นทุนในกระบวนการผลิต", freq:"2,500,000 หน่วย/ปี"}]}
     ]},
   {id:"p_boom",  dept:"lmn2", rank:40, role:"เจ้าหน้าที่", name:"นายศุภณัฐ พฤกษชาติ", nickname:"บูม", code:"680415",
-    machines:["Auto Debone Foodmate (2 เครื่อง)","Toridas 2 loop"],
+    machines:["Auto Debone Foodmate (2 เครื่อง)","Toridas 3 loop"],
     goals:[
       {title:"เป้าหมาย 1 : ลดเวลาเบรคดาวน์เครื่องจักรหลักพื้นที่ Cleanzone (Auto Debone/Toridas)", target:"", tasks:[
         {txt:"ตรวจเช็คชุดเกียร์ Pre-cutter เครื่อง Drum 1-4", freq:"1 ครั้ง/วัน"},
@@ -577,6 +583,38 @@ function isNewSchema(arr){
   return hasDept&&noHeads;
 }
 
+// รหัสเก่าที่เคยใช้ → รหัสใหม่ (กันข้อมูลที่เคยกรอกไว้หาย)
+const ID_ALIAS = { p_nip:'p_ford', p_phum:null, p_nat:null, p_section:null, p_serid2:null };
+
+// ผสานข้อมูลรายบุคคล: ของที่บันทึกไว้มาก่อน ส่วนคนที่ยังไม่มีให้เติมจากค่าตั้งต้น
+function mergeProfile(saved){
+  const out=JSON.parse(JSON.stringify(DEFAULT_PROFILE));
+  if(saved&&typeof saved==='object'){
+    Object.keys(saved).forEach(pid=>{
+      let key=pid;
+      if(key in ID_ALIAS){ key=ID_ALIAS[key]; if(!key) return; }  // ข้ามหัวหน้าที่ไม่อยู่ในรายชื่อแล้ว
+      const s=saved[pid]||{};
+      const base=out[key]||{};
+      const merged={...base};
+      Object.keys(s).forEach(k=>{ if(s[k]&&String(s[k]).trim()) merged[k]=s[k]; });
+      out[key]=merged;
+    });
+  }
+  return out;
+}
+
+function mergeKpi(saved){
+  const out={};
+  if(saved&&typeof saved==='object'){
+    Object.keys(saved).forEach(pid=>{
+      let key=pid;
+      if(key in ID_ALIAS){ key=ID_ALIAS[key]; if(!key) return; }
+      out[key]=(out[key]||[]).concat(saved[pid]||[]);
+    });
+  }
+  return out;
+}
+
 async function loadAll(){
   if(ONLINE){
     try{
@@ -588,13 +626,12 @@ async function loadAll(){
           data=j.payload.data;
           setSync('ออนไลน์ ✓');
         }else{
-          // ข้อมูลเก่า (ไม่มีแผนก) → ใช้โครงสร้างใหม่แล้วเขียนทับ
           data=JSON.parse(JSON.stringify(DEFAULT_DATA));
           setSync('อัปเดตโครงสร้างใหม่ ✓');
           setTimeout(pushOnline,800);
         }
-        kpiStore=j.payload.kpi||{};
-        profileStore=(j.payload.profile&&Object.keys(j.payload.profile).length)?j.payload.profile:JSON.parse(JSON.stringify(DEFAULT_PROFILE));
+        kpiStore=mergeKpi(j.payload.kpi);
+        profileStore=mergeProfile(j.payload.profile);
         return;
       }
       throw new Error(j.error||'no payload');
@@ -602,8 +639,8 @@ async function loadAll(){
   }
   const d=await lsGet(LOCAL_STORE),k=await lsGet(LOCAL_KPI),pr=await lsGet(LOCAL_PROFILE);
   data=isNewSchema(d)?d:JSON.parse(JSON.stringify(DEFAULT_DATA));
-  kpiStore=k||{};
-  profileStore=(pr&&Object.keys(pr).length)?pr:JSON.parse(JSON.stringify(DEFAULT_PROFILE));
+  kpiStore=mergeKpi(k);
+  profileStore=mergeProfile(pr);
   if(!ONLINE)setSync('ออฟไลน์ (ในเครื่อง)');
 }
 let saveTimer;
@@ -723,13 +760,13 @@ function personCard(p){
   el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openModal(p.id);}});
   return el;
 }
-function pcHead(p){
+function pcHead(p,extra){
   const nick=p.nickname?` <span class="nk">(${esc(p.nickname)})</span>`:'';
   const d=deptOf(p);
   return `<div class="pcard-head" style="border-left-color:${deptColor(d)}">
     <span class="pc-rank" style="background:${deptColor(d)}">${p.rank}</span>
     <div><div class="pc-name">${esc(p.name)}${nick}</div><div class="pc-role">${esc(p.role)}${p.code?' · รหัส '+esc(p.code):''}</div></div>
-    <span class="pc-dept" style="background:${deptColor(d)}">${(DEPTS[d]||{}).name||d}</span></div>`;
+    ${extra||''}<span class="pc-dept" style="background:${deptColor(d)}">${(DEPTS[d]||{}).name||d}</span></div>`;
 }
 
 /* ---------- Profile ---------- */
@@ -737,19 +774,21 @@ function renderProfile(){
   const host=document.getElementById('profileList');host.innerHTML='';
   sortedPeople().forEach(p=>{
     const prof=profileStore[p.id]||{};
+    const filled=PROFILE_FIELDS.filter(f=>prof[f.key]&&String(prof[f.key]).trim()).length;
     const wrap=document.createElement('div');wrap.className='pcard';
     let f='';
     PROFILE_FIELDS.forEach((fd,i)=>{
       f+=`<div class="prof-field"><div class="prof-q"><span class="qnum">${i+1}</span><span>${esc(fd.label)}</span></div>
         <textarea class="prof-input" data-prof="${p.id}:${fd.key}" placeholder="กรอกรายละเอียด...">${esc(prof[fd.key]||'')}</textarea></div>`;
     });
-    wrap.innerHTML=pcHead(p)+`<div class="pcard-body">${f}</div>`;
+    const badge=`<span class="fill-badge ${filled===0?'none':(filled<5?'part':'full')}">${filled}/5</span>`;
+    wrap.innerHTML=pcHead(p,badge)+`<div class="pcard-body">${f}</div>`;
     host.appendChild(wrap);
   });
   host.querySelectorAll('[data-prof]').forEach(t=>t.addEventListener('change',()=>{
     const[pid,key]=t.dataset.prof.split(':');
     if(!profileStore[pid])profileStore[pid]={};
-    profileStore[pid][key]=t.value;persistProfile();
+    profileStore[pid][key]=t.value;persistProfile();renderProfile();
   }));
 }
 
