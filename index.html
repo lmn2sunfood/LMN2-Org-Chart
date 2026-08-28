@@ -568,6 +568,15 @@ async function lsGet(k){try{const r=await window.storage.get(k);return r&&r.valu
 async function lsSet(k,v){try{await window.storage.set(k,JSON.stringify(v));}catch(e){}}
 function setSync(t){const el=document.getElementById('syncState');if(el)el.textContent=t;}
 
+// ข้อมูลถือว่าเป็นชุดใหม่ก็ต่อเมื่อมี field dept ครบ และไม่มีหัวหน้าปนอยู่ในรายชื่อ
+function isNewSchema(arr){
+  if(!Array.isArray(arr)||!arr.length) return false;
+  const headIds=HEADS.map(h=>h.id);
+  const hasDept=arr.every(p=>p&&typeof p.dept==='string'&&DEPTS[p.dept]);
+  const noHeads=!arr.some(p=>headIds.includes(p.id)||p.rank>=75);
+  return hasDept&&noHeads;
+}
+
 async function loadAll(){
   if(ONLINE){
     try{
@@ -575,17 +584,24 @@ async function loadAll(){
       const res=await fetch(API_URL+'?t='+Date.now(),{method:'GET'});
       const j=await res.json();
       if(j.ok&&j.payload){
-        data=(j.payload.data&&j.payload.data.length)?j.payload.data:JSON.parse(JSON.stringify(DEFAULT_DATA));
+        if(isNewSchema(j.payload.data)){
+          data=j.payload.data;
+          setSync('ออนไลน์ ✓');
+        }else{
+          // ข้อมูลเก่า (ไม่มีแผนก) → ใช้โครงสร้างใหม่แล้วเขียนทับ
+          data=JSON.parse(JSON.stringify(DEFAULT_DATA));
+          setSync('อัปเดตโครงสร้างใหม่ ✓');
+          setTimeout(pushOnline,800);
+        }
         kpiStore=j.payload.kpi||{};
         profileStore=(j.payload.profile&&Object.keys(j.payload.profile).length)?j.payload.profile:JSON.parse(JSON.stringify(DEFAULT_PROFILE));
-        setSync('ออนไลน์ ✓');
         return;
       }
       throw new Error(j.error||'no payload');
     }catch(e){console.error(e);setSync('โหลดออนไลน์ไม่ได้ · ใช้ในเครื่อง');}
   }
   const d=await lsGet(LOCAL_STORE),k=await lsGet(LOCAL_KPI),pr=await lsGet(LOCAL_PROFILE);
-  data=d&&d.length?d:JSON.parse(JSON.stringify(DEFAULT_DATA));
+  data=isNewSchema(d)?d:JSON.parse(JSON.stringify(DEFAULT_DATA));
   kpiStore=k||{};
   profileStore=(pr&&Object.keys(pr).length)?pr:JSON.parse(JSON.stringify(DEFAULT_PROFILE));
   if(!ONLINE)setSync('ออฟไลน์ (ในเครื่อง)');
@@ -609,7 +625,7 @@ const persist=saveAll, persistKpi=saveAll, persistProfile=saveAll;
 let flashT;
 function flash(){const f=document.getElementById('flash');f.classList.add('show');clearTimeout(flashT);flashT=setTimeout(()=>f.classList.remove('show'),1300);}
 function esc(s){return(s||"").replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function deptOf(p){return p.dept||'lmn2';}
+function deptOf(p){return (p&&DEPTS[p.dept])?p.dept:'lmn2';}
 function scoped(){return currentDept==='all'?[...data]:data.filter(p=>deptOf(p)===currentDept);}
 function sortedPeople(){return scoped().sort((a,b)=>b.rank-a.rank);}
 function deptColor(d){return (DEPTS[d]||{}).color||'#2a9d8f';}
