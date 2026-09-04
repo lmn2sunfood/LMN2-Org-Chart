@@ -358,7 +358,7 @@ const DEPTS = {
   ene:    {name:"ENE",     color:"#c53f6d", desc:"พลังงาน"}
 };
 const HEADS = [
-  {id:"h_phum", name:"นายพิทยุตม์ ทรัพย์สมบูรณ์", nickname:"ภูมิ", rank:75, role:"ผู้จัดการฝ่าย", depts:["lmn1","lmn2","sunfeed"]},
+  {id:"h_phum", name:"นายพิทยุตม์ ทรัพย์สมบูรณ์", nickname:"ภูมิ", code:"601184", rank:75, role:"ผู้จัดการฝ่าย", depts:["lmn1","lmn2","sunfeed"]},
   {id:"h_nat",  name:"นายณัฏฐวัสส์ ไตรยงค์",      nickname:"",     rank:75, role:"ผู้จัดการฝ่าย", depts:["asrs","env","ene","sunfeed"]}
 ];
 const LEVEL_NAMES={75:{th:"ระดับ 75",sub:"ผู้จัดการฝ่าย"},65:{th:"ระดับ 65",sub:"ผู้จัดการส่วน / ผู้เชี่ยวชาญ"},
@@ -461,6 +461,12 @@ const DEFAULT_DATA = [
 ];
 
 const DEFAULT_PROFILE = {
+  h_phum:{
+    mission:"1. บริหารจัดการฝ่ายวิศวกรรม ดูแล 3 แผนก (LMN1, LMN2, SUNFEED) ให้เครื่องจักรและกระบวนการผลิตเดินได้ต่อเนื่อง ตาม Target Breakdown/Yield/Accuracy ของแต่ละแผนก\n2. กำกับดูแลผู้จัดการแผนกและทีมช่างทั้งหมดในสาย ให้ปฏิบัติงานตาม KPI ที่ตกลงร่วมกัน พร้อมพัฒนาศักยภาพทีมและวางแผนสืบทอดงาน\n3. ขับเคลื่อนนโยบายลดพลังงานและต้นทุนกระบวนการผลิต — เป้ารวมฝ่าย 2,500,000 หน่วย/ปี\n4. บริหารโครงการลงทุน (Capital Project) ข้ามไซต์ที่เกี่ยวข้องกับ LMN1/LMN2/SUNFEED\n5. ติดตามงานปรับปรุงกระบวนการผลิตเฉพาะจุดที่ส่งผลต่อ Yield/การสูญเสีย\n6. นำ AI มาช่วยวิเคราะห์และแก้ไขปัญหา รวมถึงระบุจุดที่งาน/กระบวนการทำงานซ้ำซ้อนกัน ทั้งภายใน 3 แผนกที่ดูแล และแผนกอื่นๆ ในองค์กร (ฝ่ายขาย, RD, วางแผนและผลิต) เพื่อรวบ-ยุบงานที่ซ้ำ ลดการกรอกข้อมูล/รายงานซ้ำ และลดเวลารอคอย-แก้ไข-ส่งต่องาน",
+    daily:"1. ติดตามผลการดำเนินงาน/ปัญหาเครื่องจักรของ LMN1, LMN2, SUNFEED ผ่านรายงานประจำวันจากผู้จัดการแผนก — 1 ครั้ง/วัน\n2. ประชุมทีมผู้จัดการแผนกเพื่อติดตามความคืบหน้าเป้าหมายรายเดือน/ไตรมาส และปลดล็อกปัญหาที่ค้างอยู่ — 1 ครั้ง/เดือน\n3. ติดตามความคืบหน้าโครงการลงทุนที่กำลังดำเนินอยู่ และรายงานต่อผู้บริหาร — 1 ครั้ง/สัปดาห์\n4. ใช้ AI ช่วยแก้ไขกระบวนการทำงานของแผนกอื่นๆ เช่น ฝ่ายขาย ฝ่าย RD ทีมวางแผนและผลิต เป็นงานต่อเนื่อง โดยมีน้องๆ ในทีมช่วยรับผิดชอบในแต่ละงาน และเปลี่ยนจุดงานเมื่อจุดนั้นแก้ไขได้สำเร็จแล้ว",
+    improve:"1. หลายแผนกยังไม่เปิดใจรับการนำ AI มาใช้ในงาน และเมื่อทีมเราเข้าไปช่วยแก้ปัญหาให้ บางครั้งผลลัพธ์ยังไม่ตรงจุด เนื่องจากทีมเราไม่ใช่ผู้ปฏิบัติงานจริงในกระบวนการนั้น ทำให้เข้าใจบริบทหน้างานไม่ครบถ้วนเท่าเจ้าของงาน\n2. งานล่าช้าจากซัพพลายเออร์ ทั้งขั้นตอนขอ/รอราคา การจัดส่งสินค้า และการส่งแบบ (Drawing) ส่งผลให้โครงการและงานซ่อมบำรุงล่าช้ากว่าแผน\n3. ปัญหาเล็กน้อยหน้างานที่ควรแก้ไขได้เองในระดับปฏิบัติงาน ยังคงเกิดขึ้นบ่อย เนื่องจากมาตรฐานความใส่ใจของแต่ละคนไม่เท่ากัน ทั้งในแผนก LMN1, LMN2 และ SUNFEED",
+    process:"",
+    reward:""},
   p_bank:{
     mission:"1. รับผิดชอบเครื่องจักรในไลน์ผลิต Clean zone ได้แก่ X-ray, Metal detector, CCM, Weighing, Auto weight, เครื่องจักร Line Packing ทั้งหมด ทั้งการจัดแผน PM การทำ WI และสำรองอะไหล่ Spare Part รวมถึงแก้ไขปัญหาเมื่อเครื่องจักรเกิดเบรคดาวน์\n2. พัฒนาทักษะเฉพาะทางของทีมงานช่าง\n3. รับผิดชอบในการเปรียบเทียบสเปค จัดหาเครื่องจักรใหม่ งานโปรเจคปรับปรุงงานต่างๆ เช่น การปรับปรุงระบบ Packing line ใหม่ การหาเครื่องจักรสำหรับ Sunfood 2\n4. รับผิดชอบงานตอบรับ และแก้ไข complain, comment หมอ และ Auditor\n5. รับผิดชอบดูแลงานในส่วนของ ASRS Inbound CS3 จัดทีมงานและการแก้ไขปัญหาให้ไม่ติดขัด",
     daily:"1. การจัดแผนงานประจำวันให้กับทีมงาน แจกจ่ายงานที่ต้องทำในแต่ละวัน\n2. การติดตามประสิทธิภาพและปัญหาที่พบจากเครื่องจักรที่รับผิดชอบ แก้ไขรวมถึงป้องกันการเกิดปัญหา และการ Spare part อะไหล่ ปรับปรุงแผน PM\n3. ติดตามงานโปรเจคที่ได้รับมอบหมาย ความคืบหน้า แผนการดำเนินงานต่อไป ให้อยู่ในตามแผนที่วางไว้\n4. การปรับปรุงงานในจุดงานของผลิตและวิศวะ ตามแผนกต่างๆที่ได้สำรวจหรือประชุมร่วมกัน\n5. Morning talk Focus งานประจำวันก่อนเริ่มงานกับทีมงานวิศวกรรม",
@@ -665,6 +671,13 @@ function esc(s){return(s||"").replace(/&/g,'&amp;').replace(/</g,'&lt;').replace
 function deptOf(p){return (p&&DEPTS[p.dept])?p.dept:'lmn2';}
 function scoped(){return currentDept==='all'?[...data]:data.filter(p=>deptOf(p)===currentDept);}
 function sortedPeople(){return scoped().sort((a,b)=>b.rank-a.rank);}
+// หัวหน้าสาย -> รูปแบบเดียวกับสมาชิก เพื่อให้แสดงในหน้าข้อมูล/KPI/เป้าหมาย
+function headsForView(){
+  return HEADS.filter(h=>currentDept==='all'||h.depts.includes(currentDept))
+    .map(h=>({id:h.id,dept:currentDept==='all'?h.depts[0]:currentDept,rank:h.rank,
+      role:h.role,name:h.name,nickname:h.nickname||'',code:h.code||'',machines:[],goals:[],isHead:true}));
+}
+function peopleForPages(){return headsForView().concat(sortedPeople());}
 function deptColor(d){return (DEPTS[d]||{}).color||'#2a9d8f';}
 
 /* ---------- Overview ---------- */
@@ -772,7 +785,7 @@ function pcHead(p,extra){
 /* ---------- Profile ---------- */
 function renderProfile(){
   const host=document.getElementById('profileList');host.innerHTML='';
-  sortedPeople().forEach(p=>{
+  peopleForPages().forEach(p=>{
     const prof=profileStore[p.id]||{};
     const filled=PROFILE_FIELDS.filter(f=>prof[f.key]&&String(prof[f.key]).trim()).length;
     const wrap=document.createElement('div');wrap.className='pcard';
@@ -795,7 +808,7 @@ function renderProfile(){
 /* ---------- KPI ---------- */
 function renderKpi(){
   const host=document.getElementById('kpiList');host.innerHTML='';
-  sortedPeople().forEach(p=>{
+  peopleForPages().forEach(p=>{
     const items=kpiStore[p.id]||[];
     const wrap=document.createElement('div');wrap.className='pcard';
     let h=items.length?items.map((it,i)=>`<div class="kpi-item">
@@ -835,7 +848,7 @@ function kpiForm(pid,idx,anchor){
 /* ---------- Goals ---------- */
 function renderGoals(){
   const host=document.getElementById('goalsList');host.innerHTML='';
-  sortedPeople().forEach(p=>{
+  peopleForPages().forEach(p=>{
     const wrap=document.createElement('div');wrap.className='pcard';
     let g=(p.goals&&p.goals.length)?p.goals.map((go,gi)=>{
       const tasks=(go.tasks&&go.tasks.length)?go.tasks.map((t,ti)=>
@@ -847,8 +860,9 @@ function renderGoals(){
         <div class="add-task-row"><input placeholder="เพิ่มงาน / ทีเด็ด..." data-ttxt="${p.id}:${gi}"><input placeholder="ความถี่ / Target" data-tfreq="${p.id}:${gi}"><button class="mini-btn" data-tadd="${p.id}:${gi}">เพิ่ม</button></div>
       </div>`;
     }).join(''):'<div class="empty-note">ยังไม่มีเป้าหมาย</div>';
-    wrap.innerHTML=pcHead(p)+`<div class="pcard-body">${g}
-      <div class="add-goal-inline"><input placeholder="ชื่อเป้าหมายใหม่..." data-gtitle="${p.id}"><input placeholder="Target" data-gtarget="${p.id}"><button class="mini-btn" data-gadd="${p.id}">+ เพิ่มเป้าหมาย</button></div></div>`;
+    const addGoalBox=p.isHead?'<div class="empty-note">เป้าหมายของหัวหน้าสายกำหนดในระดับฝ่าย</div>'
+      :`<div class="add-goal-inline"><input placeholder="ชื่อเป้าหมายใหม่..." data-gtitle="${p.id}"><input placeholder="Target" data-gtarget="${p.id}"><button class="mini-btn" data-gadd="${p.id}">+ เพิ่มเป้าหมาย</button></div>`;
+    wrap.innerHTML=pcHead(p)+`<div class="pcard-body">${g}${addGoalBox}</div>`;
     host.appendChild(wrap);
   });
   host.querySelectorAll('[data-tadd]').forEach(b=>b.addEventListener('click',()=>{
