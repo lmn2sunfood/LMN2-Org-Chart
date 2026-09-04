@@ -346,7 +346,7 @@
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbxD2LHjl_QEajbb9hgYZh38rXz-1ZD2m1YbJCCy5FcSVxYfpNs0jUDgopE13BBRu34l/exec";
-const LOCAL_STORE="org_data_v4", LOCAL_KPI="org_kpi_v4", LOCAL_PROFILE="org_profile_v4";
+const LOCAL_STORE="org_data_v4", LOCAL_KPI="org_kpi_v4", LOCAL_PROFILE="org_profile_v4", LOCAL_HEADS="org_heads_v4";
 const ONLINE = !!API_URL;
 
 const DEPTS = {
@@ -573,7 +573,7 @@ const PROFILE_FIELDS=[
   {key:'reward', label:'ถ้าเราอยากให้รางวัล ควรประเมินอย่างไร'}
 ];
 
-let data=[], kpiStore={}, profileStore={}, currentDept='all', currentPage='overview';
+let data=[], kpiStore={}, profileStore={}, headStore={}, currentDept='all', currentPage='overview';
 
 /* ---------- storage ---------- */
 async function lsGet(k){try{const r=await window.storage.get(k);return r&&r.value?JSON.parse(r.value):null;}catch(e){return null;}}
@@ -638,6 +638,7 @@ async function loadAll(){
         }
         kpiStore=mergeKpi(j.payload.kpi);
         profileStore=mergeProfile(j.payload.profile);
+        headStore=j.payload.heads||{};
         return;
       }
       throw new Error(j.error||'no payload');
@@ -647,18 +648,19 @@ async function loadAll(){
   data=isNewSchema(d)?d:JSON.parse(JSON.stringify(DEFAULT_DATA));
   kpiStore=mergeKpi(k);
   profileStore=mergeProfile(pr);
+  headStore=(await lsGet(LOCAL_HEADS))||{};
   if(!ONLINE)setSync('ออฟไลน์ (ในเครื่อง)');
 }
 let saveTimer;
 async function saveAll(){
-  await lsSet(LOCAL_STORE,data);await lsSet(LOCAL_KPI,kpiStore);await lsSet(LOCAL_PROFILE,profileStore);
+  await lsSet(LOCAL_STORE,data);await lsSet(LOCAL_KPI,kpiStore);await lsSet(LOCAL_PROFILE,profileStore);await lsSet(LOCAL_HEADS,headStore);
   if(ONLINE){clearTimeout(saveTimer);saveTimer=setTimeout(pushOnline,600);}else flash();
 }
 async function pushOnline(){
   setSync('กำลังบันทึก...');
   try{
     const fd=new FormData();
-    fd.append('payload',JSON.stringify({data:data,kpi:kpiStore,profile:profileStore}));
+    fd.append('payload',JSON.stringify({data:data,kpi:kpiStore,profile:profileStore,heads:headStore}));
     await fetch(API_URL,{method:'POST',mode:'no-cors',body:fd});
     setSync('บันทึกแล้ว ✓ '+new Date().toLocaleTimeString('th-TH'));flash();
   }catch(e){console.error(e);setSync('บันทึกไม่สำเร็จ');}
@@ -675,9 +677,18 @@ function sortedPeople(){return scoped().sort((a,b)=>b.rank-a.rank);}
 function headsForView(){
   return HEADS.filter(h=>currentDept==='all'||h.depts.includes(currentDept))
     .map(h=>({id:h.id,dept:currentDept==='all'?h.depts[0]:currentDept,rank:h.rank,
-      role:h.role,name:h.name,nickname:h.nickname||'',code:h.code||'',machines:[],goals:[],isHead:true}));
+      role:h.role,name:h.name,nickname:h.nickname||'',code:h.code||'',machines:[],
+      goals:((headStore[h.id]||{}).goals)||[],isHead:true}));
 }
 function peopleForPages(){return headsForView().concat(sortedPeople());}
+// ค้นหา record ที่แก้ไขได้ (สมาชิกอยู่ใน data, หัวหน้าอยู่ใน headStore)
+function findRec(pid){
+  const inData=data.find(x=>x.id===pid);
+  if(inData) return inData;
+  if(!headStore[pid]) headStore[pid]={goals:[]};
+  if(!headStore[pid].goals) headStore[pid].goals=[];
+  return headStore[pid];
+}
 function deptColor(d){return (DEPTS[d]||{}).color||'#2a9d8f';}
 
 /* ---------- Overview ---------- */
@@ -776,10 +787,13 @@ function personCard(p){
 function pcHead(p,extra){
   const nick=p.nickname?` <span class="nk">(${esc(p.nickname)})</span>`:'';
   const d=deptOf(p);
-  return `<div class="pcard-head" style="border-left-color:${deptColor(d)}">
-    <span class="pc-rank" style="background:${deptColor(d)}">${p.rank}</span>
+  const col=p.isHead?'#12263a':deptColor(d);
+  // หัวหน้าสายดูแลหลายแผนก จึงไม่แสดงป้ายแผนกเดียว
+  const tag=p.isHead?'':`<span class="pc-dept" style="background:${col}">${(DEPTS[d]||{}).name||d}</span>`;
+  return `<div class="pcard-head" style="border-left-color:${col}">
+    <span class="pc-rank" style="background:${col}">${p.rank}</span>
     <div><div class="pc-name">${esc(p.name)}${nick}</div><div class="pc-role">${esc(p.role)}${p.code?' · รหัส '+esc(p.code):''}</div></div>
-    ${extra||''}<span class="pc-dept" style="background:${deptColor(d)}">${(DEPTS[d]||{}).name||d}</span></div>`;
+    ${extra||''}${tag}</div>`;
 }
 
 /* ---------- Profile ---------- */
@@ -860,24 +874,23 @@ function renderGoals(){
         <div class="add-task-row"><input placeholder="เพิ่มงาน / ทีเด็ด..." data-ttxt="${p.id}:${gi}"><input placeholder="ความถี่ / Target" data-tfreq="${p.id}:${gi}"><button class="mini-btn" data-tadd="${p.id}:${gi}">เพิ่ม</button></div>
       </div>`;
     }).join(''):'<div class="empty-note">ยังไม่มีเป้าหมาย</div>';
-    const addGoalBox=p.isHead?'<div class="empty-note">เป้าหมายของหัวหน้าสายกำหนดในระดับฝ่าย</div>'
-      :`<div class="add-goal-inline"><input placeholder="ชื่อเป้าหมายใหม่..." data-gtitle="${p.id}"><input placeholder="Target" data-gtarget="${p.id}"><button class="mini-btn" data-gadd="${p.id}">+ เพิ่มเป้าหมาย</button></div>`;
-    wrap.innerHTML=pcHead(p)+`<div class="pcard-body">${g}${addGoalBox}</div>`;
+    wrap.innerHTML=pcHead(p)+`<div class="pcard-body">${g}
+      <div class="add-goal-inline"><input placeholder="ชื่อเป้าหมายใหม่..." data-gtitle="${p.id}"><input placeholder="Target" data-gtarget="${p.id}"><button class="mini-btn" data-gadd="${p.id}">+ เพิ่มเป้าหมาย</button></div></div>`;
     host.appendChild(wrap);
   });
   host.querySelectorAll('[data-tadd]').forEach(b=>b.addEventListener('click',()=>{
-    const[pid,gi]=b.dataset.tadd.split(':');const p=data.find(x=>x.id===pid);
+    const[pid,gi]=b.dataset.tadd.split(':');const p=findRec(pid);
     const txt=host.querySelector(`[data-ttxt="${pid}:${gi}"]`).value.trim();
     const freq=host.querySelector(`[data-tfreq="${pid}:${gi}"]`).value.trim();
     if(!txt)return;p.goals[gi].tasks=p.goals[gi].tasks||[];p.goals[gi].tasks.push({txt,freq});persist();renderGoals();}));
   host.querySelectorAll('[data-tdel]').forEach(b=>b.addEventListener('click',()=>{
-    const[pid,gi,ti]=b.dataset.tdel.split(':');const p=data.find(x=>x.id===pid);
+    const[pid,gi,ti]=b.dataset.tdel.split(':');const p=findRec(pid);
     p.goals[gi].tasks.splice(+ti,1);persist();renderGoals();}));
   host.querySelectorAll('[data-gdel]').forEach(b=>b.addEventListener('click',()=>{
-    const[pid,gi]=b.dataset.gdel.split(':');const p=data.find(x=>x.id===pid);
+    const[pid,gi]=b.dataset.gdel.split(':');const p=findRec(pid);
     if(confirm('ลบเป้าหมายนี้?')){p.goals.splice(+gi,1);persist();renderGoals();}}));
   host.querySelectorAll('[data-gadd]').forEach(b=>b.addEventListener('click',()=>{
-    const pid=b.dataset.gadd;const p=data.find(x=>x.id===pid);
+    const pid=b.dataset.gadd;const p=findRec(pid);
     const t=host.querySelector(`[data-gtitle="${pid}"]`).value.trim();
     const tg=host.querySelector(`[data-gtarget="${pid}"]`).value.trim();
     if(!t)return;p.goals=p.goals||[];p.goals.push({title:t,target:tg,tasks:[]});persist();renderGoals();}));
