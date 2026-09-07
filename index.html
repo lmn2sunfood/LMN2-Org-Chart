@@ -316,7 +316,7 @@
       <div class="page-head"><div>
         <div class="ph-eyebrow">Individual Profile</div>
         <h2>ข้อมูลรายบุคคล</h2>
-        <p>พันธกิจ · งานประจำวัน · งานที่อยากปรับปรุง · กระบวนการ · แนวทางประเมินรางวัล (แก้ไขได้ทุกช่อง)</p>
+        <p>6 หัวข้อ: พันธกิจ · งานประจำวัน · ปัญหาของงาน · จุดที่เบื่อ · สิ่งที่อยากทำ · การวัดผลงาน (แก้ไขได้ทุกช่อง)</p>
       </div></div>
       <div class="plist" id="profileList"></div>
     </section>
@@ -566,11 +566,12 @@ const DEFAULT_PROFILE = {
 };
 
 const PROFILE_FIELDS=[
-  {key:'mission',label:'พันธกิจ หน้าที่'},
+  {key:'mission',label:'พันธกิจ หน้าที่ / งานที่รับผิดชอบ'},
   {key:'daily',  label:'งานประจำแต่ละวันที่ทำ'},
-  {key:'improve',label:'งานที่อยากปรับปรุง / ปัญหาที่พบบ่อยๆ'},
-  {key:'process',label:'กระบวนการในการทำ'},
-  {key:'reward', label:'ถ้าเราอยากให้รางวัล ควรประเมินอย่างไร'}
+  {key:'improve',label:'ปัญหาของงาน หามาอย่างน้อย 3 เรื่อง'},
+  {key:'bored',  label:'เราเบื่องานที่ทำคือจุดไหน'},
+  {key:'process',label:'เลือกได้ อยากทำอย่างไรบ้าง'},
+  {key:'reward', label:'อยากให้วัดผลงานเราอย่างไร'}
 ];
 
 let data=[], kpiStore={}, profileStore={}, headStore={}, currentDept='all', currentPage='overview';
@@ -808,7 +809,8 @@ function renderProfile(){
       f+=`<div class="prof-field"><div class="prof-q"><span class="qnum">${i+1}</span><span>${esc(fd.label)}</span></div>
         <textarea class="prof-input" data-prof="${p.id}:${fd.key}" placeholder="กรอกรายละเอียด...">${esc(prof[fd.key]||'')}</textarea></div>`;
     });
-    const badge=`<span class="fill-badge ${filled===0?'none':(filled<5?'part':'full')}">${filled}/5</span>`;
+    const total=PROFILE_FIELDS.length;
+    const badge=`<span class="fill-badge ${filled===0?'none':(filled<total?'part':'full')}">${filled}/${total}</span>`;
     wrap.innerHTML=pcHead(p,badge)+`<div class="pcard-body">${f}</div>`;
     host.appendChild(wrap);
   });
