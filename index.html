@@ -185,7 +185,8 @@
   .qnum{font-family:'Sora';font-weight:800;font-size:11.5px;color:#fff;background:var(--c2);border-radius:6px;min-width:21px;height:21px;
     display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
   .prof-input{font-family:inherit;font-size:13px;border:1px solid var(--line);border-radius:8px;padding:9px 11px;width:100%;
-    resize:vertical;min-height:50px;line-height:1.55;background:var(--paper);color:#233;}
+    resize:vertical;min-height:50px;line-height:1.55;background:var(--paper);color:#233;
+    overflow:hidden;}
   .prof-input:focus{outline:none;border-color:var(--c1);background:#fff;box-shadow:0 0 0 3px color-mix(in srgb, var(--c1) 18%, transparent);}
 
   .kpi-item{border-top:1px solid var(--line);padding:12px 0 4px;}
@@ -292,7 +293,7 @@
     <div class="nav-foot">
       <button class="nav-btn" id="refreshData">🔄 ดึงข้อมูลล่าสุด</button>
       <button class="nav-btn" id="addPerson">+ เพิ่มบุคลากร</button>
-      <button class="nav-btn" id="resetData">คืนค่าข้อมูลเริ่มต้น</button>
+      <button class="nav-btn" id="backupData">💾 ดาวน์โหลดสำรองข้อมูล</button>
       <div class="nav-count"><span id="headcount">0</span> คนทั้งหมด<br><span id="syncState">—</span></div>
     </div>
   </nav>
@@ -798,6 +799,12 @@ function pcHead(p,extra){
 }
 
 /* ---------- Profile ---------- */
+// ขยายความสูง textarea ให้พอดีกับเนื้อหา (ไม่ต้องเลื่อนในช่อง)
+function autoGrow(el){
+  if(!el) return;
+  el.style.height='auto';
+  el.style.height=(el.scrollHeight+2)+'px';
+}
 function renderProfile(){
   const host=document.getElementById('profileList');host.innerHTML='';
   peopleForPages().forEach(p=>{
@@ -814,11 +821,15 @@ function renderProfile(){
     wrap.innerHTML=pcHead(p,badge)+`<div class="pcard-body">${f}</div>`;
     host.appendChild(wrap);
   });
-  host.querySelectorAll('[data-prof]').forEach(t=>t.addEventListener('change',()=>{
-    const[pid,key]=t.dataset.prof.split(':');
-    if(!profileStore[pid])profileStore[pid]={};
-    profileStore[pid][key]=t.value;persistProfile();renderProfile();
-  }));
+  host.querySelectorAll('[data-prof]').forEach(t=>{
+    autoGrow(t);                                  // ขยายให้พอดีเนื้อหาตอนเปิดหน้า
+    t.addEventListener('input',()=>autoGrow(t));  // ขยายต่อขณะพิมพ์
+    t.addEventListener('change',()=>{
+      const[pid,key]=t.dataset.prof.split(':');
+      if(!profileStore[pid])profileStore[pid]={};
+      profileStore[pid][key]=t.value;persistProfile();renderProfile();
+    });
+  });
 }
 
 /* ---------- KPI ---------- */
@@ -962,6 +973,8 @@ function selectPage(pg){
   document.querySelectorAll('.nav-item').forEach(x=>x.classList.toggle('active',x.dataset.page===pg));
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+pg).classList.add('active');
+  // วัดความสูงช่องกรอกอีกครั้งหลังหน้าแสดงผล (ตอนซ่อนอยู่จะวัดไม่ได้)
+  if(pg==='profile') setTimeout(()=>document.querySelectorAll('[data-prof]').forEach(autoGrow),0);
   closeNav();
 }
 document.querySelectorAll('.dept-item').forEach(it=>it.addEventListener('click',()=>selectDept(it.dataset.dept)));
@@ -977,12 +990,15 @@ document.getElementById('addPerson').addEventListener('click',()=>{
   data.push({id,dept:d,rank:40,role:'เจ้าหน้าที่',name:'ชื่อใหม่',nickname:'',code:'',machines:[],goals:[]});
   persist();refreshAll();openModal(id);
 });
-document.getElementById('resetData').addEventListener('click',async()=>{
-  if(confirm('คืนค่าโครงสร้างและข้อมูลกลับเป็นค่าเริ่มต้นทั้งหมด?')){
-    data=JSON.parse(JSON.stringify(DEFAULT_DATA));
-    profileStore=JSON.parse(JSON.stringify(DEFAULT_PROFILE));
-    await persist();refreshAll();
-  }
+document.getElementById('backupData').addEventListener('click',()=>{
+  const snap={data:data,kpi:kpiStore,profile:profileStore,heads:headStore,
+    savedAt:new Date().toISOString()};
+  const blob=new Blob([JSON.stringify(snap,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='orgchart-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+  setSync('ดาวน์โหลดไฟล์สำรองแล้ว');
 });
 document.getElementById('refreshData').addEventListener('click',async()=>{setSync('กำลังดึงข้อมูล...');await loadAll();refreshAll();});
 
