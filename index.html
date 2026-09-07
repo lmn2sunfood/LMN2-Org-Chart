@@ -263,6 +263,61 @@
     .add-task-row,.add-goal-inline{grid-template-columns:1fr;}
     .edit-row{flex-direction:column;}
   }
+
+  /* ===== หน้าแนะนำจาก AI ===== */
+  .ai-alert{background:#fff4ec;border:1px solid #f0c9a8;border-left:6px solid #d9722b;border-radius:14px;
+    padding:18px 22px;margin-bottom:20px;}
+  .ai-alert .t{font-family:'Sora';font-weight:800;font-size:16px;color:#8a3d0b;margin-bottom:8px;}
+  .ai-alert p{font-size:13.5px;color:#6b4a33;line-height:1.6;}
+  .ai-sec{background:var(--white);border:1px solid var(--line);border-radius:16px;padding:20px 24px;margin-bottom:18px;
+    box-shadow:0 5px 20px -14px rgba(15,42,63,.4);}
+  .ai-sec > h3{font-family:'Sora';font-weight:800;font-size:17px;color:var(--ink);margin-bottom:4px;
+    display:flex;align-items:center;gap:9px;}
+  .ai-sec > h3 .num{background:var(--c1);color:#fff;width:26px;height:26px;border-radius:8px;
+    display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;}
+  .ai-sec > .lead{font-size:13px;color:var(--muted);margin:0 0 14px 35px;line-height:1.6;}
+  .ai-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:6px;}
+  .ai-table th{background:var(--soft);color:var(--c2);font-family:'Sora';font-size:11.5px;letter-spacing:.05em;
+    text-transform:uppercase;padding:8px 11px;text-align:left;border-bottom:2px solid var(--line);}
+  .ai-table td{padding:8px 11px;border-bottom:1px solid var(--line);vertical-align:top;color:#33474f;}
+  .ai-table tr:last-child td{border-bottom:none;}
+  .ai-table .cnt{font-family:'Sora';font-weight:700;color:var(--c1);white-space:nowrap;}
+  .ai-tree{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:16px 18px;
+    font-size:13px;line-height:1.9;color:#33474f;overflow-x:auto;}
+  .ai-tree .root{font-family:'Sora';font-weight:800;color:var(--c2);font-size:14px;}
+  .ai-tree .br{color:var(--muted);}
+  .ai-tree .who{color:var(--c1);font-size:12px;}
+  .phase{border-left:4px solid var(--c1);padding:2px 0 2px 16px;margin-bottom:16px;}
+  .phase h4{font-family:'Sora';font-weight:700;font-size:14.5px;color:var(--ink);margin-bottom:6px;}
+  .phase ul{margin:0 0 0 17px;font-size:13px;color:#33474f;line-height:1.75;}
+  .ai-2col{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .ai-card{border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+  .ai-card.good{background:#eefaf6;border-color:#b6e3d6;}
+  .ai-card.warn{background:#fdf3e7;border-color:#f0d3ab;}
+  .ai-card h5{font-family:'Sora';font-weight:700;font-size:13px;margin-bottom:7px;}
+  .ai-card.good h5{color:#1a7a68;} .ai-card.warn h5{color:#a06412;}
+  .ai-card ul{margin-left:16px;font-size:12.8px;line-height:1.7;color:#3a525e;}
+  .ai-quote{background:var(--soft);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--c2);
+    line-height:1.65;margin:10px 0;font-style:italic;}
+  .ai-note{font-size:12px;color:var(--muted);margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);line-height:1.6;}
+  @media(max-width:760px){ .ai-2col{grid-template-columns:1fr;} }
+
+  /* แท็บสายงานในหน้า AI */
+  .ai-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+  .ai-tab{border:1px solid var(--line);background:var(--white);border-radius:10px;padding:10px 16px;
+    font-family:inherit;font-size:13.5px;font-weight:600;color:var(--muted);cursor:pointer;transition:.15s;}
+  .ai-tab:hover{color:var(--ink);}
+  .ai-tab.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .ai-tab .sub{display:block;font-size:11px;font-weight:400;opacity:.75;margin-top:2px;}
+  .ai-pane{display:none;} .ai-pane.active{display:block;}
+  .side-head{border-radius:14px;padding:16px 20px;color:#fff;margin-bottom:16px;}
+  .side-head .r{font-family:'Sora';font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;opacity:.85;}
+  .side-head .n{font-size:19px;font-weight:700;margin-top:3px;}
+  .side-head .d{font-size:12.5px;opacity:.9;margin-top:5px;}
+  .verdict{border-radius:12px;padding:14px 18px;margin-bottom:16px;font-size:13.5px;line-height:1.65;}
+  .verdict.a{background:#fff4ec;border:1px solid #f0c9a8;color:#7a3f10;}
+  .verdict.b{background:#eef3fb;border:1px solid #c3d5ee;color:#274468;}
+  .verdict b{font-family:'Sora';}
 </style>
 </head>
 <body data-dept="all">
@@ -287,7 +342,7 @@
     <div class="nav-item active" data-page="overview"><span class="ic">🗂️</span> แผนผัง</div>
     <div class="nav-item" data-page="profile"><span class="ic">👤</span> ข้อมูลรายบุคคล</div>
     <div class="nav-item" data-page="kpi"><span class="ic">📊</span> KPI</div>
-    <div class="nav-item" data-page="goals"><span class="ic">🎯</span> เป้าหมาย</div>
+    <div class="nav-item" data-page="ai"><span class="ic">🤖</span> แนะนำจาก AI</div>
 
     <div class="nav-spacer"></div>
     <div class="nav-foot">
@@ -331,13 +386,13 @@
       <div class="plist" id="kpiList"></div>
     </section>
 
-    <section class="page" id="page-goals">
+    <section class="page" id="page-ai">
       <div class="page-head"><div>
-        <div class="ph-eyebrow">Goals &amp; Key Actions</div>
-        <h2>เป้าหมาย &amp; ทีเด็ด</h2>
-        <p>เป้าหมายและทีเด็ดของแต่ละคน — เพิ่ม/แก้ไข/ลบได้</p>
+        <div class="ph-eyebrow">AI Analysis &amp; Recommendation</div>
+        <h2>แนะนำจาก AI</h2>
+        <p>วิเคราะห์จากคำตอบข้อมูลรายบุคคลของทั้ง 17 คน — ปัญหาที่ซ้ำข้ามแผนก และแนวทางปรับปรุงที่ควรทำต่อ</p>
       </div></div>
-      <div class="plist" id="goalsList"></div>
+      <div id="aiBody"></div>
     </section>
   </main>
 </div>
@@ -893,7 +948,9 @@ function kpiForm(pid,idx,anchor){
 
 /* ---------- Goals ---------- */
 function renderGoals(){
-  const host=document.getElementById('goalsList');host.innerHTML='';
+  const host=document.getElementById('goalsList');
+  if(!host) return;            // หน้าเป้าหมายถูกแทนที่ด้วยหน้าแนะนำจาก AI แล้ว
+  host.innerHTML='';
   peopleForPages().forEach(p=>{
     const wrap=document.createElement('div');wrap.className='pcard';
     let g=(p.goals&&p.goals.length)?p.goals.map((go,gi)=>{
@@ -975,7 +1032,213 @@ function closeModal(){document.getElementById('overlay').classList.remove('open'
 document.getElementById('overlay').addEventListener('click',e=>{if(e.target.id==='overlay')closeModal();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
-function refreshAll(){renderOverview();renderProfile();renderKpi();renderGoals();}
+
+function renderAI(){
+  const host=document.getElementById('aiBody');
+  if(!host) return;
+  host.innerHTML=`
+  <div class="ai-tabs">
+    <button class="ai-tab active" data-aitab="phum">สายนายพิทยุตม์ (ภูมิ)<span class="sub">LMN1 · LMN2 · SUNFEED · 13 คน</span></button>
+    <button class="ai-tab" data-aitab="nat">สายนายณัฏฐวัสส์<span class="sub">ASRS · ENV · ENE · SUNFEED · 6 คน</span></button>
+    <button class="ai-tab" data-aitab="both">ภาพรวม 2 สาย<span class="sub">ข้อเสนอร่วม</span></button>
+  </div>
+
+  <!-- ============ สายภูมิ ============ -->
+  <div class="ai-pane active" id="aip-phum">
+    <div class="side-head" style="background:linear-gradient(135deg,#12263a,#2a7f74)">
+      <div class="r">ผู้จัดการฝ่าย · ระดับ 75</div>
+      <div class="n">นายพิทยุตม์ ทรัพย์สมบูรณ์ (ภูมิ)</div>
+      <div class="d">LMN1 (4 คน) · LMN2 (5 คน) · SUNFEED (4 คน)</div>
+    </div>
+
+    <div class="verdict a"><b>ลักษณะปัญหาของสายนี้ : ทำเยอะจนซ้ำ</b><br>
+      คนในสายนี้ริเริ่มสูงมาก แต่ต่างคนต่างทำ — ผู้ที่วางแผนสร้างเว็บแอปทั้ง 6 คน อยู่ในสายนี้ทั้งหมด งานหลักคือ "จัดระเบียบและรวมให้เป็นระบบเดียว" ก่อนที่จะเกิดฐานข้อมูลซ้ำ</div>
+
+    <div class="ai-sec">
+      <h3><span class="num">1</span> ใครกำลังจะสร้างอะไร — ทั้ง 6 คนอยู่สายนี้</h3>
+      <div class="lead">ทุกระบบใช้ข้อมูลแกนเดียวกัน : เครื่องจักร → ประวัติซ่อม → อะไหล่ → เอกสาร</div>
+      <table class="ai-table">
+        <tr><th>คน</th><th>แผนก</th><th>กำลังจะสร้าง</th></tr>
+        <tr><td><b>บูม</b></td><td>LMN2</td><td>5 แอป — Master plan, รวมเอกสาร, ทะเบียนสายพาน, LINE OA, ระบบลา</td></tr>
+        <tr><td><b>ฟอร์ด</b></td><td>LMN2</td><td>เว็บสรุปหยุดผลิต + เว็บค้นสาเหตุ/วิธีแก้</td></tr>
+        <tr><td><b>แบงค์</b></td><td>LMN2</td><td>เว็บ SOP / คู่มือซ่อม</td></tr>
+        <tr><td><b>ปลาย</b></td><td>LMN1</td><td>Web app บันทึกงานช่าง + ประวัติ Breakdown</td></tr>
+        <tr><td><b>แฮปปี้</b></td><td>SUNFEED</td><td>ระบบบันทึกงาน + Master Plan + คลังอะไหล่</td></tr>
+        <tr><td><b>ปิ๊ก</b></td><td>SUNFEED</td><td>ระบบ Spare Part → PR</td></tr>
+      </table>
+    </div>
+
+    <div class="ai-sec">
+      <h3><span class="num">2</span> ปัญหาที่ซ้ำภายในสาย</h3>
+      <table class="ai-table">
+        <tr><th>ปัญหา</th><th>จำนวน</th><th>ใครบ้าง</th></tr>
+        <tr><td>ไม่มีระบบบันทึกงาน / ค้นประวัติย้อนหลังไม่ได้</td><td class="cnt">5 คน</td><td>ปลาย ฟอร์ด แฮปปี้ สิปโป เพชร</td></tr>
+        <tr><td>หา Spare Part / เปิด PR กินเวลา</td><td class="cnt">4 คน</td><td>ปิ๊ก กบ แฮปปี้ เพชร</td></tr>
+        <tr><td>Master Plan / แผน PM ต่างคนต่างทำ</td><td class="cnt">4 คน</td><td>บูม เพชร แฮปปี้ ปิ๊ก</td></tr>
+        <tr><td>เอกสารเครื่องจักร (WI/Manual/SOP) ไม่ครบ</td><td class="cnt">4 คน</td><td>แบงค์ กบ ฟอร์ด ปลาย</td></tr>
+        <tr><td>เอกสารกระดาษ / กรอกซ้ำหลายที่</td><td class="cnt">3 คน</td><td>แบงค์ ฟอร์ด สิปโป</td></tr>
+        <tr><td>ทักษะช่างไม่เท่ากัน</td><td class="cnt">3 คน</td><td>แบงค์ ปลาย เสริฐ</td></tr>
+      </table>
+    </div>
+
+    <div class="ai-sec">
+      <h3><span class="num">3</span> สิ่งที่ต้องทำ</h3>
+      <div class="phase">
+        <h4>เดือน 1 — หยุดการซ้ำซ้อน</h4>
+        <ul>
+          <li>เรียกประชุม 6 คนที่กำลังจะสร้างแอป ตกลงใช้ฐานข้อมูลเดียวกัน</li>
+          <li>ทำทะเบียนเครื่องจักรกลางให้เสร็จก่อน (รหัส · ชื่อ · แผนก · ผู้รับผิดชอบ)</li>
+          <li>แบ่งเจ้าภาพรายโมดูล : ปิ๊ก→Spare Part · แฮปปี้→PM/Checklist · ปลาย+ฟอร์ด→บันทึกงาน/ประวัติซ่อม · แบงค์→เอกสาร/SOP · บูม→รวม Link และระบบลา</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <h4>เดือน 2–3 — สร้างโมดูลตามลำดับความคุ้ม</h4>
+        <ul>
+          <li><b>บันทึกงาน + ประวัติซ่อม</b> (5 คนได้ประโยชน์) — เป็นฐานของทุกอย่าง ต้องทำก่อน</li>
+          <li><b>Spare Part → PR อัตโนมัติ</b> (4 คน) — ปิ๊กออกแบบ flow ไว้แล้ว ใช้ได้เลย</li>
+          <li><b>PM + Checklist บนมือถือ</b> (4 คน) — แฮปปี้มีโครงมาตรฐาน 1/3/5 แล้ว</li>
+          <li><b>คลังเอกสาร/SOP ผูก QR ที่ตัวเครื่อง</b> (4 คน)</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <h4>เดือน 4+ — แก้เรื่องทักษะช่าง</h4>
+        <ul>
+          <li>ปัญหาทักษะไม่เท่ากัน แก้ได้ด้วยฐานประวัติซ่อมที่ทำในเฟส 2 — ให้ช่างค้นวิธีแก้เองได้</li>
+          <li>ต่อยอดเป็น QWI + คลิปสั้น ตามที่ปลายและแบงค์เสนอไว้</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ สายณัฏฐวัสส์ ============ -->
+  <div class="ai-pane" id="aip-nat">
+    <div class="side-head" style="background:linear-gradient(135deg,#12263a,#6742b8)">
+      <div class="r">ผู้จัดการฝ่าย · ระดับ 75</div>
+      <div class="n">นายณัฏฐวัสส์ ไตรยงค์</div>
+      <div class="d">ASRS (3 คน) · ENV (2 คน) · ENE (1 คน) · SUNFEED (ดูแลร่วม)</div>
+    </div>
+
+    <div class="verdict b"><b>ลักษณะปัญหาของสายนี้ : คนไม่ขยับ ไม่ใช่ระบบซ้ำ</b><br>
+      สายนี้ <b>ไม่มีใครวางแผนสร้างเว็บแอปเลยสักคน</b> ต่างจากสายภูมิอย่างชัดเจน และ 3 ใน 6 คนระบุตรงกันว่าปัญหาคือทีมไม่กระตือรือร้น/ไม่กล้าเสนอ — โจทย์ของสายนี้คือ "ปลดล็อกคน" ไม่ใช่ "จัดระเบียบระบบ"</div>
+
+    <div class="ai-sec">
+      <h3><span class="num">1</span> ปัญหาหลักของสาย</h3>
+      <table class="ai-table">
+        <tr><th>ปัญหา</th><th>ใคร</th><th>สาระ</th></tr>
+        <tr><td>ทีมไม่กระตือรือร้น / ไม่กล้าเสนอ</td><td>บาส เจป ดล</td><td>บาสระบุว่าทีม "ไม่กล้าคิด ไม่กล้าทำ" เพราะกลัวเพิ่มภาระ · เจปและดลบอกทีมไม่ Active และขาดการสื่อสาร</td></tr>
+        <tr><td>ใช้คนไม่คุ้มค่า</td><td>บาส</td><td>งานโหลดสินค้า CS3 ให้คนเดินบังคับรถ/ขับ AGV ทั้งวัน จนไม่มีเวลาไปพัฒนาระบบ</td></tr>
+        <tr><td>ไม่มีระบบติดตามแบบ real-time</td><td>ดล จี๊บ</td><td>จุดตรวจกระจายห่างกันมาก ต้องเดินเช็คเอง อยากได้ SCADA/CCTV</td></tr>
+        <tr><td>ความปลอดภัยหน้างาน</td><td>ฟิวส์ นิค</td><td>ต้องเดินเข้า-ออกคลัง CS2 บนสายพาน เสี่ยงอุบัติเหตุ ยังไม่มีประตู service</td></tr>
+        <tr><td>งานข้ามหน่วยไม่สอดคล้อง</td><td>จี๊บ</td><td>แผนฟาร์มกับบ่อแก๊สไม่ตรงกัน เกิดปัญหากลิ่นและพื้นที่กองมูลไก่</td></tr>
+      </table>
+    </div>
+
+    <div class="ai-sec">
+      <h3><span class="num">2</span> สิ่งที่ต้องทำ</h3>
+      <div class="phase">
+        <h4>เดือน 1 — ปลดล็อกเวลาและความกล้า</h4>
+        <ul>
+          <li>ทบทวนงาน CS3 : จุดไหนตั้งอัตโนมัติหรือหมุนเวียนกันได้ เพื่อคืนเวลาให้ทีมไปพัฒนางาน</li>
+          <li>ใช้วิธีที่บาสเสนอไว้แล้ว — เปลี่ยนคำถามจาก "เสร็จหรือยัง" เป็น "ตรงไหนทำยาก ต้องการเครื่องมืออะไร"</li>
+          <li>ตั้งเป้าเล็ก : ให้แต่ละคนเสนอ 1 เรื่องปรับปรุงต่อเดือน ไม่ต้องใหญ่ เน้นให้กล้าเริ่ม</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <h4>เดือน 2–3 — แก้ความปลอดภัยและงานที่รอมานาน</h4>
+        <ul>
+          <li>ประตู service คลัง CS2 — เรื่องความปลอดภัย ควรทำก่อนเรื่องอื่น</li>
+          <li>Location อบงาเฉพาะจุด (ฟิวส์/นิคเสนอไว้) ลดเวลา PM</li>
+          <li>ขยายผล autodrain ของจี๊บที่สำเร็จแล้ว (ลดคนได้ 1 คน) ไปยังจุดอื่นที่ยังใช้คนเฝ้า</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <h4>เดือน 4+ — ระบบติดตามและงานข้ามหน่วย</h4>
+        <ul>
+          <li>SCADA/CCTV ตามจุดตรวจ ENV ที่อยู่ห่างกัน (ดลเสนอไว้)</li>
+          <li>ตั้งวงประชุมร่วมฟาร์ม–บ่อแก๊ส ให้แผนสอดคล้องกัน แก้ปัญหากลิ่นที่ต้นเหตุ</li>
+          <li>รวมเอกสาร ทส./รว./CoP ให้ดึงจากฐานเดียว ตัดการกรอกซ้ำ (เจป/ดล)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ai-sec">
+      <h3><span class="num">3</span> ข้อควรระวังเฉพาะสายนี้</h3>
+      <div class="ai-quote">ทีม "ไม่กล้าคิด ไม่กล้าทำ" เพราะกลัวทำไม่ได้ หรือกลัวเพิ่มภาระให้ตัวเอง — จากคำตอบของบาส</div>
+      <p style="font-size:13px;color:#33474f;line-height:1.7;">ถ้าเอาระบบจากสายภูมิมาใช้เลยโดยไม่แก้เรื่องคนก่อน มีความเสี่ยงสูงที่ระบบจะไม่ถูกใช้จริง — ควรเริ่มจากคืนเวลาและสร้างความปลอดภัยทางใจก่อน แล้วค่อยนำระบบเข้ามา</p>
+    </div>
+  </div>
+
+  <!-- ============ ภาพรวม 2 สาย ============ -->
+  <div class="ai-pane" id="aip-both">
+    <div class="ai-alert">
+      <div class="t">ข้อสังเกตสำคัญจากการแยก 2 สาย</div>
+      <p>ผู้ที่วางแผนสร้างเว็บแอปทั้ง <b>6 คน อยู่ในสายภูมิทั้งหมด</b> ส่วนสายณัฏฐวัสส์ไม่มีเลยสักคน — ปัญหาของสองสายจึงคนละแบบและต้องใช้วิธีต่างกัน การเอาแผนเดียวไปใช้ทั้ง 2 สายจะไม่ได้ผล</p>
+    </div>
+
+    <div class="ai-sec">
+      <h3><span class="num">1</span> เปรียบเทียบ 2 สาย</h3>
+      <table class="ai-table">
+        <tr><th>หัวข้อ</th><th>สายภูมิ</th><th>สายณัฏฐวัสส์</th></tr>
+        <tr><td>จำนวนคน</td><td>13 คน</td><td>6 คน</td></tr>
+        <tr><td>คนที่ริเริ่มสร้างระบบ</td><td class="cnt">6 คน</td><td class="cnt">0 คน</td></tr>
+        <tr><td>ลักษณะปัญหา</td><td>ทำเยอะจนซ้ำซ้อน</td><td>ไม่มีใครริเริ่ม</td></tr>
+        <tr><td>สิ่งที่ต้องทำก่อน</td><td>จัดระเบียบ รวมเป็นระบบเดียว</td><td>คืนเวลา ปลดล็อกความกล้า</td></tr>
+        <tr><td>ความเสี่ยงหลัก</td><td>ฐานข้อมูลซ้ำ 6 ชุด</td><td>สร้างระบบแล้วไม่มีคนใช้</td></tr>
+      </table>
+    </div>
+
+    <div class="ai-sec">
+      <h3><span class="num">2</span> Master Source ที่ใช้ร่วมกันได้ทั้ง 2 สาย</h3>
+      <div class="lead">สายภูมิเป็นผู้สร้าง สายณัฏฐวัสส์นำไปใช้ในเฟสถัดไป — ไม่ต้องสร้างซ้ำ</div>
+      <div class="ai-tree">
+<span class="root">รหัสเครื่องจักร (Master Source)</span>
+<span class="br">├─</span> เอกสาร : Manual, WI, SOP, คลิปสอน <span class="who">→ สร้างโดย แบงค์</span>
+<span class="br">├─</span> แผน PM + Checklist <span class="who">→ สร้างโดย แฮปปี้</span>
+<span class="br">├─</span> ประวัติซ่อม + สาเหตุ + วิธีแก้ <span class="who">→ สร้างโดย ปลาย + ฟอร์ด</span>
+<span class="br">├─</span> Spare Part + Part No. + Stock + PR <span class="who">→ สร้างโดย ปิ๊ก</span>
+<span class="br">└─</span> บันทึกงานช่างประจำวัน <span class="who">→ สร้างโดย แฮปปี้ + สิปโป</span>
+      </div>
+    </div>
+
+    <div class="ai-sec">
+      <h3><span class="num">3</span> SUNFEED : จุดที่ต้องระวังเป็นพิเศษ</h3>
+      <p style="font-size:13px;color:#33474f;line-height:1.7;">SUNFEED อยู่ใต้การดูแลของทั้ง 2 ฝ่าย ควรกำหนดให้ชัดว่าเรื่องใดรายงานใคร เพื่อไม่ให้ทีม SUNFEED (สิปโป เพชร แฮปปี้ ปิ๊ก) ต้องทำรายงานซ้ำ 2 ชุด หรือได้รับคำสั่งที่ขัดกัน — ซึ่งจะสวนทางกับเป้าหมายลดงานซ้ำโดยตรง</p>
+    </div>
+
+    <div class="ai-sec">
+      <h3><span class="num">4</span> AI ช่วยได้ vs ต้องมีคนอนุมัติ (ใช้ร่วมทั้ง 2 สาย)</h3>
+      <div class="ai-2col">
+        <div class="ai-card good">
+          <h5>✓ ให้ AI ช่วยได้</h5>
+          <ul>
+            <li>ค้นหาสาเหตุ/วิธีแก้จากประวัติซ่อม</li>
+            <li>สรุปรายงานอัตโนมัติ</li>
+            <li>แนะนำอะไหล่ที่ควรสำรอง</li>
+            <li>ร่าง WI จากบันทึกการซ่อมจริง</li>
+          </ul>
+        </div>
+        <div class="ai-card warn">
+          <h5>⚠ ต้องมีคนอนุมัติ</h5>
+          <ul>
+            <li>การอนุมัติ PR</li>
+            <li>การตัดสินใจหยุดเครื่อง</li>
+            <li>การประเมินผลงานคน</li>
+            <li>การปรับแผน PM ที่กระทบความปลอดภัย</li>
+          </ul>
+        </div>
+      </div>
+      <div class="ai-note">หมายเหตุ : บทวิเคราะห์นี้อ้างอิงจากคำตอบข้อมูลรายบุคคลของ 17 คนในระบบ ณ ช่วงเวลาที่จัดทำ เมื่อมีข้อมูลเพิ่มเติมควรทบทวนอีกครั้ง</div>
+    </div>
+  </div>`;
+
+  host.querySelectorAll('[data-aitab]').forEach(b=>b.addEventListener('click',()=>{
+    host.querySelectorAll('.ai-tab').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+    host.querySelectorAll('.ai-pane').forEach(x=>x.classList.remove('active'));
+    document.getElementById('aip-'+b.dataset.aitab).classList.add('active');
+  }));
+}
+function refreshAll(){renderOverview();renderProfile();renderKpi();renderGoals();renderAI();}
 
 /* ---------- nav ---------- */
 function selectDept(d){
