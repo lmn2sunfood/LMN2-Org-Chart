@@ -738,37 +738,55 @@ async function saveAll(){
 }
 async function pushOnline(){
   setSync('กำลังบันทึก...');
-  const payload=JSON.stringify({data:data,kpi:kpiStore,profile:profileStore,heads:headStore});
   const stamp=Date.now();
+  const body=JSON.stringify({data:data,kpi:kpiStore,profile:profileStore,heads:headStore,stamp:stamp});
+
+  // วิธีที่ 1: POST แบบปกติ (text/plain = simple request ไม่ต้อง preflight) อ่านคำตอบได้จริง
+  try{
+    const res=await fetch(API_URL,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:body
+    });
+    const j=await res.json();
+    if(j&&j.ok){
+      setSync('บันทึกแล้ว ✓ '+new Date().toLocaleTimeString('th-TH'));
+      flash(); return;
+    }
+    setSync('⚠️ ชีตปฏิเสธ: '+((j&&j.error)||'ไม่ทราบสาเหตุ'));
+    console.warn('server said',j);
+    return;
+  }catch(e){
+    console.warn('POST ปกติไม่ผ่าน (อาจติด CORS) ลองวิธีสำรอง...',e);
+  }
+
+  // วิธีที่ 2 (สำรอง): no-cors + ตรวจสอบย้อนกลับด้วย stamp
   try{
     const fd=new FormData();
-    fd.append('payload',payload);
+    fd.append('payload',body);
     fd.append('stamp',String(stamp));
     await fetch(API_URL,{method:'POST',mode:'no-cors',body:fd});
   }catch(e){
-    console.error('send failed',e);
-    setSync('❌ ส่งข้อมูลไม่ได้ — ยังไม่บันทึก');
+    console.error('ส่งไม่ได้ทั้ง 2 วิธี',e);
+    setSync('❌ ส่งข้อมูลไม่ได้ — ตรวจอินเทอร์เน็ต/URL');
     return;
   }
-  // ตรวจสอบจริงว่าชีตรับข้อมูลแล้วหรือยัง (no-cors อ่านคำตอบไม่ได้ จึงต้องอ่านย้อนกลับ)
-  await new Promise(r=>setTimeout(r,1500));
+  await new Promise(r=>setTimeout(r,1800));
   try{
-    const res=await fetch(API_URL+'?t='+Date.now(),{method:'GET'});
+    const res=await fetch(API_URL+'?t='+Date.now());
     const j=await res.json();
     const saved=j&&j.payload&&j.payload.stamp;
     if(String(saved)===String(stamp)){
-      setSync('บันทึกแล้ว ✓ '+new Date().toLocaleTimeString('th-TH'));
-      flash();
+      setSync('บันทึกแล้ว ✓ '+new Date().toLocaleTimeString('th-TH')); flash();
     }else{
-      setSync('⚠️ บันทึกไม่สำเร็จ — ข้อมูลไม่เข้าชีต (กดปุ่มบันทึกซ้ำ)');
-      console.warn('verify failed: expected',stamp,'got',saved);
+      setSync('⚠️ ไม่เข้าชีต — ตรวจว่า Deploy Code.gs เวอร์ชันใหม่แล้วหรือยัง');
+      console.warn('verify mismatch: sent',stamp,'sheet has',saved,'| updatedAt',j&&j.payload&&j.payload.updatedAt);
     }
   }catch(e){
-    console.error('verify failed',e);
-    setSync('⚠️ ตรวจสอบไม่ได้ — อาจบันทึกไม่สำเร็จ');
+    console.error('verify error',e);
+    setSync('⚠️ อ่านชีตไม่ได้ — ตรวจการตั้งค่า Deploy (Anyone)');
   }
 }
-// ปุ่มบันทึกด้วยมือ (กรณีระบบอัตโนมัติไม่เข้า)
 async function forceSave(){ await pushOnline(); }
 
 const persist=saveAll, persistKpi=saveAll, persistProfile=saveAll;
